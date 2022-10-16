@@ -1,4 +1,4 @@
-package aplicacion;
+package DesignPatterns.Singleton;
 
 public class Singleton {
     // Static variable reference of single_instance
@@ -18,7 +18,7 @@ public class Singleton {
 
     // Static method 
     // Static method to create instance of aplicacion.Singleton class
-    public static Singleton getInstance()
+    public synchronized static Singleton getInstance()
     {
         if (single_instance == null)
             single_instance = new Singleton();
