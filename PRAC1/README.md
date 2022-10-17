@@ -10,9 +10,9 @@ Practica 1 Técnicas Avanzadas de Programación. Consiste en implementar un sist
     * [Reflection and Dynamic Proxy](#reflection-and-dynamic-proxy)
     * [MonitorService and Observer pattern](#monitorservice-and-observer-pattern)
     * [Validation](#validation)
-    * [Optional](#optional)
+    * [Optional](#optional-parts)
 * [Autores](#autores)
-* [APuntes](#apuntes)
+* [Apuntes](#apuntes)
 ## TODO
 Tareas pendientes que faltan por hacer:
 * [ ] Implementar el sistema de actores
