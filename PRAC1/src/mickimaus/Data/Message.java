@@ -3,11 +3,15 @@ package mickimaus.Data;
 public class Message {
     private Actor from;
     private String text;
-    public Message(Actor from,String message){
+    public Message(ActorProxy from,String message){
         this.from=from;
         this.text=message;
     }
     public String getText(){
         return text;
+    }
+    @Override
+    public String toString(){
+        return "Message from "+from+" : "+text;
     }
 }

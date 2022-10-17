@@ -6,7 +6,7 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 
 public class ActorContext {
-    private HashMap<String,Actor>actorSet=new HashMap<>();
+    private static HashMap<String,Actor>actorSet=new HashMap<>();
     private static ActorContext actorInstance;
     private ActorContext(){
 
@@ -18,10 +18,16 @@ public class ActorContext {
         return actorInstance;
     }
 
-    public ActorProxy spawnActor (String name, Actor type){
-        ActorProxy newActor = new ActorProxy();
+    public static ActorProxy spawnActor (String name, Actor type){
+        ActorProxy newActor = new ActorProxy(name);
         actorSet.put(name, type);
         return newActor;
+    }
+    public Actor lookup(String id){
+        if(actorSet.containsKey(id)){
+            return actorSet.get(id);
+        }
+        return null;
     }
 
 
