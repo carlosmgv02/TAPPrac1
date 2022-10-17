@@ -2,6 +2,7 @@ package mickimaus.Data;
 
 import mickimaus.Data.Actor;
 
+import java.lang.reflect.Proxy;
 import java.util.HashMap;
 
 public class ActorContext {
@@ -15,6 +16,12 @@ public class ActorContext {
             actorInstance=new ActorContext();
         }
         return actorInstance;
+    }
+
+    public ActorProxy spawnActor (String name, Actor type){
+        ActorProxy newActor = new ActorProxy();
+        actorSet.put(name, type);
+        return newActor;
     }
 
 

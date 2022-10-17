@@ -1,9 +1,32 @@
 package mickimaus.Programa;
 
-import mickimaus.Data.Actor;
+import mickimaus.Data.*;
+
+import java.time.Duration;
 
 public class App {
+
     public static void main(String[] args) {
+
+        ActorContext ac = ActorContext.getInstance();
+        ActorProxy hola = ac.spawnActor("prova1", new RingActor());
+        hola.send(new Message(null, "Hello wol"));
+        hola.send(new Message(null, "Hellouu"));
+
+        //System.out.println(hola.getQueLength());
+
+        hola.getQue().forEach((s)-> System.out.println(s));
+
+
+
+    }
+
+    }
+
+/*
+
+
+   public static void main(String[] args) {
 
         provaInstancia();
 
@@ -28,5 +51,4 @@ public class App {
         t1.start();
         t2.start();
     }
-    }
-
+ */
