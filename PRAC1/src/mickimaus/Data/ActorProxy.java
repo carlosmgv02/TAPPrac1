@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class ActorProxy implements Actor{
-    //No savem ben be que fa pero la classe esà creada
+    //No sabem ben be que fa pero la classe esà creada
 
 
     //Each actor has a queue 4 the messages
