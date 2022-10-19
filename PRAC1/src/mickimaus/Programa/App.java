@@ -2,17 +2,14 @@ package mickimaus.Programa;
 
 import mickimaus.Data.*;
 
-import java.time.Duration;
 import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.SynchronousQueue;
 
 public class App {
 
     public static void main(String[] args) {
 
         ActorContext ac = ActorContext.getInstance();
-        ActorProxy actor1 = ac.spawnActor("Thread1", new Actor() {
+        ActorProxy actor1 = ActorContext.spawnActor("Thread1", new Actor() {
             @Override
             public void send(Message msg) {
 

@@ -2,12 +2,11 @@ package mickimaus.Data;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.SynchronousQueue;
+
 
 public class ActorProxy implements Actor,Runnable{
     //No savem ben be que fa pero la classe esà creada
-    private String id;
+    private final String id;
     private Thread t;
     public ActorProxy (String id){
         this.id = id;
@@ -30,7 +29,7 @@ public class ActorProxy implements Actor,Runnable{
     @Override
     public Message process() {
         //- Returns the head of the queue.
-        Message processedMessage=null;
+        Message processedMessage;
 
             processedMessage = cua.element();
             System.out.println(id+" processed: "+processedMessage.getText());
