@@ -20,17 +20,18 @@ public class ActorDecorator implements Actor {
     private HashMap<String,Actor> actorSet=new HashMap<>();
 
     public void FirewallDecorator(Actor actor){
-        if(actorset.contains(actor)){    // si el actor está en el actorset
+        if(actorSet.containsKey(actor)){    // si el actor está en el actorset
             actor.process();            // procesa el mensaje
                                         // no se si está bién pero por ahí deben ir los tiros
         }
     }
-
+/*
     public void LambdaFirewallDecorator(Actor actor, String lambda){
         if (lambda(actor)){             // si el actor cumple la condición lambda
             actor.process();            // procesa el mensaje
         }
     }
+    */
 
     public void EncryptionDecorator(Actor actor){ //falta hacerlo
         // encriptar mensaje
