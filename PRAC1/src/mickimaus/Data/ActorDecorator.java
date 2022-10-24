@@ -20,7 +20,7 @@ public class ActorDecorator implements Actor {
     private HashMap<String,Actor> actorSet=new HashMap<>();
 
     public void FirewallDecorator(Actor actor){
-        if(actorSet.containsKey(actor)){    // si el actor está en el actorset
+        if(actorSet.containsKey(actor)){    // si el actor está en el actorseSet
             actor.process();            // procesa el mensaje
                                         // no se si está bién pero por ahí deben ir los tiros
         }

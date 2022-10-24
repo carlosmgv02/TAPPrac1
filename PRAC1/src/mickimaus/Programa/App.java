@@ -2,6 +2,7 @@ package mickimaus.Programa;
 
 import mickimaus.Data.*;
 
+import java.util.Arrays;
 import java.util.Queue;
 
 public class App {
@@ -48,8 +49,19 @@ public class App {
         actor1.start();
         actor2.start();
 
-        //actor1.getQue().forEach((s)-> System.out.println(s));
+        InsultActor actor= new InsultActor("Insultador");
 
+        actor.addInsultMessage(new Message(actor1,"Capullo"));
+        actor.addInsultMessage(new Message(actor2,"Imbécil"));
+        actor.addInsultMessage(new Message(actor1,"Francés"));
+
+
+        actor.getAllMessages().stream().forEach(System.out::println);
+
+        System.out.println("Generamos un insulto random:");
+
+        Message insultMessage = actor.getInsultMessage();
+        System.out.println(insultMessage);
 
 
     }

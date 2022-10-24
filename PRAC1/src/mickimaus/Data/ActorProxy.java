@@ -13,6 +13,7 @@ public class ActorProxy implements Actor,Runnable{
     }
 
 
+
     //Each actor has a queue 4 the messages
     private Queue<Message> cua = new LinkedList<>();
     //private BlockingQueue<Message> cua2=new SynchronousQueue<>();
@@ -56,14 +57,14 @@ public class ActorProxy implements Actor,Runnable{
 
 
     public void run() {
-        try{
+        //try{
             while(!cua.isEmpty()){
                 process();
-                Thread.sleep(50);
+                //Thread.sleep(50);
             }
-        }catch(InterruptedException e){
+       /* }catch(InterruptedException e){
             System.out.println("Thread "+id+" interrupted.");
-        }
+        }*/
         //while(true)
 
     }
