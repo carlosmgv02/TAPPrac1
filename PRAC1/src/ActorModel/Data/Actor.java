@@ -12,4 +12,7 @@ public interface Actor {
 
      Queue<Message> getQue();
 
+    void run();
+
+    void start();
 }

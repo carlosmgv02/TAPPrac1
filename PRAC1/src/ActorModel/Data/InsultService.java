@@ -1,13 +1,28 @@
 package ActorModel.Data;
 
-import java.util.Queue;
 
-public class DynamicProxy implements Actor, Runnable {
+import java.util.Queue;
+import java.util.List;
+import java.util.ArrayList;
+
+
+public class InsultService extends InsultActor {
     private final String id;
     private Thread t;
     private Actor actor;
 
-    public DynamicProxy(String id, Actor actor) {
+    private List<Message> insultlist = new ArrayList<>();
+
+    public void addInsult(String insult){
+        Message msg = new Message(insult);
+        addInsultMessage(msg);
+    }
+
+    public Message getInsult(){
+        return insultlist.get((int)(Math.random()* insultlist.size()));
+    }
+    public InsultService(String id, Actor actor) {
+        super(id);
         this.id = id;
         this.actor = actor;
     }

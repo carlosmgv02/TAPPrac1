@@ -25,6 +25,7 @@ public class ActorDecorator implements Actor {
                                         // no se si está bién pero por ahí deben ir los tiros
         }
     }
+
 /*
     public void LambdaFirewallDecorator(Actor actor, String lambda){
         if (lambda(actor)){             // si el actor cumple la condición lambda
