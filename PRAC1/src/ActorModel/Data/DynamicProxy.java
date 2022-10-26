@@ -42,4 +42,4 @@ public class DynamicProxy implements Actor, Runnable {
         return actor.getQue();
     }
 }
-}
+

@@ -11,11 +11,14 @@ public class InsultService extends InsultActor {
     private Thread t;
     private Actor actor;
 
+    //Canviat tipo per string ja que no fem servir actor
+    //private List<Message> insultlist = new ArrayList<>();
     private List<Message> insultlist = new ArrayList<>();
 
+
     public void addInsult(String insult){
-        Message msg = new Message(insult);
-        addInsultMessage(msg);
+        //Message msg = new Message(insult);
+        addInsultMessage(insult);
     }
 
     public Message getInsult(){
@@ -57,4 +60,4 @@ public class InsultService extends InsultActor {
         return actor.getQue();
     }
 }
-}
+
