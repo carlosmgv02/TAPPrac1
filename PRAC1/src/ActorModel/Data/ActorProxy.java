@@ -29,17 +29,11 @@ public class ActorProxy implements Actor,Runnable{
     //Method that processes the message and deletes it from the queue
     @Override
     public Message process() {
-        //- Returns the head of the queue.
-        Message processedMessage;
-
-            processedMessage = cua.element();
-            System.out.println(id+" processed: "+processedMessage.getText());
-            //- Deletes the head of the queue.
-            cua.poll();
 
 
 
-        return processedMessage;
+
+        return null;
 
     }
     @Override

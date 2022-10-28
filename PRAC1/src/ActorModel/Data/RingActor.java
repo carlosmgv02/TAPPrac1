@@ -23,4 +23,23 @@ public class RingActor implements Actor{
     public Queue getQue() {
         return null;
     }
+
+    @Override
+    public void run() {
+
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    //
+
+    public void connectProxies() {
+
+    }
+
+
+
 }
