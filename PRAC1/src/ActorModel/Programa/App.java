@@ -12,6 +12,7 @@ public class App {
         ActorContext.getInstance();
         //Create the first proxy
         ActorProxy actor1 = ActorContext.spawnActor("Thread1", new RingActor());
+        actor1.process();
         //Send the first message
         actor1.send(new Message(null, "Hello wol"));
         actor1.send(new Message(null, "ola"));
@@ -23,8 +24,8 @@ public class App {
         //To demonstrate the Actor system, create a HelloWorldActor
         ActorProxy hwActor = ActorContext.spawnActor("Thread2", new HelloWorldActor());
         hwActor.send(new Message(actor1, " trial msg from t1"));
-
         hwActor.process();
+        hwActor.start();
 
 
 

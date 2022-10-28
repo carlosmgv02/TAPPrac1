@@ -38,8 +38,8 @@ public class DynamicProxy implements Actor, Runnable {
     }
 
     @Override
-    public Queue<Message> getQue() {
-        return actor.getQue();
+    public Queue<Message> getQueue() {
+        return actor.getQueue();
     }
 }
 

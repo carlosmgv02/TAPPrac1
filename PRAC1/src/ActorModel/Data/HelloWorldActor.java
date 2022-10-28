@@ -3,17 +3,19 @@ package ActorModel.Data;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class HelloWorldActor  implements Actor   {
+public class HelloWorldActor implements Actor   {
 
     private Queue<Message> cua = new LinkedList<>();
 
 
     @Override
     public void send(Message msg) {
+        cua.offer(msg);
     }
 
     @Override
     public Message process() {
+        System.out.println("Printing Hello World Actor");
         //- Returns the head of the queue.
         Message processedMessage;
 
@@ -21,21 +23,16 @@ public class HelloWorldActor  implements Actor   {
         System.out.println(" processed: "+processedMessage.getText());
         //- Deletes the head of the queue.
         cua.poll();
-
-
-
-
         return processedMessage;
-
     }
 
     @Override
     public int getQueLength() {
-        return 0;
+        return cua.size();
     }
 
     @Override
-    public Queue<Message> getQue() {
+    public Queue<Message> getQueue() {
         return null;
     }
 

@@ -65,7 +65,7 @@ public class ActorDecorator implements Actor {
     }
 
     @Override
-    public Queue getQue() {
+    public Queue getQueue() {
         return this.cua;
     }
 

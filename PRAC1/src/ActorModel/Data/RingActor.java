@@ -11,6 +11,7 @@ public class RingActor implements Actor{
 
     @Override
     public Message process() {
+        System.out.println("Printing Ring Actor");
         return null;
     }
 
@@ -20,7 +21,7 @@ public class RingActor implements Actor{
     }
 
     @Override
-    public Queue getQue() {
+    public Queue getQueue() {
         return null;
     }
 

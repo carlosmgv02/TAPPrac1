@@ -8,8 +8,10 @@ public class ActorProxy implements Actor,Runnable{
     //No savem ben be que fa pero la classe esà creada
     private final String id;
     private Thread t;
-    public ActorProxy (String id){
-        this.id = id;
+    private Actor a;
+    public ActorProxy(Actor act,String id){
+        this.a=act;
+        this.id=id;
     }
 
 
@@ -22,19 +24,14 @@ public class ActorProxy implements Actor,Runnable{
     @Override
     public void send(Message msg) {
         //Inserts the specified element into the queue
-        cua.offer(msg);
+        a.send(msg);
 
     }
 
     //Method that processes the message and deletes it from the queue
     @Override
     public Message process() {
-
-
-
-
-        return null;
-
+        return a.process();
     }
     @Override
     public int getQueLength(){
@@ -42,7 +39,7 @@ public class ActorProxy implements Actor,Runnable{
     }
     @Override
 
-    public synchronized Queue<Message> getQue(){
+    public synchronized Queue<Message> getQueue(){
         return this.cua;
     }
     public void quitMessage(){
@@ -52,7 +49,8 @@ public class ActorProxy implements Actor,Runnable{
 
     public void run() {
         //try{
-            while(!cua.isEmpty()){
+        if(a.getQueue()!=null)
+            while(!a.getQueue().isEmpty()){
                 process();
                 //Thread.sleep(50);
             }
