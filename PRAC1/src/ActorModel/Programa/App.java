@@ -9,7 +9,8 @@ public class App {
     public static void main(String[] args) {
 
         ActorContext ac = ActorContext.getInstance();
-        ActorProxy actor1 = ActorContext.spawnActor("Thread1", new Actor() {
+        Actor provaA=ac.spawnActor("provaA",new RingActor());
+        ActorProxy actor1 = ActorContext.spawnActor("Thread1", new RingActor() {
             @Override
             public void send(Message msg) {
 

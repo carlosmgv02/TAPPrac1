@@ -2,7 +2,7 @@ package ActorModel.Data;
 
 import java.util.Queue;
 
-public class RingActor implements Actor{
+public class RingActor extends ActorProxy {
 
     @Override
     public void send(Message msg) {
