@@ -14,8 +14,6 @@ public class ActorProxy implements Actor,Runnable{
         this.id=id;
     }
 
-
-
     //Each actor has a queue 4 the messages
     private Queue<Message> cua = new LinkedList<>();
     //private BlockingQueue<Message> cua2=new SynchronousQueue<>();
@@ -49,9 +47,9 @@ public class ActorProxy implements Actor,Runnable{
 
     public void run() {
         //try{
-        if(a.getQueue()!=null)
+        if(a.getQueLength()!=0)
             while(!a.getQueue().isEmpty()){
-                process();
+                a.process();
                 //Thread.sleep(50);
             }
        /* }catch(InterruptedException e){

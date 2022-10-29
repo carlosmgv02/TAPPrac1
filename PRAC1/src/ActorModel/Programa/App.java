@@ -2,7 +2,9 @@ package ActorModel.Programa;
 
 import ActorModel.Data.*;
 
+import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 public class App {
 
@@ -12,20 +14,48 @@ public class App {
         ActorContext.getInstance();
         //Create the first proxy
         ActorProxy actor1 = ActorContext.spawnActor("Thread1", new RingActor());
-        actor1.process();
+        ActorProxy actor2 = ActorContext.spawnActor("provaa", new RingActor());
+        ActorProxy actor3 = ActorContext.spawnActor("holaaa", new RingActor());
+
+        //Testing method lookup
+        // System.out.println("Testing method lookup()");
+        Actor lookedActor =  ActorContext.lookup("provaa");
+        //System.out.println(lookedActor); //Retuns pointer!!!
+
+        //Testing method getNames()
+        Set<String> keys = ActorContext.getNames();
+        //System.out.println("Testing method getNames()");
+        //keys.forEach(System.out::println);
+        //Works but doesn't follow an order...
+
+
         //Send the first message
         actor1.send(new Message(null, "Hello wol"));
         actor1.send(new Message(null, "ola"));
         actor1.send(new Message(null, "prova"));
         actor1.send(new Message(null, "xd"));
 
-        actor1.start();
+        //actor1.start();
 
         //To demonstrate the Actor system, create a HelloWorldActor
         ActorProxy hwActor = ActorContext.spawnActor("Thread2", new HelloWorldActor());
         hwActor.send(new Message(actor1, " trial msg from t1"));
-        hwActor.process();
+        hwActor.send(new Message(actor1, " trial msg from t1, 2"));
+        hwActor.send(new Message(actor2, "prova send2"));
+        hwActor.send(new Message(actor3, "prova send3"));
+        //Processes ?concurrent? messages
         hwActor.start();
+        hwActor.run();
+
+        //TESTING PROXY
+
+        ActorProxy insult = ActorContext.spawnActor("insulter",new InsultActor());
+        insult.send(new GetInsultMessage());
+        Message result = insult.receive();
+        System.out.println(result.getText());
+
+
+
 
 
 

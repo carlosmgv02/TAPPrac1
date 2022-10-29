@@ -33,7 +33,8 @@ public class HelloWorldActor implements Actor   {
 
     @Override
     public Queue<Message> getQueue() {
-        return null;
+
+        return cua;
     }
 
     @Override
