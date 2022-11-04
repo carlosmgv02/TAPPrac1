@@ -5,18 +5,18 @@ import java.util.Queue;
 
 
 public class ActorProxy implements Actor,Runnable{
-    //No savem ben be que fa pero la classe esà creada
+    //No sabem ben be que fa pero la classe esà creada
     private final String id;
-    private Thread t;
+    private Thread t;//seguramente tengamos que cambiar el thread a insultActor,RingActor, etc.
     private Actor a;
+    private Queue<Message> cua = new LinkedList<>();
     public ActorProxy(Actor act,String id){
         this.a=act;
         this.id=id;
+        start();
     }
 
     //Each actor has a queue 4 the messages
-    private Queue<Message> cua = new LinkedList<>();
-    //private BlockingQueue<Message> cua2=new SynchronousQueue<>();
 
     //Method 2 send a message to the actor
     @Override
@@ -40,9 +40,15 @@ public class ActorProxy implements Actor,Runnable{
     public synchronized Queue<Message> getQueue(){
         return this.cua;
     }
-    public void quitMessage(){
 
+    /**
+     * Method that stops the actor from running
+     */
+    public void quitMessage(){
+        //stop thread from running
+        t.interrupt();
     }
+
 
 
     public void run() {

@@ -35,11 +35,16 @@ public class InsultActor implements Actor{
 
     @Override
     public void send(Message msg) {
-
+        insultList.add(msg);
     }
 
     @Override
     public Message process() {
+            insultList.forEach(i -> {
+                System.out.println(i);
+            });
+            insultList.clear();
+
         return null;
     }
 
