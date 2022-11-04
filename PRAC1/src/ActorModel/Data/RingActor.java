@@ -11,6 +11,7 @@ public class RingActor extends ActorProxy {
 
     @Override
     public Message process() {
+        System.out.println("Printing Ring Actor");
         return null;
     }
 
@@ -20,7 +21,26 @@ public class RingActor extends ActorProxy {
     }
 
     @Override
-    public Queue getQue() {
+    public Queue getQueue() {
         return null;
     }
+
+    @Override
+    public void run() {
+
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    //
+
+    public void connectProxies() {
+
+    }
+
+
+
 }

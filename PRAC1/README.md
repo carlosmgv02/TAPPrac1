@@ -206,3 +206,25 @@ Actor -> `Mailbox` = cola de mensajes
     //hay que crear un patrón factoría para que nuestros actores puedan funcionar con Java Threads y con virtualThreads
 
 </div>
+
+
+//pot ser que el proxy nomes envia i no te llista
+
+
+//interficie
+Actor (metodes declarats)
+
+//classes implementen actor
+-Cadascuna té llista de missatges i caracteristiues de processar
+ringActor
+helloWorldActor
+...
+//ActorProxy->
+No te llista i nomes serveix per conectar els actors entre si i comunicarlos i donarels hi un nom
+
+
+
+
+
+
+

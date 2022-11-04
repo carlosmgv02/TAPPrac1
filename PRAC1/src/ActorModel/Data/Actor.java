@@ -10,7 +10,7 @@ public interface Actor {
      Message process();
      int getQueLength();
 
-     Queue<Message> getQue();
+     Queue<Message> getQueue();
 
     void run();
 

@@ -2,14 +2,12 @@ package ActorModel.Data;
 
 import java.util.ArrayList;
 import java.util.List;
-public class InsultActor extends ActorProxy{
+import java.util.Queue;
+
+public class InsultActor implements Actor{
 
     private List<Message> insultList = new ArrayList<>();
 
-    public InsultActor(String id) {
-        super(id);
-
-    }
 
     /**
      * Returns a random message from the insult list
@@ -33,5 +31,35 @@ public class InsultActor extends ActorProxy{
      */
     public List<Message> getAllMessages (){
         return insultList;  //devolvemos la lista de insultos
+    }
+
+    @Override
+    public void send(Message msg) {
+
+    }
+
+    @Override
+    public Message process() {
+        return null;
+    }
+
+    @Override
+    public int getQueLength() {
+        return 0;
+    }
+
+    @Override
+    public Queue<Message> getQueue() {
+        return null;
+    }
+
+    @Override
+    public void run() {
+
+    }
+
+    @Override
+    public void start() {
+
     }
 }

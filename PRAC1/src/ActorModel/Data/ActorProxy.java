@@ -8,11 +8,11 @@ public class ActorProxy implements Actor,Runnable{
     //No savem ben be que fa pero la classe esà creada
     private final String id;
     private Thread t;
-    public ActorProxy (String id){
-        this.id = id;
+    private Actor a;
+    public ActorProxy(Actor act,String id){
+        this.a=act;
+        this.id=id;
     }
-
-
 
     //Each actor has a queue 4 the messages
     private Queue<Message> cua = new LinkedList<>();
@@ -22,25 +22,14 @@ public class ActorProxy implements Actor,Runnable{
     @Override
     public void send(Message msg) {
         //Inserts the specified element into the queue
-        cua.offer(msg);
+        a.send(msg);
 
     }
 
     //Method that processes the message and deletes it from the queue
     @Override
     public Message process() {
-        //- Returns the head of the queue.
-        Message processedMessage;
-
-            processedMessage = cua.element();
-            System.out.println(id+" processed: "+processedMessage.getText());
-            //- Deletes the head of the queue.
-            cua.poll();
-
-
-
-        return processedMessage;
-
+        return a.process();
     }
     @Override
     public int getQueLength(){
@@ -48,7 +37,7 @@ public class ActorProxy implements Actor,Runnable{
     }
     @Override
 
-    public synchronized Queue<Message> getQue(){
+    public synchronized Queue<Message> getQueue(){
         return this.cua;
     }
     public void quitMessage(){
@@ -58,8 +47,9 @@ public class ActorProxy implements Actor,Runnable{
 
     public void run() {
         //try{
-            while(!cua.isEmpty()){
-                process();
+        if(a.getQueLength()!=0)
+            while(!a.getQueue().isEmpty()){
+                a.process();
                 //Thread.sleep(50);
             }
        /* }catch(InterruptedException e){

@@ -2,98 +2,65 @@ package ActorModel.Programa;
 
 import ActorModel.Data.*;
 
+import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 public class App {
 
     public static void main(String[] args) {
 
-        ActorContext ac = ActorContext.getInstance();
-        Actor provaA=ac.spawnActor("provaA",new RingActor());
-        ActorProxy actor1 = ActorContext.spawnActor("Thread1", new RingActor() {
-            @Override
-            public void send(Message msg) {
+        //Ini the app w the singleton
+        ActorContext.getInstance();
+        //Create the first proxy
+        ActorProxy actor1 = ActorContext.spawnActor("Thread1", new RingActor());
+        ActorProxy actor2 = ActorContext.spawnActor("provaa", new RingActor());
+        ActorProxy actor3 = ActorContext.spawnActor("holaaa", new RingActor());
 
-            }
+        //Testing method lookup
+        // System.out.println("Testing method lookup()");
+        Actor lookedActor =  ActorContext.lookup("provaa");
+        //System.out.println(lookedActor); //Retuns pointer!!!
 
-            @Override
-            public Message process() {
-                return null;
-            }
-
-            @Override
-            public int getQueLength() {
-                return 0;
-            }
-
-            @Override
-            public Queue<Message> getQue() {
-                return null;
-            }
-        });
-        ActorProxy actor2=new ActorProxy("Thread2");
-        actor1.send(new Message(new ActorProxy("Carlos"), "Hello wol"));
-        actor1.send(new Message(new ActorProxy("Nil"), "Hellouu"));
-        actor1.send(new Message(new ActorProxy("Genis"), "Hello"));
-        actor1.send(new Message(new ActorProxy("Pedro"), "Hello"));
-        actor2.send(new Message(new ActorProxy("Juan"), "Prueba2.1"));
-        actor2.send(new Message(new ActorProxy("Luis"), "Prueba2.2"));
-
-        /*Thread t1=new Thread(actor1);
-        Thread t2=new Thread(actor2);
-        t1.start();
-        //t1.stop();
-        t2.start();
-        System.out.println(actor1.process());*/
-
-        actor1.start();
-        actor2.start();
-
-        InsultActor actor= new InsultActor("Insultador");
-
-        actor.addInsultMessage(new Message(actor1,"Capullo"));
-        actor.addInsultMessage(new Message(actor2,"Imbécil"));
-        actor.addInsultMessage(new Message(actor1,"Francés"));
+        //Testing method getNames()
+        Set<String> keys = ActorContext.getNames();
+        //System.out.println("Testing method getNames()");
+        //keys.forEach(System.out::println);
+        //Works but doesn't follow an order...
 
 
-        actor.getAllMessages().stream().forEach(System.out::println);
+        //Send the first message
+        actor1.send(new Message(null, "Hello wol"));
+        actor1.send(new Message(null, "ola"));
+        actor1.send(new Message(null, "prova"));
+        actor1.send(new Message(null, "xd"));
 
-        System.out.println("Generamos un insulto random:");
+        //actor1.start();
 
-        Message insultMessage = actor.getInsultMessage();
-        System.out.println(insultMessage);
+        //To demonstrate the Actor system, create a HelloWorldActor
+        ActorProxy hwActor = ActorContext.spawnActor("Thread2", new HelloWorldActor());
+        hwActor.send(new Message(actor1, " trial msg from t1"));
+        hwActor.send(new Message(actor1, " trial msg from t1, 2"));
+        hwActor.send(new Message(actor2, "prova send2"));
+        hwActor.send(new Message(actor3, "prova send3"));
+        //Processes ?concurrent? messages
+        hwActor.start();
+        hwActor.run();
+
+        //TESTING PROXY
+
+        ActorProxy insult = ActorContext.spawnActor("insulter",new InsultActor());
+        insult.send(new GetInsultMessage());
+        Message result = insult.receive();
+        System.out.println(result.getText());
+
+
+
+
+
 
 
     }
 
     }
 
-/*
-
-
-   public static void main(String[] args) {
-
-        provaInstancia();
-
-    }
-    //fot el mateix k abans
-    public static void provaInstancia(){
-        Thread t1=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Actor a1=Actor.getInstance();
-                System.out.println(a1.hashCode());
-
-            }
-        });
-        Thread t2=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Actor a2=Actor.getInstance();
-                System.out.println(a2.hashCode());
-            }
-        });
-        t1.start();
-        t2.start();
-    }
- */
