@@ -1,6 +1,7 @@
 package ActorModel.Data;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class ActorContext {
@@ -32,8 +33,5 @@ public class ActorContext {
         //keySet()->gets the keys
         return actorSet.keySet();
     }
-
-
-
 
 }
