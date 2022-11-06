@@ -5,7 +5,7 @@ import ActorModel.Data.Messages.Message;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public abstract class Actor extends Thread {
+public abstract class Actor extends Thread{
 
     public Actor() {
 
@@ -34,20 +34,16 @@ public abstract class Actor extends Thread {
 
         while (!isInterrupted()) {
             if (cua.size() > 0) {
-                try {
+                /*try {
                     sleep(3000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
-                }
+                }*/
                 process();
+
+
                 //interrupt();
-            } else
-                System.out.println("BUIDA");
-            /*try {
-                sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }*/
+            }
         }
     }
 }

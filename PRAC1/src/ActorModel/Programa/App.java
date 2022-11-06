@@ -3,12 +3,12 @@ package ActorModel.Programa;
 import ActorModel.Data.*;
 import ActorModel.Data.Messages.Message;
 
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class App {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws InterruptedException {
         Actor act=new InsultActor();
         Actor act2=new InsultActor();
         Actor act3=new InsultActor();
@@ -17,7 +17,9 @@ public class App {
         prova1.start();
         Actor prova2=new InsultActor();
 
+
         ActorProxy hello = ActorContext.spawnActor("name", prova1);
+        //hello=ActorContext.spawnActor("carlos",new InsultActor());
         hello.send(new Message(act2, "hello world"));
         hello.send(new Message(act3, "olaa"));
         hello.send(new Message(act, "prova thread"));
@@ -40,7 +42,7 @@ public class App {
         //Testing method getNames()
         Set<String> keys = ActorContext.getNames();
         System.out.println("Testing method getNames()");
-        keys.forEach(System.out::println);
+        //keys.forEach(System.out::println);
         //Works but doesn't follow an order...
 
 
@@ -73,9 +75,13 @@ public class App {
         insult.send(new GetInsultMessage());
         Message result = insult.receive();
         System.out.println(result.getText());*/
+        act.sleep(5000);
 
-
+        //waits until next message is sent, and it processes it
+        //hello.send(new Message());
+        hello.send(new Message(act, "prova THREAD"));
     }
+
 
 }
 

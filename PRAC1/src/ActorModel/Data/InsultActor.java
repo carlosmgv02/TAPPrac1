@@ -8,7 +8,7 @@ import java.util.Queue;
 
 public class InsultActor extends Actor{
 
-    private List<Message> insultList = new ArrayList<>();
+    //private List<Message> insultList = new ArrayList<>();
 
 
 
@@ -17,7 +17,8 @@ public class InsultActor extends Actor{
      * @return random message
      */
     public Message getInsultMessage(){
-        return insultList.get((int)(Math.random()* insultList.size())); //devolvemos un insulto random de la lista
+        return cua.peek();
+        //return insultList.get((int)(Math.random()* insultList.size())); //devolvemos un insulto random de la lista
     }
 
     /**
@@ -25,29 +26,34 @@ public class InsultActor extends Actor{
      * @param msg message we want to add
      */
     public void addInsultMessage (Message msg){
-        insultList.add(msg);    //añadimos un insulto a la lista
+        cua.offer(msg);    //añadimos un insulto a la lista
     }
 
     /**
      * Returns the insult list
      * @return
      */
-    public List<Message> getAllMessages (){
-        return insultList;  //devolvemos la lista de insultos
+    public Queue<Message> getAllMessages (){
+        return cua;  //devolvemos la lista de insultos
     }
 
     @Override
     public void send(Message msg) {
-        insultList.add(msg);
+        cua.offer(msg);
     }
 
     @Override
     public Message process() {
-            insultList.forEach(i -> {
+            cua.forEach(i -> {
                 System.out.println(i);
+                /*try {
+                    sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }*/
             });
-            insultList.clear();
-            interrupt();
+            cua.clear();
+
         return null;
     }
 

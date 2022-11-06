@@ -20,6 +20,8 @@ public class ActorContext {
     public static ActorProxy spawnActor (String name, Actor type){
         ActorProxy newActor = new ActorProxy(type,name);
         actorSet.put(name, type);
+        //type.start();
+
         return newActor;
     }
     public static Actor lookup(String id){
