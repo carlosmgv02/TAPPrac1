@@ -23,13 +23,15 @@ public class ActorContext {
         return newActor;
     }
     public static Actor lookup(String id){
+        Actor act;
         if(actorSet.containsKey(id)){
-            return actorSet.get(id);
+            act= actorSet.get(id);
+            return act;
         }
         return null;
     }
 
-    public static Set getNames(){
+    public static Set<String> getNames(){
         //keySet()->gets the keys
         return actorSet.keySet();
     }

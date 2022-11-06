@@ -8,12 +8,13 @@ public class RingActor extends Actor {
 
     @Override
     public void send(Message msg) {
-
+        cua.offer(msg);
     }
 
     @Override
     public Message process() {
         System.out.println("Printing Ring Actor");
+        cua.poll();
         return null;
     }
 
@@ -27,15 +28,6 @@ public class RingActor extends Actor {
         return null;
     }
 
-    @Override
-    public void run() {
-
-    }
-
-    @Override
-    public void start() {
-
-    }
 
     //
 

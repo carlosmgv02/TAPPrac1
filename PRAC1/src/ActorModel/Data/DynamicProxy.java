@@ -4,7 +4,7 @@ import ActorModel.Data.Messages.Message;
 
 import java.util.Queue;
 
-public class DynamicProxy implements Actor, Runnable {
+public class DynamicProxy extends Actor {
     private final String id;
     private Thread t;
     private Actor actor;

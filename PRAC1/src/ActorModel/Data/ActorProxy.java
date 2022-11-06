@@ -7,12 +7,10 @@ import java.util.Queue;
 
 
 public class ActorProxy{
-    private final String id;
     private Actor a;
     private Queue<Message> cua = new LinkedList<>();
     public ActorProxy(Actor act,String id){
         this.a=act;
-        this.id=id;
     }
 
     //Each actor has a queue 4 the messages
@@ -35,7 +33,4 @@ public class ActorProxy{
         return this.cua;
     }
 
-    public synchronized String toString(){
-        return id;
-    }
 }

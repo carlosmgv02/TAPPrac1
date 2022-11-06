@@ -47,7 +47,7 @@ public class InsultActor extends Actor{
                 System.out.println(i);
             });
             insultList.clear();
-
+            interrupt();
         return null;
     }
 
@@ -59,15 +59,5 @@ public class InsultActor extends Actor{
     @Override
     public Queue<Message> getQueue() {
         return null;
-    }
-
-    @Override
-    public void run() {
-
-    }
-
-    @Override
-    public void start() {
-
     }
 }

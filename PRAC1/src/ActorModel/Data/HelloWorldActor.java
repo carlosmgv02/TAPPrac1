@@ -5,9 +5,7 @@ import ActorModel.Data.Messages.Message;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class HelloWorldActor implements Actor   {
-
-    private Queue<Message> cua = new LinkedList<>();
+public class HelloWorldActor extends Actor {
 
 
     @Override
@@ -39,13 +37,7 @@ public class HelloWorldActor implements Actor   {
         return cua;
     }
 
-    @Override
-    public void run() {
 
-    }
 
-    @Override
-    public void start() {
 
-    }
 }
