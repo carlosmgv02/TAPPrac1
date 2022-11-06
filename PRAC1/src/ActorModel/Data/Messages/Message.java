@@ -1,4 +1,6 @@
-package ActorModel.Data;
+package ActorModel.Data.Messages;
+
+import ActorModel.Data.Actor;
 
 public class Message {
     private Actor from;

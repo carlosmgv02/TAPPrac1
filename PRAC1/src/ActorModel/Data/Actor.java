@@ -1,19 +1,36 @@
 package ActorModel.Data;
 
+import ActorModel.Data.Messages.Message;
+import java.util.LinkedList;
 import java.util.Queue;
 
-public interface Actor {
+public abstract class Actor extends Thread{
+
+    private Queue<Message> cua = new LinkedList<>();
 
     //Method 2 send a message to the actor
-    void send(Message msg);
+    public abstract void send(Message msg);
+
     //Method that processes the message and deletes it from the queue
-     Message process();
-     int getQueLength();
+    public abstract Message process();
 
-     Queue<Message> getQueue();
+    public int getQueLength() {
+        return cua.toArray().length;
+    }
 
-    void run();
+    public abstract Queue<Message> getQueue();
 
-    void start();
+    public void quitMessage(){
+        interrupt();
+    }
+    @Override
+    public void run() {
+        System.out.println("Actor " + this.getName() + " started");
+        process();
+
+    }
+
+
+
 
 }

@@ -1,5 +1,9 @@
 # PRACTICA TAP
 Practica 1 Técnicas Avanzadas de Programación. Consiste en implementar un sistema de actores en `Java`.<br>
+## NOTES
+* Actor proxy no ha de ser un thread pero necessita tenir una cua per poder rebre missatges un cop ja n'ha enviat.
+* Proxy ha de ser una interfície.
+* Actor ha de ser una classe, no una interfície, y les classes han d'heretar d'ella.
 ## Contenido
 * [TODO](#todo)
 * [Introducción](#introducción)

@@ -21,11 +21,11 @@ public class Test {
 
         // UNCOMMENT WHEN ACTIVATED THE EXPERIMENTAL FEATURES
         // https://foojay.io/today/how-to-run-project-loom-from-intellij-idea/
-      /*  switch (m){
+        switch (m){
             case InsultMessage m1 -> System.out.println(m1.getBody());
             case QuitMessage m1 -> System.out.println("BWYE BYE ");
             default -> System.out.println("ERROR");
-        }*/
+        }
 
     }
 

@@ -1,12 +1,15 @@
 package ActorModel.Data;
 
+import ActorModel.Data.Messages.Message;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
-public class InsultActor implements Actor{
+public class InsultActor extends Actor{
 
     private List<Message> insultList = new ArrayList<>();
+
 
 
     /**

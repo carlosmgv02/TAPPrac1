@@ -1,11 +1,13 @@
 package ActorModel.Data;
 
+import ActorModel.Data.Messages.Message;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 
-public class MonitorService implements Actor {
-
+public class MonitorService {
+    /*
     //TODO
     //tenemos que crear un ActorListener que nos informe de la (creación, finalización, error y mensaje recibido) de un actor
     //tenemos que crear un método monitorActor(name) y otro monitorAllActors()
@@ -60,5 +62,5 @@ public class MonitorService implements Actor {
     @Override
     public void start() {
 
-    }
+    }*/
 }

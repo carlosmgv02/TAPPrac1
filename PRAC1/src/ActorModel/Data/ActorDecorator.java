@@ -1,10 +1,12 @@
 package ActorModel.Data;
 
+import ActorModel.Data.Messages.Message;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class ActorDecorator implements Actor {
+public class ActorDecorator extends Actor {
 
     // tenemos que crear un decorator para poder modificar el procesado de mensajes a un actor
     // para eso crearemos un FirewallDecorator y un EncryptionDecorator
@@ -59,10 +61,6 @@ public class ActorDecorator implements Actor {
         return processedMessage;
     }
 
-    @Override
-    public int getQueLength() {
-        return cua.toArray().length;
-    }
 
     @Override
     public Queue getQueue() {

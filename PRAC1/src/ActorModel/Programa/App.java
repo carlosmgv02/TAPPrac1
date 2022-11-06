@@ -1,15 +1,16 @@
 package ActorModel.Programa;
 
 import ActorModel.Data.*;
+import ActorModel.Data.Messages.Message;
 
-import java.util.List;
-import java.util.Queue;
 import java.util.Set;
 
 public class App {
 
     public static void main(String[] args) {
 
+        ActorProxy hello=ActorContext.spawnActor("name",new RingActor());
+        hello.send(new Message(null,"hello world"));
         //Ini the app w the singleton
         ActorContext.getInstance();
         //Create the first proxy

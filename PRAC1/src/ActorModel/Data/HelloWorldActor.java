@@ -1,5 +1,7 @@
 package ActorModel.Data;
 
+import ActorModel.Data.Messages.Message;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
