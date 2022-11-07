@@ -27,7 +27,7 @@ Tareas pendientes que faltan por hacer:
       * [ ] GetInsultMessage
       * [ ] GetAllInsultMessage
       * [ ] AddInsultMessage
-    * [ ] HelloWorld Actor
+    * [x] HelloWorld Actor
   * [ ] Patrón de decorador
   * [ ] Patrón de proxy
     * [ ] Actor Proxy

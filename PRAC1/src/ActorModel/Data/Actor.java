@@ -11,6 +11,7 @@ public abstract class Actor extends Thread{
 
     protected Queue<Message> cua = new LinkedBlockingQueue<>();
 
+
     //Method 2 send a message to the actor
     public void send(Message msg){
         switch (msg){

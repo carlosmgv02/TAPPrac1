@@ -1,43 +1,35 @@
 package ActorModel.Data;
 
+import ActorModel.Data.Messages.Insult.*;
 import ActorModel.Data.Messages.Message;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class InsultActor extends Actor{
 
-    //private List<Message> insultList = new ArrayList<>();
+
+    private List<Message> insultList = new ArrayList<>();
 
 
+    @Override
+    public void send(Message msg){
 
-    /**
-     * Returns a random message from the insult list
-     * @return random message
-     */
-    public Message getInsultMessage(){
-        return cua.peek();
-        //return insultList.get((int)(Math.random()* insultList.size())); //devolvemos un insulto random de la lista
+
+        switch (msg){
+            case GetInsultMessage m1-> {
+                ArrayList<Message> temp=new ArrayList<>(insultList);
+                Collections.shuffle(temp);
+                Message aux=temp.get(0);
+            }
+            case AddInsultMessage m2-> insultList.add(msg);
+            case GetAllInsultsMessage m3-> interrupt();
+
+            default -> cua.offer(msg);
+
+        }
+        //get random element from insultList
+
     }
-
-    /**
-     * Adds a new message to the insultList
-     * @param msg message we want to add
-     */
-    public void addInsultMessage (Message msg){
-        cua.offer(msg);    //añadimos un insulto a la lista
-    }
-
-    /**
-     * Returns the insult list
-     * @return
-     */
-    public Queue<Message> getAllMessages (){
-        return cua;  //devolvemos la lista de insultos
-    }
-
 
     @Override
     public Message process() {
@@ -49,12 +41,9 @@ public class InsultActor extends Actor{
     }
 
     @Override
-    public int getQueLength() {
-        return 0;
-    }
-
-    @Override
     public Queue<Message> getQueue() {
         return null;
     }
+
+
 }
