@@ -37,5 +37,14 @@ public class ActorContext {
         //keySet()->gets the keys
         return actorSet.keySet();
     }
+    public String getActorName(Actor actor){
+        for(Map.Entry<String,Actor> entry: actorSet.entrySet()){
+            if(entry.getValue().equals(actor)){
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
 
 }

@@ -6,16 +6,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class HelloWorldActor extends Actor {
-
-
-    @Override
-    public void send(Message msg) {
-        cua.offer(msg);
-    }
-
     @Override
     public Message process() {
-        System.out.println("Printing Hello World Actor");
+        System.out.println("From Hello World Actor: ");
         //- Returns the head of the queue.
         Message processedMessage;
 

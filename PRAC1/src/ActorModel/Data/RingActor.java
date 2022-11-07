@@ -5,11 +5,10 @@ import ActorModel.Data.Messages.Message;
 import java.util.Queue;
 
 public class RingActor extends Actor {
+    Actor next;
 
-    @Override
-    public void send(Message msg) {
-        cua.offer(msg);
-    }
+
+
 
     @Override
     public Message process() {

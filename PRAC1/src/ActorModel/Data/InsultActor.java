@@ -3,6 +3,7 @@ package ActorModel.Data;
 import ActorModel.Data.Messages.Message;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
 
@@ -37,23 +38,13 @@ public class InsultActor extends Actor{
         return cua;  //devolvemos la lista de insultos
     }
 
-    @Override
-    public void send(Message msg) {
-        cua.offer(msg);
-    }
 
     @Override
     public Message process() {
-            cua.forEach(i -> {
-                System.out.println(i);
-                /*try {
-                    sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }*/
-            });
-            cua.clear();
-
+        for(Message msg:cua) {
+            System.out.println(msg);
+        }
+        cua.clear();
         return null;
     }
 

@@ -1,9 +1,11 @@
 # PRACTICA TAP
 Practica 1 Técnicas Avanzadas de Programación. Consiste en implementar un sistema de actores en `Java`.<br>
 ## NOTES
+### Consells Pedro
 * Actor proxy no ha de ser un thread pero necessita tenir una cua per poder rebre missatges un cop ja n'ha enviat.
 * Proxy ha de ser una interfície.
 * Actor ha de ser una classe, no una interfície, y les classes han d'heretar d'ella.
+* Nos bloqueamos cuando hacemos un receive para esperar la respuesta.
 ## Contenido
 * [TODO](#todo)
 * [Introducción](#introducción)
@@ -20,9 +22,16 @@ Practica 1 Técnicas Avanzadas de Programación. Consiste en implementar un sist
 ## TODO
 Tareas pendientes que faltan por hacer:
 * [ ] Implementar el sistema de actores
-  * [ ] Patrón de singleton
+  * [x] Patrón de singleton (Actor Context)
+    * [ ] Insult Actor
+      * [ ] GetInsultMessage
+      * [ ] GetAllInsultMessage
+      * [ ] AddInsultMessage
+    * [ ] HelloWorld Actor
   * [ ] Patrón de decorador
   * [ ] Patrón de proxy
+    * [ ] Actor Proxy
+    * [ ] Dynamic Proxy
   * [ ] Patrón de observador
 * [ ] Validar funcionamiento
   * [ ] Test unitarios
