@@ -3,6 +3,9 @@ package ActorModel.Data;
 public class Message {
     private Actor from;
     private String text;
+    public Message(){
+
+    }
     public Message(Actor from,String message){
         this.from=from;
         this.text=message;

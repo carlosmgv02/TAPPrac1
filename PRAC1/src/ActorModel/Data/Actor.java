@@ -1,18 +1,49 @@
 package ActorModel.Data;
 
+import ActorModel.Data.Messages.*;
+
+import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
-public interface Actor {
+public abstract class Actor extends Thread{
 
+    protected Queue<Message> cua = new LinkedBlockingQueue<>();
+
+    /**
+     * Probablement s'ha d'esborrar i ficar-ho direcament al Insult només
+     * @return message rebut
+     */
+    public abstract Message receive();
     //Method 2 send a message to the actor
-    void send(Message msg);
+    public void send(Message msg){
+        switch (msg){
+            case QuitMessage m1-> interrupt();
+            default -> cua.offer(msg);
+
+        }
+    }
+
     //Method that processes the message and deletes it from the queue
-     Message process();
-     int getQueLength();
+    public abstract Message process();
 
-     Queue<Message> getQueue();
+    public int getQueLength() {
+        return cua.toArray().length;
+    }
 
-    void run();
+    public abstract Queue<Message> getQueue();
 
-    void start();
+
+    @Override
+    public void run() {
+
+        while (!isInterrupted()) {
+            if (cua.size() > 0) {
+                process();
+                //interrupt();
+            }
+        }
+
+    }
 }

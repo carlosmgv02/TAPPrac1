@@ -1,65 +1,58 @@
 package ActorModel.Data;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import ActorModel.Data.Messages.Insult.*;
+import ActorModel.Data.Messages.Message;
 
-public class InsultActor implements Actor{
+import java.util.*;
 
-    private List<Message> insultList = new ArrayList<>();
+/*
+Preguntes a Pedro:
+com ficar send i recieve als missatges
+si els insult message implementen o hereten de im i de mess
+ */
+
+public class InsultActor extends Actor{
 
 
-    /**
-     * Returns a random message from the insult list
-     * @return random message
-     */
-    public Message getInsultMessage(){
-        return insultList.get((int)(Math.random()* insultList.size())); //devolvemos un insulto random de la lista
-    }
+    protected List<InsultMessage> insultList = new ArrayList<>();
 
-    /**
-     * Adds a new message to the insultList
-     * @param msg message we want to add
-     */
-    public void addInsultMessage (Message msg){
-        insultList.add(msg);    //añadimos un insulto a la lista
-    }
 
-    /**
-     * Returns the insult list
-     * @return
-     */
-    public List<Message> getAllMessages (){
-        return insultList;  //devolvemos la lista de insultos
-    }
 
-    @Override
-    public void send(Message msg) {
+    public void send(InsultMessage msg){
+
+
+        switch (msg){
+            case GetInsultMessage m1-> {
+                ArrayList<Message> temp=new ArrayList<>(insultList);
+                Collections.shuffle(temp);
+                Message aux=temp.get(0);
+            }
+            case AddInsultMessage m2-> insultList.add(msg);
+            case GetAllInsultsMessage m3-> interrupt();
+
+            default -> cua.offer(msg);
+
+        }
+        //get random element from insultList
 
     }
 
     @Override
     public Message process() {
+        for(Message msg:cua) {
+            System.out.println(msg);
+        }
+        cua.clear();
         return null;
     }
 
-    @Override
-    public int getQueLength() {
-        return 0;
+    public Message receive(){
+        return null;
     }
-
     @Override
     public Queue<Message> getQueue() {
         return null;
     }
 
-    @Override
-    public void run() {
 
-    }
-
-    @Override
-    public void start() {
-
-    }
 }
