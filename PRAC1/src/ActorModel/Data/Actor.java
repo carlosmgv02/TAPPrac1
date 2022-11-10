@@ -11,7 +11,11 @@ public abstract class Actor extends Thread{
 
     protected Queue<Message> cua = new LinkedBlockingQueue<>();
 
-
+    /**
+     * Probablement s'ha d'esborrar i ficar-ho direcament al Insult només
+     * @return message rebut
+     */
+    public abstract Message receive();
     //Method 2 send a message to the actor
     public void send(Message msg){
         switch (msg){

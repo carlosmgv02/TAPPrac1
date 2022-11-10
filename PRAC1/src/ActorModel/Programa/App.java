@@ -1,8 +1,8 @@
 package ActorModel.Programa;
 
 import ActorModel.Data.*;
-import ActorModel.Data.Messages.Message;
-import ActorModel.Data.Messages.QuitMessage;
+import ActorModel.Data.Messages.*;
+import ActorModel.Data.Messages.Insult.*;
 
 import java.util.*;
 
@@ -11,7 +11,12 @@ public class App {
 
     public static void main(String[] args) throws InterruptedException {
         //provarHelloWorld();
-        provarInsultActor();
+        //provarInsultActor();
+
+        Actor insult = ActorContext.spawnActor("name",new InsultActor());
+        insult.send(new GetInsultMessage());
+        Message result = insult.receive();
+        System.out.println(result.getText());
 
 
         //TESTING PROXY

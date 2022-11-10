@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 
-public class ActorProxy{
+public class ActorProxy extends Actor{
     private Actor a;
     private Queue<Message> cua = new LinkedList<>();
     public ActorProxy(Actor act,String id){
@@ -21,6 +21,14 @@ public class ActorProxy{
         //Inserts the specified element into the queue
         a.send(msg);
 
+    }
+    public Message receive(){
+        return null;
+    }
+
+    @Override
+    public Message process() {
+        return null;
     }
 
     //Method that processes the message and deletes it from the queue

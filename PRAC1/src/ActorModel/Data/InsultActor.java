@@ -5,14 +5,20 @@ import ActorModel.Data.Messages.Message;
 
 import java.util.*;
 
+/*
+Preguntes a Pedro:
+com ficar send i recieve als missatges
+si els insult message implementen o hereten de im i de mess
+ */
+
 public class InsultActor extends Actor{
 
 
-    private List<Message> insultList = new ArrayList<>();
+    protected List<InsultMessage> insultList = new ArrayList<>();
 
 
-    @Override
-    public void send(Message msg){
+
+    public void send(InsultMessage msg){
 
 
         switch (msg){
@@ -40,6 +46,9 @@ public class InsultActor extends Actor{
         return null;
     }
 
+    public Message receive(){
+        return null;
+    }
     @Override
     public Queue<Message> getQueue() {
         return null;
