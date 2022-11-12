@@ -11,6 +11,11 @@ public abstract class Actor extends Thread{
 
     protected Queue<Message> cua = new LinkedBlockingQueue<>();
 
+    public Actor(String name) {
+        this.setName(name);
+        cua= new LinkedList<>();
+    }
+
     /**
      * Probablement s'ha d'esborrar i ficar-ho direcament al Insult només
      * @return message rebut
@@ -33,6 +38,7 @@ public abstract class Actor extends Thread{
     }
 
     public abstract Queue<Message> getQueue();
+
 
 
     @Override

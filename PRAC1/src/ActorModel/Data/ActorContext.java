@@ -45,6 +45,17 @@ public class ActorContext {
         }
         return null;
     }
+    public static void getActorsContext(){
+        System.out.println("The actors we have registered in the system are:\n");
+        actorSet.forEach((k,v)->System.out.println("Key: "+k+" Value: "+v));
+    }
 
+    public static HashMap<String,Actor> getActorSet(){
+        return actorSet;
+    }
+
+    public static void setActorSet(HashMap<String,Actor> actorSet){
+        ActorContext.actorSet=actorSet;
+    }
 
 }

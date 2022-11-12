@@ -14,9 +14,25 @@ si els insult message implementen o hereten de im i de mess
 public class InsultActor extends Actor{
 
 
-    protected List<InsultMessage> insultList = new ArrayList<>();
+    protected List<Message> insultList = new ArrayList<>();
 
+    public InsultActor(String name) {
+        super(name);
+        insultList = new LinkedList<>();
+    }
 
+    public String getInsultMessage(){
+        int index = (int) (Math.random() * insultList.size());
+        return insultList.get(index).getText();
+    }
+
+    public void addInsultMessage(Message msg){
+        insultList.add(msg);
+    }
+
+    public List<Message> getAllMessages(){
+        return (List<Message>) insultList;
+    }
 
     public void send(InsultMessage msg){
 
