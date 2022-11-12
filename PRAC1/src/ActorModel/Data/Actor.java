@@ -30,6 +30,7 @@ public abstract class Actor extends Thread implements Receive{
     public abstract Queue<Message> getQueue();
 
 
+
     @Override
     public void run() {
         while (!isInterrupted()) {

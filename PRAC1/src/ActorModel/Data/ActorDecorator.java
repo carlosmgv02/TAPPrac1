@@ -19,7 +19,16 @@ public class ActorDecorator extends Actor {
 
     // el EncryptionDecorator encriptará los mensajes y desencriptará en Actores interconectados
 
+    Actor cliente;
+
+
     private HashMap<String,Actor> actorSet=new HashMap<>();
+
+    public ActorDecorator(Actor cliente) {
+        super(cliente.getName() + "Decorator");
+        this.cliente = cliente;
+    }
+
 
     public void FirewallDecorator(Actor actor){
         if(actorSet.containsKey(actor)){    // si el actor está en el actorseSet
@@ -48,6 +57,11 @@ public class ActorDecorator extends Actor {
 
 
 
+
+    @Override
+    public Message receive() {
+        return null;
+    }
 
     @Override
     public void send(Message msg) {
