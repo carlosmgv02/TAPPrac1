@@ -7,20 +7,10 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public abstract class Actor extends Thread{
+public abstract class Actor extends Thread implements Receive{
 
     protected Queue<Message> cua = new LinkedBlockingQueue<>();
 
-    public Actor(String name) {
-        this.setName(name);
-        cua= new LinkedList<>();
-    }
-
-    /**
-     * Probablement s'ha d'esborrar i ficar-ho direcament al Insult només
-     * @return message rebut
-     */
-    public abstract Message receive();
     //Method 2 send a message to the actor
     public void send(Message msg){
         switch (msg){
@@ -43,13 +33,16 @@ public abstract class Actor extends Thread{
 
     @Override
     public void run() {
-
         while (!isInterrupted()) {
             if (cua.size() > 0) {
                 process();
                 //interrupt();
             }
         }
+    }
 
+    @Override
+    public Message receive() {
+        return null;
     }
 }

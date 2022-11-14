@@ -8,7 +8,10 @@ public class RingActor extends Actor {
     Actor next;
 
 
-
+    @Override
+    public Message receive() {
+        return null;
+    }
 
     @Override
     public Message process() {

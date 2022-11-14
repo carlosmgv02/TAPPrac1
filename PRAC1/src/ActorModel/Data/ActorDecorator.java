@@ -56,6 +56,13 @@ public class ActorDecorator extends Actor {
    private Queue<Message> cua = new LinkedList<>();
 
 
+
+
+    @Override
+    public Message receive() {
+        return null;
+    }
+
     @Override
     public Message receive() {
         return null;

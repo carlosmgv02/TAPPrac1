@@ -17,7 +17,7 @@ public class ActorContext {
         return actorInstance;
     }
 
-    public static ActorProxy spawnActor (String name, Actor type){
+    public static Actor spawnActor (String name, Actor type){
         ActorProxy newActor = new ActorProxy(type,name);
         actorSet.put(name, type);
         //type.start();

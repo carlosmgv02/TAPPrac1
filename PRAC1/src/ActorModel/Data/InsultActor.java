@@ -13,37 +13,16 @@ si els insult message implementen o hereten de im i de mess
 
 public class InsultActor extends Actor{
 
-
-    protected List<Message> insultList = new ArrayList<>();
-
-    public InsultActor(String name) {
-        super(name);
-        insultList = new LinkedList<>();
-    }
-
-    public String getInsultMessage(){
-        int index = (int) (Math.random() * insultList.size());
-        return insultList.get(index).getText();
-    }
-
-    public void addInsultMessage(Message msg){
-        insultList.add(msg);
-    }
-
-    public List<Message> getAllMessages(){
-        return (List<Message>) insultList;
-    }
-
-    public void send(InsultMessage msg){
+    @Override
+    public void send(Message msg){
 
 
         switch (msg){
             case GetInsultMessage m1-> {
-                ArrayList<Message> temp=new ArrayList<>(insultList);
-                Collections.shuffle(temp);
-                Message aux=temp.get(0);
+                //prova de funcionament
+                System.out.println(m1.getRandomInsult());
             }
-            case AddInsultMessage m2-> insultList.add(msg);
+            //case AddInsultMessage m2-> insultList.add(m2);
             case GetAllInsultsMessage m3-> interrupt();
 
             default -> cua.offer(msg);
@@ -62,12 +41,11 @@ public class InsultActor extends Actor{
         return null;
     }
 
-    public Message receive(){
-        return null;
-    }
+
     @Override
     public Queue<Message> getQueue() {
-        return null;
+        //return null;
+        return cua;
     }
 
 
