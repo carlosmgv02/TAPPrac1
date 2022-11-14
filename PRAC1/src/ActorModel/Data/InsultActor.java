@@ -13,8 +13,6 @@ si els insult message implementen o hereten de im i de mess
 
 public class InsultActor extends Actor{
 
-
-    protected List<String> insultList = new ArrayList<>(Arrays.asList("tonto","feo","inútil","cabezón","gilipollas"));
     @Override
     public void send(Message msg){
 
