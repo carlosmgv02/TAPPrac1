@@ -45,7 +45,7 @@ public class App {
 
 
         act.start();
-        ActorProxy hello = ActorContext.spawnActor("name", act);
+        Actor hello = ActorContext.spawnActor("name", act);
         //hello=ActorContext.spawnActor("carlos",new InsultActor());
         hello.send(new Message(act2, "hello world"));
         hello.send(new Message(act3, "olaa"));
@@ -54,9 +54,9 @@ public class App {
         //Ini the app w the singleton
         ActorContext.getInstance();
         //Create the first proxy
-        ActorProxy actor1 = ActorContext.spawnActor("Thread1", new RingActor());
-        ActorProxy actor2 = ActorContext.spawnActor("provaa", new RingActor());
-        ActorProxy actor3 = ActorContext.spawnActor("holaaa", new RingActor());
+        Actor actor1 = ActorContext.spawnActor("Thread1", new RingActor());
+        Actor actor2 = ActorContext.spawnActor("provaa", new RingActor());
+        Actor actor3 = ActorContext.spawnActor("holaaa", new RingActor());
 
         //Testing method lookup
         System.out.println("Testing method lookup()");
@@ -80,7 +80,7 @@ public class App {
         actor1.send(new Message(null, "ola"));
         actor1.send(new Message(null, "prova"));
         actor1.send(new Message(null, "xd"));
-        ActorProxy prueba1 = ActorContext.spawnActor("carlos", new InsultActor());
+        Actor prueba1 = ActorContext.spawnActor("carlos", new InsultActor());
         prueba1.send(new Message(null,"hola"));
         //prueba1.process();
         //prueba1.quitMessage();
@@ -94,7 +94,7 @@ public class App {
      */
     public static void provarHelloWorld(){
         HelloWorldActor hwProva = new HelloWorldActor();
-        ActorProxy hwActor = ActorContext.spawnActor("Thread2",hwProva );
+        Actor hwActor = ActorContext.spawnActor("Thread2",hwProva );
         hwProva.start();
         hwActor.send(new Message(null, " trial msg from t1"));
         hwActor.send(new Message(null, " trial msg from t1, 2"));
@@ -109,7 +109,7 @@ public class App {
      */
     public static void provarInsultActor() throws InterruptedException {
         Actor insultProva = new InsultActor();
-        ActorProxy insultActor = ActorContext.spawnActor("Thread3",insultProva );
+        Actor insultActor = ActorContext.spawnActor("Thread3",insultProva );
         insultProva.start();
         insultActor.send(new Message(null, " trial msg from t1"));
         insultActor.send(new Message(null, " trial msg from t1, 2"));

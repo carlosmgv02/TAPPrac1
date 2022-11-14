@@ -6,26 +6,20 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 
-public class ActorProxy extends Actor{
+public class ActorProxy extends Actor implements Receive {
     private Actor a;
     private Queue<Message> cua = new LinkedList<>();
+    protected String id;
     public ActorProxy(Actor act,String id){
         this.a=act;
+        this.id=id;
     }
-
-    //Each actor has a queue 4 the messages
-
-    //Method 2 send a message to the actor
-
+    @Override
     public void send(Message msg) {
         //Inserts the specified element into the queue
         a.send(msg);
 
     }
-    public Message receive(){
-        return null;
-    }
-
     @Override
     public Message process() {
         return null;
@@ -40,5 +34,12 @@ public class ActorProxy extends Actor{
     public synchronized Queue<Message> getQueue(){
         return this.cua;
     }
+    public String getProxyId(){
+        return this.id;
+    }
 
+    @Override
+    public Message receive(){
+        return new Message(this,"Hello World from ActorProxy");
+    }
 }

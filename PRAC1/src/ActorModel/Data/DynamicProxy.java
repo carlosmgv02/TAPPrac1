@@ -15,6 +15,11 @@ public class DynamicProxy extends Actor {
     }
 
     @Override
+    public Message receive() {
+        return null;
+    }
+
+    @Override
     public void send(Message msg) {
         actor.send(msg);
     }

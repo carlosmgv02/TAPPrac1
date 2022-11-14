@@ -7,6 +7,11 @@ import java.util.Queue;
 
 public class HelloWorldActor extends Actor {
     @Override
+    public Message receive() {
+        return null;
+    }
+
+    @Override
     public Message process() {
         System.out.println("From Hello World Actor: ");
         //- Returns the head of the queue.
