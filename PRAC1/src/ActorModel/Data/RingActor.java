@@ -14,7 +14,7 @@ public class RingActor extends Actor {
     }
 
     @Override
-    public Message process() {
+    public String process() {
         System.out.println("Printing Ring Actor");
         cua.poll();
         return null;
@@ -26,7 +26,7 @@ public class RingActor extends Actor {
     }
 
     @Override
-    public Queue getQueue() {
+    public Queue<String> getQueue() {
         return null;
     }
 

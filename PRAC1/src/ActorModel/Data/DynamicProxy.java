@@ -20,12 +20,12 @@ public class DynamicProxy extends Actor {
     }
 
     @Override
-    public void send(Message msg) {
+    public void send(String msg) {
         actor.send(msg);
     }
 
     @Override
-    public Message process() {
+    public String process() {
         return actor.process();
     }
 
@@ -45,7 +45,7 @@ public class DynamicProxy extends Actor {
     }
 
     @Override
-    public Queue<Message> getQueue() {
+    public Queue<String> getQueue() {
         return actor.getQueue();
     }
 

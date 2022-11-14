@@ -1,7 +1,6 @@
 package ActorModel.Data.Tests;
 
 import ActorModel.Data.Actor;
-import ActorModel.Data.ActorContext;
 import ActorModel.Data.ActorProxy;
 import ActorModel.Data.InsultActor;
 import ActorModel.Data.Messages.Message;
@@ -9,10 +8,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-
-import static org.mockito.Mockito.*;
+//import static org.mockito.Mockito.*;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,7 +32,7 @@ public class ActorTest {
     void send() {
          Actor act=new InsultActor();
          ActorProxy act2=new ActorProxy(act,"hola");
-         Message msg=new Message(act,"hola");
+         String msg=new Message(act,"hola");
          act2.send(msg);
          System.out.println("-> TESTING SEND...");
          assertEquals(true,act.getQueue().contains(msg));

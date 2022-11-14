@@ -8,20 +8,20 @@ import java.util.Queue;
 
 public class ActorProxy extends Actor implements Receive {
     private Actor a;
-    private Queue<Message> cua = new LinkedList<>();
+    private Queue<String> cua = new LinkedList<String>();
     protected String id;
     public ActorProxy(Actor act,String id){
         this.a=act;
         this.id=id;
     }
     @Override
-    public void send(Message msg) {
+    public void send(String msg) {
         //Inserts the specified element into the queue
         a.send(msg);
 
     }
     @Override
-    public Message process() {
+    public String process() {
         return null;
     }
 
@@ -31,7 +31,7 @@ public class ActorProxy extends Actor implements Receive {
         return cua.toArray().length;
     }
 
-    public synchronized Queue<Message> getQueue(){
+    public synchronized Queue<String> getQueue(){
         return this.cua;
     }
     public String getProxyId(){
@@ -41,5 +41,13 @@ public class ActorProxy extends Actor implements Receive {
     @Override
     public Message receive(){
         return new Message(this,"Hello World from ActorProxy");
+    }
+
+    public Actor getActor(){
+        return this.a;
+    }
+
+    public void setActor(Actor a){
+        this.a=a;
     }
 }

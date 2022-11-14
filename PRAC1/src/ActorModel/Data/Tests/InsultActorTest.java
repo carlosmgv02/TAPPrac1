@@ -7,15 +7,13 @@ import ActorModel.Data.Messages.Message;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 public class InsultActorTest {
 
     @Test
     void send() {
         Actor act=new InsultActor();
         Actor source=new HelloWorldActor();
-        Message msg=new Message(source,"hola");
+        String msg=new Message(source,"hola");
         act.send(msg);
         Assert.assertEquals(true,act.getQueue().contains(msg));
     }

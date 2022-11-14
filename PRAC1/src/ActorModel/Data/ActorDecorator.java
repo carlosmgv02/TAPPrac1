@@ -53,7 +53,7 @@ public class ActorDecorator extends Actor {
 
 
 
-   private Queue<Message> cua = new LinkedList<>();
+   private Queue<String> cua = new LinkedList<String>();
 
 
 
@@ -69,13 +69,13 @@ public class ActorDecorator extends Actor {
     }
 
     @Override
-    public void send(Message msg) {
+    public void send(String msg) {
         cua.offer(msg);
     }
 
     @Override
-    public Message process() {
-        Message processedMessage;
+    public String process() {
+        String processedMessage;
         processedMessage = cua.element();
         cua.poll();
 
@@ -84,7 +84,7 @@ public class ActorDecorator extends Actor {
 
 
     @Override
-    public Queue getQueue() {
+    public Queue<String> getQueue() {
         return this.cua;
     }
 

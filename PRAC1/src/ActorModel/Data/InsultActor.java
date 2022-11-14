@@ -1,7 +1,6 @@
 package ActorModel.Data;
 
 import ActorModel.Data.Messages.Insult.*;
-import ActorModel.Data.Messages.Message;
 
 import java.util.*;
 
@@ -14,7 +13,7 @@ si els insult message implementen o hereten de im i de mess
 public class InsultActor extends Actor{
 
     @Override
-    public void send(Message msg){
+    public void send(String msg){
 
 
         switch (msg){
@@ -33,8 +32,8 @@ public class InsultActor extends Actor{
     }
 
     @Override
-    public Message process() {
-        for(Message msg:cua) {
+    public String process() {
+        for(String msg:cua) {
             System.out.println(msg);
         }
         cua.clear();
@@ -43,7 +42,7 @@ public class InsultActor extends Actor{
 
 
     @Override
-    public Queue<Message> getQueue() {
+    public Queue<String> getQueue() {
         //return null;
         return cua;
     }

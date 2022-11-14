@@ -2,7 +2,6 @@ package ActorModel.Data;
 
 import ActorModel.Data.Messages.Message;
 
-import java.util.LinkedList;
 import java.util.Queue;
 
 public class HelloWorldActor extends Actor {
@@ -12,10 +11,10 @@ public class HelloWorldActor extends Actor {
     }
 
     @Override
-    public Message process() {
+    public String process() {
         System.out.println("From Hello World Actor: ");
         //- Returns the head of the queue.
-        Message processedMessage;
+        String processedMessage;
 
         processedMessage = cua.element();
         System.out.println(" processed: "+processedMessage.getText());
@@ -30,7 +29,7 @@ public class HelloWorldActor extends Actor {
     }
 
     @Override
-    public Queue<Message> getQueue() {
+    public Queue<String> getQueue() {
 
         return cua;
     }
