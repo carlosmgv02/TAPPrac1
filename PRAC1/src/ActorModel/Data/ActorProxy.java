@@ -14,6 +14,11 @@ public class ActorProxy extends Actor implements Receive {
         this.a=act;
         this.id=id;
     }
+
+    public ActorProxy() {
+
+    }
+
     @Override
     public void send(String msg) {
         //Inserts the specified element into the queue
