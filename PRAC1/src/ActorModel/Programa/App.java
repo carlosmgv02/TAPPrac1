@@ -3,6 +3,7 @@ package ActorModel.Programa;
 import ActorModel.Data.*;
 import ActorModel.Data.Messages.*;
 import ActorModel.Data.Messages.Insult.*;
+import ActorModel.Data.Messages.Message;
 
 import java.util.*;
 
@@ -15,6 +16,10 @@ public class App {
 
         Actor insult = ActorContext.spawnActor("name",new InsultActor());
         insult.send(new GetInsultMessage());
+        insult.send(new GetAllInsultsMessage());
+
+        insult.send(new AddInsultMessage(null,"holaaaa"));
+        
         Message result = insult.receive();
         System.out.println(result.getText());
 
@@ -121,6 +126,12 @@ public class App {
 
     }
 
+    /*public static void provarDecordator(){
+        ActorProxy proxy = ActorContext.spawnActor("Nil",new Actor("Nilito"));
+        ActorProxy proxy2 = ActorContext.spawnActor(new Actor("Carlitos"));
+        ActorProxy proxy3 = ActorContext.spawnActor(new Actor("Yenisito"));
+
+    }*/
 
 }
 

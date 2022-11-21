@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class ActorDecorator extends Actor {
+public class    ActorDecorator extends Actor {
 
     // tenemos que crear un decorator para poder modificar el procesado de mensajes a un actor
     // para eso crearemos un FirewallDecorator y un EncryptionDecorator
@@ -20,13 +20,10 @@ public class ActorDecorator extends Actor {
     // el EncryptionDecorator encriptará los mensajes y desencriptará en Actores interconectados
 
     Actor cliente;
-
-
     private HashMap<String,Actor> actorSet=new HashMap<>();
 
-    public ActorDecorator(Actor cliente) {
-        super(cliente.getName() + "Decorator");
-        this.cliente = cliente;
+    public ActorDecorator() {
+
     }
 
 
@@ -53,29 +50,20 @@ public class ActorDecorator extends Actor {
 
 
 
-   private Queue<String> cua = new LinkedList<String>();
-
-
-
-
     @Override
     public Message receive() {
         return null;
     }
 
-    @Override
-    public Message receive() {
-        return null;
-    }
 
     @Override
-    public void send(String msg) {
+    public void send(Message msg) {
         cua.offer(msg);
     }
 
     @Override
-    public String process() {
-        String processedMessage;
+    public Message process() {
+        Message processedMessage;
         processedMessage = cua.element();
         cua.poll();
 
@@ -84,7 +72,7 @@ public class ActorDecorator extends Actor {
 
 
     @Override
-    public Queue<String> getQueue() {
+    public Queue<Message> getQueue() {
         return this.cua;
     }
 

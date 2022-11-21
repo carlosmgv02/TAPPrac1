@@ -8,25 +8,22 @@ import java.util.Queue;
 
 public class ActorProxy extends Actor implements Receive {
     private Actor a;
-    private Queue<String> cua = new LinkedList<String>();
+    private Queue<Message> cua = new LinkedList<>();
     protected String id;
+
     public ActorProxy(Actor act,String id){
         this.a=act;
         this.id=id;
     }
 
-    public ActorProxy() {
-
-    }
-
     @Override
-    public void send(String msg) {
+    public void send(Message msg) {
         //Inserts the specified element into the queue
         a.send(msg);
 
     }
     @Override
-    public String process() {
+    public Message process() {
         return null;
     }
 
@@ -36,17 +33,14 @@ public class ActorProxy extends Actor implements Receive {
         return cua.toArray().length;
     }
 
-    public synchronized Queue<String> getQueue(){
+    public synchronized Queue<Message> getQueue(){
         return this.cua;
     }
     public String getProxyId(){
         return this.id;
     }
 
-    @Override
-    public Message receive(){
-        return new Message(this,"Hello World from ActorProxy");
-    }
+
 
     public Actor getActor(){
         return this.a;

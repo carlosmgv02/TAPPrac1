@@ -19,6 +19,7 @@ public class ActorContext {
 
     public static Actor spawnActor (String name, Actor type){
         ActorProxy newActor = new ActorProxy(type,name);
+        //new Thread(newActor).start();
         actorSet.put(name, type);
         //type.start();
 

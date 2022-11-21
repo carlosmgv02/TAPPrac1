@@ -3,31 +3,37 @@ package ActorModel.Data.Messages.Insult;
 import ActorModel.Data.*;
 import ActorModel.Data.Messages.Message;
 
-public class AddInsultMessage extends InsultMessage {
-    private String message;
-    private Actor sender;
-    private Actor reciever;
-    public AddInsultMessage(Actor actor, String message) {
-        this.reciever = actor;
-        this.message = message;
+public class AddInsultMessage extends Message {
+    private String insult;
+    public AddInsultMessage (Actor actor, String insult){
+        super(actor,insult);
     }
-    public Actor getReciever() {
-        return reciever;
+
+    /*
+    public Actor getReciver() {
+        return reciver;
     }
-    public void setReciever(Actor a) {
-        this.reciever = reciever;
+    public void setReciver(Actor reciver) {
+        this.reciver = reciver;
     }
-    public String getMessage() {
-        return message;
+    public String getMsg(){
+        return msg;
     }
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg){
+        this.msg = msg;
     }
     public Actor getSender() {
         return sender;
     }
-    public void setSender(Actor a) {
+    public void setSender(Actor sender) {
         this.sender = sender;
+    }
+
+     */
+
+    @Override
+    public String toString(){
+        return "AddInsultMessage{" + "msg=' " + insult + '\'' + '}';
     }
 }
 

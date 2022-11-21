@@ -4,13 +4,15 @@ import ActorModel.Data.Messages.*;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.Stream;
 
 public abstract class Actor extends Thread implements Receive{
+    protected LinkedBlockingQueue<Message> cua = new LinkedBlockingQueue<>();
 
-    protected Queue<Message> cua = new LinkedBlockingQueue<>();
+
 
     //Method 2 send a message to the actor
-    public void send(String msg){
+    public void send(Message msg){
         switch (msg){
             case QuitMessage m1-> interrupt();
             default -> cua.offer(msg);
@@ -19,13 +21,13 @@ public abstract class Actor extends Thread implements Receive{
     }
 
     //Method that processes the message and deletes it from the queue
-    public abstract String process();
+    public abstract Message process();
 
     public int getQueLength() {
         return cua.toArray().length;
     }
 
-    public abstract Queue<String> getQueue();
+    public abstract Queue<Message> getQueue();
 
 
 
@@ -39,11 +41,26 @@ public abstract class Actor extends Thread implements Receive{
         }
     }
 
-    protected void setMessage(String msg){
-        cua.add(msg);
-    }
-    @Override
+//    protected void setMessage(String msg){
+//        cua.add(msg);
+//    }
+
     public Message receive() {
+        //Recupera y elimina el encabezado de esta cola,
+        //esperando si es necesario hasta que un elemento esté disponible.
+        //com fer perque vaigui
+        try{
+        cua.take();
+//            cua.stream().filter(e->{
+//                (e.getFrom().threadId())
+//            });
+
+            //cua.forEach(e -> {
+
+        sleep(3000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
         return null;
     }
 }

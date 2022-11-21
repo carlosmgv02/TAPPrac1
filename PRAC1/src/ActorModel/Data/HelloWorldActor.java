@@ -11,10 +11,10 @@ public class HelloWorldActor extends Actor {
     }
 
     @Override
-    public String process() {
+    public Message process() {
         System.out.println("From Hello World Actor: ");
         //- Returns the head of the queue.
-        String processedMessage;
+        Message processedMessage;
 
         processedMessage = cua.element();
         System.out.println(" processed: "+processedMessage.getText());
@@ -29,7 +29,7 @@ public class HelloWorldActor extends Actor {
     }
 
     @Override
-    public Queue<String> getQueue() {
+    public Queue<Message> getQueue() {
 
         return cua;
     }

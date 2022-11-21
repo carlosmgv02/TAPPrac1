@@ -1,8 +1,10 @@
 package ActorModel.Data.Tests;
 
 import ActorModel.Data.*;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 //import org.testng.annotations.Test;
 
 public class ActorContextTest {
@@ -11,7 +13,7 @@ public class ActorContextTest {
     void spawnActor() {
         Actor act= ActorContext.spawnActor("hola",new HelloWorldActor());
         System.out.println("-> TESTING SPAWN ACTOR...");
-        Assert.assertEquals(true,ActorContext.getNames().contains("hola"));
+        assertEquals(true,ActorContext.getNames().contains("hola"));
     }
 
     @Test

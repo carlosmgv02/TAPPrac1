@@ -15,6 +15,9 @@ public class Message {
     public String getText(){
         return text;
     }
+    public Actor getFrom(){
+        return from;
+    }
     @Override
     public String toString(){
         return "Message from "+from+" : "+text;
