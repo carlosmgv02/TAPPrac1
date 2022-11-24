@@ -6,6 +6,7 @@ import java.util.Queue;
 
 public class ActorDecorator implements Actor {
 
+<<<<<<< Updated upstream
     // tenemos que crear un decorator para poder modificar el procesado de mensajes a un actor
     // para eso crearemos un FirewallDecorator y un EncryptionDecorator
 
@@ -40,6 +41,8 @@ public class ActorDecorator implements Actor {
         // desencriptar mensaje
     }
 
+=======
+>>>>>>> Stashed changes
 
 
    private Queue<Message> cua = new LinkedList<>();

@@ -6,10 +6,18 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
+<<<<<<< Updated upstream
 
 public abstract class Actor extends Thread{
 
     protected Queue<Message> cua = new LinkedBlockingQueue<>();
+=======
+import java.util.stream.Stream;
+
+public abstract class Actor extends Thread implements Receive{
+
+    protected LinkedBlockingQueue<Message> cua = new LinkedBlockingQueue<>();
+>>>>>>> Stashed changes
 
     /**
      * Probablement s'ha d'esborrar i ficar-ho direcament al Insult només
@@ -29,7 +37,7 @@ public abstract class Actor extends Thread{
     public abstract Message process();
 
     public int getQueLength() {
-        return cua.toArray().length;
+        return cua.size();
     }
 
     public abstract Queue<Message> getQueue();
@@ -39,11 +47,16 @@ public abstract class Actor extends Thread{
     public void run() {
 
         while (!isInterrupted()) {
-            if (cua.size() > 0) {
+            if(this instanceof ActorProxy){
+                if(((ActorProxy) this).getActor().getQueLength()>0){
+                    process();
+                }
+            } else if ((this.cua.size() > 0) ) {
                 process();
-                //interrupt();
+
             }
         }
 
     }
+
 }

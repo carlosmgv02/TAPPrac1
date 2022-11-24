@@ -32,6 +32,29 @@ public class ActorContext {
         //keySet()->gets the keys
         return actorSet.keySet();
     }
+<<<<<<< Updated upstream
+=======
+
+    public static ProxyClient spawnProxy(String nombre, Actor actor) {
+        ProxyClient aux = new ProxyClient(actor);
+        aux.start();
+        actorSet.put(nombre, actor);
+        return aux;
+    }
+
+    public String getActorName(Actor actor){
+        for(Map.Entry<String,Actor> entry: actorSet.entrySet()){
+            if(entry.getValue().equals(actor)){
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+    public static void getActorsContext(){
+        System.out.println("The actors we have registered in the system are:\n");
+        actorSet.forEach((k,v)->System.out.println("Key: "+k+" Value: "+v));
+    }
+>>>>>>> Stashed changes
 
 
 
