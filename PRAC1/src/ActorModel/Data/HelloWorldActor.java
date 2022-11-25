@@ -1,9 +1,11 @@
 package ActorModel.Data;
 
+import ActorModel.Data.Messages.Message;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class HelloWorldActor implements Actor   {
+public class HelloWorldActor extends Actor   {
 
     private Queue<Message> cua = new LinkedList<>();
 

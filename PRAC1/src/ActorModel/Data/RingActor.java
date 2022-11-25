@@ -1,8 +1,10 @@
 package ActorModel.Data;
 
+import ActorModel.Data.Messages.Message;
+
 import java.util.Queue;
 
-public class RingActor implements Actor{
+public class RingActor extends Actor{
 
     @Override
     public void send(Message msg) {
@@ -35,7 +37,6 @@ public class RingActor implements Actor{
 
     }
 
-    //
 
     public void connectProxies() {
 

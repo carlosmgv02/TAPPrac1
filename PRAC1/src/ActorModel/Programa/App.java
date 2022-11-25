@@ -1,15 +1,8 @@
 package ActorModel.Programa;
 
 import ActorModel.Data.*;
-<<<<<<< Updated upstream
-import ActorModel.Data.Messages.*;
-import ActorModel.Data.Messages.Insult.*;
-=======
 
-import ActorModel.Data.Messages.Insult.AddInsultMessage;
-import ActorModel.Data.Messages.Insult.GetInsultMessage;
 import ActorModel.Data.Messages.Message;
->>>>>>> Stashed changes
 
 import java.util.*;
 
@@ -25,18 +18,8 @@ public class App {
         Message result = insult.receive();
         System.out.println(result.getText());
         */
-        probarPipeline();
+        probarCifrado();
 
-        Actor ac1=ActorContext.spawnActor("carlos",new InsultActor());
-        Actor ac2=ActorContext.spawnActor("genis",new InsultActor());
-        ac1.start();
-        ac1.sleep(3000);
-        ac1.send(new Message(ac2,"hola buenas"));
-        Actor ac3=ActorContext.spawnActor("nil",new InsultActor());
-        ac1.sleep(3000);
-        ac1.send(new Message(ac3,"Segundo texto de prueba"));
-
-        //provarCifrado();
 
 
         //TESTING PROXY
@@ -159,12 +142,10 @@ public class App {
 
     }
 
-<<<<<<< Updated upstream
-=======
     /**
      * Method used to test the encryptions
      */
-    public static void provarCifrado (){
+    public static void probarCifrado(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduce el mensaje a cifrar");
         String inputStr = sc.nextLine();
@@ -172,22 +153,21 @@ public class App {
         System.out.println("Introduce el valor por el cuál cada carácter se desplazará");
         int clave= Integer.valueOf(sc.nextLine());
 
-
-        String mensajeCifrado=CifradoCesar.cifrar(inputStr, clave);
+        EncryptionDecorator enc=new EncryptionDecorator();
+        String mensajeCifrado=enc.cifrar(inputStr, clave);
         System.out.println("Texto cifrado ==> " + mensajeCifrado);
         System.out.println("--------------------------------------");
-        System.out.println("Texto descifrado ==> " + CifradoCesar.descifrar(mensajeCifrado, clave));
+        System.out.println("Texto descifrado ==> " + enc.descifrar(mensajeCifrado, clave));
 
         sc.close();
     }
 
     public static void probarPipeline (){
         ActorContext Actor = ActorContext.getInstance();
-        ActorProxy sender = ActorContext.spawnActor("actor1", new FirewallDecorator(new EncryptionDecorator(new RingActor())));
-        ActorProxy receiver = ActorContext.spawnActor("actor2", new EncryptionDecorator(new FirewallDecorator(new RingActor())));
+        ActorProxy sender = ActorContext.spawnActor("actor1", new FirewallDecorator(new RingActor()));
+        ActorProxy receiver = ActorContext.spawnActor("actor2", new EncryptionDecorator());
         sender.send(new Message(receiver, "Hola"));
     }
->>>>>>> Stashed changes
 
 }
 

@@ -7,8 +7,8 @@ import java.util.Queue;
 
 public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
 
-    public EncryptionDecorator(Actor actor) {
-        //super(actor);
+    public EncryptionDecorator() {
+
     }
     @Override
     public void send(Message msg) {
