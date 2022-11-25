@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class ActorContext {
-    private static HashMap<String,Actor>actorSet=new HashMap<>();
+    private final static HashMap<String,Actor>actorSet=new HashMap<>();
     private static ActorContext actorInstance;
     private ActorContext(){
 
@@ -55,8 +55,6 @@ public class ActorContext {
         return actorSet;
     }
 
-    public static void setActorSet(HashMap<String,Actor> actorSet){
-        ActorContext.actorSet=actorSet;
-    }
+    
 
 }

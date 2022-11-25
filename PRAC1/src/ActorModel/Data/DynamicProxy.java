@@ -7,7 +7,7 @@ import java.util.Queue;
 public class DynamicProxy extends Actor {
     private final String id;
     private Thread t;
-    private Actor actor;
+    private final Actor actor;
 
     public DynamicProxy(String id, Actor actor) {
         this.id = id;

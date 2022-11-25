@@ -4,19 +4,21 @@ import ActorModel.Data.Messages.*;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.stream.Stream;
 
-public abstract class Actor extends Thread implements Receive{
-    protected LinkedBlockingQueue<Message> cua = new LinkedBlockingQueue<>();
+public abstract class Actor extends Thread{
 
+    protected Queue<Message> cua = new LinkedBlockingQueue<>();
 
-
+    /**
+     * Probablement s'ha d'esborrar i ficar-ho direcament al Insult només
+     */
+    //public abstract Message receive();
     //Method 2 send a message to the actor
     public void send(Message msg){
         switch (msg){
             case QuitMessage m1-> interrupt();
-            default -> cua.offer(msg);
 
+            default -> cua.offer(msg);
         }
     }
 
@@ -24,43 +26,28 @@ public abstract class Actor extends Thread implements Receive{
     public abstract Message process();
 
     public int getQueLength() {
-        return cua.toArray().length;
+        return cua.size();
     }
 
-    public abstract Queue<Message> getQueue();
-
+    public Queue<Message> getQueue(){
+        return cua;
+    }
 
 
     @Override
     public void run() {
+
         while (!isInterrupted()) {
-            if (cua.size() > 0) {
+            if(this instanceof ActorProxy){
+                if(((ActorProxy) this).getActor().getQueLength()>0){
+                    process();
+                }
+            } else if ((this.cua.size() > 0) ) {
                 process();
-                //interrupt();
+
             }
         }
+
     }
 
-//    protected void setMessage(String msg){
-//        cua.add(msg);
-//    }
-
-    public Message receive() {
-        //Recupera y elimina el encabezado de esta cola,
-        //esperando si es necesario hasta que un elemento esté disponible.
-        //com fer perque vaigui
-        try{
-        cua.take();
-//            cua.stream().filter(e->{
-//                (e.getFrom().threadId())
-//            });
-
-            //cua.forEach(e -> {
-
-        sleep(3000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

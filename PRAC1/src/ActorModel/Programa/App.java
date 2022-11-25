@@ -5,6 +5,8 @@ import ActorModel.Data.Messages.*;
 import ActorModel.Data.Messages.Insult.*;
 import ActorModel.Data.Messages.Message;
 
+import ActorModel.Data.Messages.Message;
+
 import java.util.*;
 
 public class App {
@@ -13,25 +15,27 @@ public class App {
     public static void main(String[] args) throws InterruptedException {
         //provarHelloWorld();
         //provarInsultActor();
-
+        /*
         Actor insult = ActorContext.spawnActor("name",new InsultActor());
         insult.send(new GetInsultMessage());
-        insult.send(new GetAllInsultsMessage());
-
-        insult.send(new AddInsultMessage(null,"holaaaa"));
-        
         Message result = insult.receive();
         System.out.println(result.getText());
+        */
+        probarCifrado();
+
 
 
         //TESTING PROXY
+/*
 
-        /*ActorProxy insult = ActorContext.spawnActor("insulter",new InsultActor());
+ /*
+        ProxyClient insult = ActorContext.spawnProxy("insulter",new InsultActor());
+        insult.send(new AddInsultMessage(ac1, "HOLA"));
         insult.send(new GetInsultMessage());
         Message result = insult.receive();
-        System.out.println(result.getText());*/
-        /*
-        act.sleep(3000);
+        System.out.println(result.getText());
+*/
+        /*act.sleep(3000);
 
         //waits until next message is sent, and it processes it
         //hello.send(new Message());
@@ -43,6 +47,21 @@ public class App {
         hello.send(new Message(act, "prova ULTIM THREAD"));
         */
     }
+
+    /**
+     * Method used to test the sendActor method
+     */
+    public static void provarSendActor(){
+        Actor ac1=ActorContext.spawnActor("carlos",new InsultActor());
+        Actor ac2=ActorContext.spawnActor("genis",new InsultActor());
+
+        ac1.send(new Message(ac2,"hola buenos dias"));
+        ac1.send(new Message(ac2,"hola buenos dias"));
+    }
+
+    /**
+     * Method used to test the Actor context class
+     */
     public static void provarContext(){
         Actor act=new InsultActor();
         Actor act2=new InsultActor();
@@ -126,12 +145,32 @@ public class App {
 
     }
 
-    /*public static void provarDecordator(){
-        ActorProxy proxy = ActorContext.spawnActor("Nil",new Actor("Nilito"));
-        ActorProxy proxy2 = ActorContext.spawnActor(new Actor("Carlitos"));
-        ActorProxy proxy3 = ActorContext.spawnActor(new Actor("Yenisito"));
+    /**
+     * Method used to test the encryptions
+     */
+    public static void probarCifrado(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Introduce el mensaje a cifrar");
+        String inputStr = sc.nextLine();
 
-    }*/
+        System.out.println("Introduce el valor por el cuál cada carácter se desplazará");
+        int clave= Integer.valueOf(sc.nextLine());
+
+        EncryptionDecorator enc=new EncryptionDecorator();
+        String mensajeCifrado=enc.cifrar(inputStr, clave);
+        System.out.println("Texto cifrado ==> " + mensajeCifrado);
+        System.out.println("--------------------------------------");
+        System.out.println("Texto descifrado ==> " + enc.descifrar(mensajeCifrado, clave));
+
+        sc.close();
+    }
+
+    public static void probarPipeline (){
+        ActorContext Actor = ActorContext.getInstance();
+        Actor sender = ActorContext.spawnActor("actor1", new FirewallDecorator(new RingActor()));
+        Actor receiver = ActorContext.spawnActor("actor2", new EncryptionDecorator());
+        sender.send(new Message(receiver, "Hola"));
+    }
 
 }
 

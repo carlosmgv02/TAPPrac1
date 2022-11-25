@@ -4,14 +4,9 @@ import ActorModel.Data.Messages.Message;
 
 import java.util.Queue;
 
-public class RingActor extends Actor {
-    Actor next;
+public class RingActor extends Actor{
 
 
-    @Override
-    public Message receive() {
-        return null;
-    }
 
     @Override
     public Message process() {
@@ -24,14 +19,6 @@ public class RingActor extends Actor {
     public int getQueLength() {
         return 0;
     }
-
-    @Override
-    public Queue<Message> getQueue() {
-        return null;
-    }
-
-
-    //
 
     public void connectProxies() {
 
