@@ -17,7 +17,8 @@ public class ActorContext {
         return actorInstance;
     }
 
-    public static Actor spawnActor (String name, Actor type){
+    //TODO preguntar si hem de retornar Actor o ActorProxy
+    public static ActorProxy spawnActor (String name, Actor type){
         ActorProxy newActor = new ActorProxy(type,name);
         //new Thread(newActor).start();
         actorSet.put(name, type);

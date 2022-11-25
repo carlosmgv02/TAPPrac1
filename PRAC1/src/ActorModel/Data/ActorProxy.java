@@ -2,13 +2,16 @@ package ActorModel.Data;
 
 import ActorModel.Data.Messages.Message;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class ActorProxy implements Receive{
     private final Actor a;
-    private final LinkedBlockingQueue<Message> receiveQueue;
+    private final List<Message> receiveQueue;
     protected String id;
 
     //TODO com fer el recieve i crear el 2n proxy perque no es solapin els sends
@@ -20,18 +23,20 @@ public class ActorProxy implements Receive{
     public ActorProxy(Actor act,String id){
         this.a=act;
         this.id=id;
-        receiveQueue = new LinkedBlockingQueue<>();
+        receiveQueue = Collections.synchronizedList((new ArrayList<>()));
     }
 
-    public synchronized Queue<Message> getProxyQueue(){
+    public List<Message> getProxyQueue(){
         return receiveQueue;
     }
 
-    @Override
     public void send(Message msg) {
-        //Inserts the specified element into the queue
-        a.send(msg);
-
+        try{
+            //TODO preguntar com hem d'afegir els missatges a la cua de cada actor
+            ActorContext.lookup(id).cua.offer(msg);
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
     }
 
     //Method that processes the message and deletes it from the queue

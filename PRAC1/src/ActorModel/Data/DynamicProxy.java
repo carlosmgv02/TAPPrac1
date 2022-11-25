@@ -16,13 +16,8 @@ public class DynamicProxy extends Actor {
 
 
     @Override
-    public void send(Message msg) {
-        actor.send(msg);
-    }
+    public void process(){
 
-    @Override
-    public Message process() {
-        return actor.process();
     }
 
     @Override

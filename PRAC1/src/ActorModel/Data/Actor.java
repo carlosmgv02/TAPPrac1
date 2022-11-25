@@ -19,22 +19,14 @@ public abstract class Actor extends Thread{
     public Queue<Message> getQueue(){
         return cua;
     }
-
-
     @Override
-    public void run() {
-
-        while (!isInterrupted()) {
-            if(this instanceof ActorProxy){
-                if(((ActorProxy) this).getActor().getQueLength()>0){
-                    process();
-                }
-            } else if ((this.cua.size() > 0) ) {
+    public void run(){
+        do{
+            if(!cua.isEmpty())
                 process();
-
-            }
-        }
-
+        }while(!isInterrupted());
     }
+
+    public abstract void process();
 
 }
