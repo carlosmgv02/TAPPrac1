@@ -31,11 +31,18 @@ public class App {
         //Actor=ActorProxy
         //ActorProxy=Actor
 
-        Actor insult = ActorContext.spawnActor("name",new InsultActor());
-        insult.send(new GetInsultMessage());
-        Message result = insult.receive();
-        System.out.println(result.getText());
 
+        ActorProxy ac1=ActorContext.spawnActor("carlos",new InsultActor());
+
+        ac1.send(new Message(null,"Esto es un mensaje de prueba"));
+        System.out.println("**********************");
+        ac1.send(new GetInsultMessage());
+        System.out.println("**********************");
+        ac1.send(new AddInsultMessage(null,"tonto"));
+        System.out.println("**********************");
+        ac1.send(new GetAllInsultsMessage());
+        Queue<Message> queue = ac1.getActor().getQueue();
+        System.out.println(Arrays.asList(queue));
         //probarCifrado();
 
 
@@ -67,11 +74,11 @@ public class App {
      * Method used to test the sendActor method
      */
     public static void provarSendActor(){
-        Actor ac1=ActorContext.spawnActor("carlos",new InsultActor());
-        Actor ac2=ActorContext.spawnActor("genis",new InsultActor());
+        ActorProxy ac1=ActorContext.spawnActor("carlos",new InsultActor());
+        ActorProxy ac2=ActorContext.spawnActor("genis",new InsultActor());
 
-        ac1.send(new Message(ac2,"hola buenos dias"));
-        ac1.send(new Message(ac2,"hola buenos dias"));
+        ac1.send(new Message(null,"hola buenos dias"));
+        ac1.send(new Message(null,"hola buenos dias"));
     }
 
     /**
@@ -84,7 +91,7 @@ public class App {
 
 
         act.start();
-        Actor hello = ActorContext.spawnActor("name", act);
+        ActorProxy hello = ActorContext.spawnActor("name", act);
         //hello=ActorContext.spawnActor("carlos",new InsultActor());
         hello.send(new Message(act2, "hello world"));
         hello.send(new Message(act3, "olaa"));
@@ -93,9 +100,9 @@ public class App {
         //Ini the app w the singleton
         ActorContext.getInstance();
         //Create the first proxy
-        Actor actor1 = ActorContext.spawnActor("Thread1", new RingActor());
-        Actor actor2 = ActorContext.spawnActor("provaa", new RingActor());
-        Actor actor3 = ActorContext.spawnActor("holaaa", new RingActor());
+        ActorProxy actor1 = ActorContext.spawnActor("Thread1", new RingActor());
+        ActorProxy actor2 = ActorContext.spawnActor("provaa", new RingActor());
+        ActorProxy actor3 = ActorContext.spawnActor("holaaa", new RingActor());
 
         //Testing method lookup
         System.out.println("Testing method lookup()");
@@ -109,31 +116,13 @@ public class App {
         //Works but doesn't follow an order...
     }
 
-    /**
-     * Method used to test
-     */
-    public static void provarActor(){
-        HelloWorldActor actor1 = new HelloWorldActor();
-        //Send the first message
-        actor1.send(new Message(null, "Hello wol"));
-        actor1.send(new Message(null, "ola"));
-        actor1.send(new Message(null, "prova"));
-        actor1.send(new Message(null, "xd"));
-        Actor prueba1 = ActorContext.spawnActor("carlos", new InsultActor());
-        prueba1.send(new Message(null,"hola"));
-        //prueba1.process();
-        //prueba1.quitMessage();
-
-        //actor1.start();
-
-    }
 
     /**
      * Method used to test the HelloWorldActor
      */
     public static void provarHelloWorld(){
         HelloWorldActor hwProva = new HelloWorldActor();
-        Actor hwActor = ActorContext.spawnActor("Thread2",hwProva );
+        ActorProxy hwActor = ActorContext.spawnActor("Thread2",hwProva );
         hwProva.start();
         hwActor.send(new Message(null, " trial msg from t1"));
         hwActor.send(new Message(null, " trial msg from t1, 2"));
@@ -148,7 +137,7 @@ public class App {
      */
     public static void provarInsultActor() throws InterruptedException {
         Actor insultProva = new InsultActor();
-        Actor insultActor = ActorContext.spawnActor("Thread3",insultProva );
+        ActorProxy insultActor = ActorContext.spawnActor("Thread3",insultProva );
         insultProva.start();
         insultActor.send(new Message(null, " trial msg from t1"));
         insultActor.send(new Message(null, " trial msg from t1, 2"));
@@ -160,9 +149,7 @@ public class App {
 
     }
 
-    /**
-     * Method used to test the encryptions
-     */
+    /*
     public static void probarCifrado(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduce el mensaje a cifrar");
@@ -186,6 +173,6 @@ public class App {
         Actor receiver = ActorContext.spawnActor("actor2", new EncryptionDecorator());
         sender.send(new Message(receiver, "Hola"));
     }
-
+*/
 }
 

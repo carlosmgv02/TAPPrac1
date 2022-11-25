@@ -22,27 +22,36 @@ public class InsultActor extends Actor {
         switch(msg){
             case GetInsultMessage m1 -> {
                 Collections.shuffle(insultList);
-                if (msgIsValid(m1))
-                    cua.offer(new Message(m1.getFrom(), insultList.get(0)));
+                if (msgIsValid(m1)){
+                    System.out.println(insultList.get(0));
+                    //cua.offer(new Message(m1.getFrom(), insultList.get(0)));
+                }
             }
             case GetAllInsultsMessage m3 -> {
                 Collections.shuffle(insultList);
                 //TODO: cambiarlo para que no se envie el mensaje dos veces a la cola
                 insultList.forEach(e -> {
                     Message temp = new Message(msg.getFrom(), e);
+
+                    System.out.println(temp);
+                    /*
                     if (msgIsValid(temp))
                         cua.offer(temp);
+                    */
                 });
             }
             case AddInsultMessage m4 -> {
                 String insult = msg.getText();
-                insultList.add(insult);
+                if(!insultList.contains(msg.getText()))
+                    insultList.add(insult);
+                System.out.println(Arrays.asList(insultList));
                 //insultList.add(InsultGenerator.getRandomInsult());
             }
             case null -> {}
             default -> {
-                if (msgIsValid(msg))
-                    cua.offer(msg);
+                System.out.println(msg);
+                /*if (msgIsValid(msg))
+                    cua.offer(msg);*/
             }
         }
     }

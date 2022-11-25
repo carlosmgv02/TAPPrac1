@@ -6,16 +6,14 @@ import java.util.Queue;
 
 public class HelloWorldActor extends Actor {
     @Override
-    public Message process() {
+    public void process() {
         System.out.println("From Hello World Actor: ");
         //- Returns the head of the queue.
-        Message processedMessage;
-
-        processedMessage = cua.element();
+        Message processedMessage = cua.element();
         System.out.println(" processed: "+processedMessage.getText());
         //- Deletes the head of the queue.
         cua.poll();
-        return processedMessage;
+
     }
 
     @Override

@@ -9,10 +9,10 @@ public class RingActor extends Actor{
 
 
     @Override
-    public Message process() {
+    public void process() {
         System.out.println("Printing Ring Actor");
         cua.poll();
-        return null;
+
     }
 
     @Override

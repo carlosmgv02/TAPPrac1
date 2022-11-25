@@ -11,7 +11,7 @@ public class ActorContextTest {
 
     @Test
     void spawnActor() {
-        Actor act= ActorContext.spawnActor("hola",new HelloWorldActor());
+        ActorProxy act= ActorContext.spawnActor("hola",new HelloWorldActor());
         System.out.println("-> TESTING SPAWN ACTOR...");
         assertEquals(true,ActorContext.getNames().contains("hola"));
     }

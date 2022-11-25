@@ -24,6 +24,7 @@ public class ActorProxy implements Receive{
         this.a=act;
         this.id=id;
         receiveQueue = Collections.synchronizedList((new ArrayList<>()));
+        a.start();
     }
 
     public List<Message> getProxyQueue(){
