@@ -16,9 +16,10 @@ public class InsultActor extends Actor {
 
     protected List<String> insultList = new ArrayList<>(Arrays.asList("tonto", "feo", "inútil", "gilipollas"));
 
-    public void send(Message msg) {
-
-        switch (msg) {
+    @Override
+    public void process(){
+        Message msg=cua.poll();
+        switch(msg){
             case GetInsultMessage m1 -> {
                 Collections.shuffle(insultList);
                 if (msgIsValid(m1))
@@ -38,11 +39,11 @@ public class InsultActor extends Actor {
                 insultList.add(insult);
                 //insultList.add(InsultGenerator.getRandomInsult());
             }
+            case null -> {}
             default -> {
                 if (msgIsValid(msg))
                     cua.offer(msg);
             }
-
         }
     }
 
@@ -50,20 +51,14 @@ public class InsultActor extends Actor {
         return !cua.contains(m);
     }
 
-    @Override
-    public Message process() {
-        for (Message msg : cua) {
-            System.out.println(msg);
-        }
-        cua.clear();
-        return null;
-    }
+
 
     @Override
     public Queue<Message> getQueue() {
         //return null;
         return cua;
     }
+
 
     private static class InsultGenerator {
         private static final List<String> insultos = new ArrayList<>(Arrays.asList("cabron", "gusano", "soplapollas", "anacleto", "betta", "nobita", "pringao", "capullo", "estúpido"));

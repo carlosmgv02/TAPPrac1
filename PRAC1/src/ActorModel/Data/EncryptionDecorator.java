@@ -4,12 +4,13 @@ import ActorModel.Data.Messages.Message;
 
 import java.util.Queue;
 
-
+/*
 public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
 
     public EncryptionDecorator() {
 
     }
+
     @Override
     public void send(Message msg) {
         //msg.setText(cifrar(msg.getText(), 1));
@@ -84,4 +85,4 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
     }
 
 
-}
+*/

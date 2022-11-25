@@ -3,7 +3,7 @@ package ActorModel.Data;
 import ActorModel.Data.Messages.Message;
 
 import java.util.function.Predicate;
-
+/*
 public class LambdaFirewallDecorator extends ActorDecorator{
 
     Predicate<Message> predicado;
@@ -23,3 +23,4 @@ public class LambdaFirewallDecorator extends ActorDecorator{
         this.predicado = predicado;
     }
 }
+*/

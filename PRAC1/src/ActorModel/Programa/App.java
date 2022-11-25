@@ -9,19 +9,34 @@ import ActorModel.Data.Messages.Message;
 
 import java.util.*;
 
+/*
+
+PREGUNTES:
+-Metode recive com el fem:
+  -2 proxis
+  -send1 send2 ???
+
+-com fer spawnactor sense que peti retonra actor o proxy??
+
+
+ */
+
+
 public class App {
     static Scanner sc=new Scanner(System.in);
 
     public static void main(String[] args) throws InterruptedException {
         //provarHelloWorld();
         //provarInsultActor();
-        /*
+        //Actor=ActorProxy
+        //ActorProxy=Actor
+
         Actor insult = ActorContext.spawnActor("name",new InsultActor());
         insult.send(new GetInsultMessage());
         Message result = insult.receive();
         System.out.println(result.getText());
-        */
-        probarCifrado();
+
+        //probarCifrado();
 
 
 

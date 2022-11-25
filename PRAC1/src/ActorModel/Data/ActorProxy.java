@@ -6,10 +6,16 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
-public class ActorProxy extends Actor implements Receive{
+public class ActorProxy implements Receive{
     private final Actor a;
     private final LinkedBlockingQueue<Message> receiveQueue;
     protected String id;
+
+    //TODO com fer el recieve i crear el 2n proxy perque no es solapin els sends
+
+    //llista nomes send
+    //nomes el pot tenir el proxy
+    //es fica a ell mateix com a sender i el actor crida al del proxy
 
     public ActorProxy(Actor act,String id){
         this.a=act;
@@ -27,22 +33,8 @@ public class ActorProxy extends Actor implements Receive{
         a.send(msg);
 
     }
-    @Override
-    public Message receive(){
-        return null;
-    }
-
-    @Override
-    public Message process() {
-        return null;
-    }
 
     //Method that processes the message and deletes it from the queue
-
-    public int getQueLength(){
-        return cua.toArray().length;
-    }
-
 
     public String getProxyId(){
         return this.id;
@@ -52,4 +44,8 @@ public class ActorProxy extends Actor implements Receive{
         return this.a;
     }
 
+    @Override
+    public Message receive() {
+        return null;
+    }
 }
