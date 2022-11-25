@@ -14,10 +14,6 @@ public class DynamicProxy extends Actor {
         this.actor = actor;
     }
 
-    @Override
-    public Message receive() {
-        return null;
-    }
 
     @Override
     public void send(Message msg) {
@@ -44,10 +40,6 @@ public class DynamicProxy extends Actor {
         actor.start();
     }
 
-    @Override
-    public Queue<Message> getQueue() {
-        return actor.getQueue();
-    }
 
 }
 

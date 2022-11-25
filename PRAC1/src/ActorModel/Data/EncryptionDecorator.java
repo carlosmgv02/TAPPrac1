@@ -12,9 +12,11 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
     }
     @Override
     public void send(Message msg) {
-        msg.setText(cifrar(msg.getText(), 1));
-        System.out.println("El mensaje encriptado es: "+ msg.getText());
-        super.send(msg);
+        //msg.setText(cifrar(msg.getText(), 1));
+        String txt=cifrar(msg.getText(), 1);
+        //TODO ELIMINAR PRINT CUANDO HAYAMOS ACABADO DE HACER PRUEBAS, DESDE LAS CLASES NO SE IMPRIME
+        System.out.println("El mensaje encriptado es: "+ txt);
+        cua.offer(new Message(msg.getFrom(),txt));
     }
 
     @Override
@@ -23,22 +25,18 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
     }
 
     @Override
-    public Queue<Message> getQueue() {
-        return null;
-    }
-    @Override
     public String cifrar(String mensaje, int clave){
         //lo ponemos en minusculas
         mensaje = mensaje.toLowerCase();
         //creamos un stringbuilder para ir añadiendo los caracteres
-        String mensajeCifrado = "";
+        StringBuilder mensajeCifrado = new StringBuilder();
 
         //recorremos el mensaje
         for (int i=0; i<mensaje.length(); i++){
             //obtenemos el caracter
             if (mensaje.charAt(i) == ' '){
                 //si es un espacio lo añadimos
-                mensajeCifrado += ' ';
+                mensajeCifrado.append(' ');
                 //si no es un espacio
                 continue;
             }
@@ -49,10 +47,10 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
             //obtenemos el caracter cifrado
             char reemplazarValor = alfabeto.charAt(posicionCifrada);
             //añadimos el caracter cifrado al mensaje cifrado
-            mensajeCifrado += reemplazarValor;
+            mensajeCifrado.append(reemplazarValor);
         }
         //devolvemos el mensaje cifrado
-        return mensajeCifrado;
+        return mensajeCifrado.toString();
     }
     @Override
     public String descifrar(String textoCifrado, int clave){
