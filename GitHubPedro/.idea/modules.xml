@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/GitHubPedro.iml" filepath="$PROJECT_DIR$/.idea/GitHubPedro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TAP1/TAP1.iml" filepath="$PROJECT_DIR$/TAP1/TAP1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TAP2/TAP2.iml" filepath="$PROJECT_DIR$/TAP2/TAP2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TAP3/TAP3.iml" filepath="$PROJECT_DIR$/TAP3/TAP3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TAP4/TAP4.iml" filepath="$PROJECT_DIR$/TAP4/TAP4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TapGroovy/TapGroovy.iml" filepath="$PROJECT_DIR$/TapGroovy/TapGroovy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TapGroovy2/TapGroovy2.iml" filepath="$PROJECT_DIR$/TapGroovy2/TapGroovy2.iml" />
+    </modules>
+  </component>
+</project>
