@@ -1,59 +1,37 @@
-//package ActorModel.Data.Tests;
-//
-//import ActorModel.Data.Actor;
-//import ActorModel.Data.ActorProxy;
-//import ActorModel.Data.InsultActor;
-//import ActorModel.Data.Messages.Message;
-//import org.junit.Assert;
-//import org.junit.jupiter.api.Test;
-//
-//
-////import static org.mockito.Mockito.*;
-//
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//
-//public class ActorTest {
-//
-//    @Test
-//    void getQueLength() {
-//        Actor act=new InsultActor();
-//        Assert.assertEquals(0,act.getQueLength());
-//    }
-//
-//    @Test
-//    void getQueueShouldBeEmpty() {
-//        Actor act=new InsultActor();
-//        Assert.assertEquals(true,act.getQueue().isEmpty());
-//    }
-//
-//
-//     @Test
-//    void send() {
-//         Actor act=new InsultActor();
-//         ActorProxy act2=new ActorProxy(act,"hola");
-//         String msg=new Message(act,"hola");
-//         act2.send(msg);
-//         System.out.println("-> TESTING SEND...");
-//         assertEquals(true,act.getQueue().contains(msg));
-//     }
-//
-//     @Test
-//    void run() throws InterruptedException{
-//        /*
-//         int numberOfThreads = 10;
-//         ExecutorService service = Executors.newFixedThreadPool(10);
-//         CountDownLatch latch = new CountDownLatch(numberOfThreads);
-//         MyCounter counter = new MyCounter();
-//         for (int i = 0; i < numberOfThreads; i++) {
-//             service.execute(() -> {
-//                 counter.increment();
-//                 latch.countDown();
-//             });
-//         }
-//         latch.await();
-//         assertEquals(numberOfThreads, counter.getCount());
-//
-//         */
-//     }
-//}
+package ActorModel.Data.Tests;
+
+import ActorModel.Data.*;
+
+import ActorModel.Data.Messages.Insult.AddInsultMessage;
+import ActorModel.Data.Messages.Insult.GetInsultMessage;
+import ActorModel.Data.Messages.Message;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class ActorTest {
+
+    @Test
+    public void messageQueueShouldBeOne(){
+        System.out.println("-> TESTING MESSAGE QUEUE SHOULD BE ONE...");
+        Message msg=new Message(null,"Hello World");
+        Actor act=new InsultActor();
+        act.getQueue().add(msg);
+        assertTrue(act.getQueLength() == 1);
+    }
+    @Test
+    public void actorShouldBeAlive(){
+        Actor act=new InsultActor();
+        act.start();
+        assertTrue(act.isAlive());
+    }
+    @Test
+    public void actorShouldBeSleeping(){
+        Actor act=new InsultActor();
+        assertTrue(!act.isAlive());
+    }
+
+}

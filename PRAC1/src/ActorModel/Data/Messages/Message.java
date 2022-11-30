@@ -27,7 +27,7 @@ public class Message {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj.getClass().equals(this.getClass())){
+        if(obj.getClass().equals(this.getClass())&&getFrom()!=null){
             return ((Message) obj).getFrom().equals(this.getFrom())&&((Message) obj).getText().equals(this.getText());
         }
         return super.equals(obj);

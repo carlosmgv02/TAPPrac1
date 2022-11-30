@@ -27,6 +27,6 @@ public abstract class Actor extends Thread{
         }while(!isInterrupted());
     }
 
-    public abstract void process();
+    public abstract Message process();
 
 }

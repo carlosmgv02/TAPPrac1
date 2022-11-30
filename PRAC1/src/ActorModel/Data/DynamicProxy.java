@@ -2,8 +2,6 @@ package ActorModel.Data;
 
 import ActorModel.Data.Messages.Message;
 
-import java.util.Queue;
-
 public class DynamicProxy extends Actor {
     private final String id;
     private Thread t;
@@ -16,8 +14,8 @@ public class DynamicProxy extends Actor {
 
 
     @Override
-    public void process(){
-
+    public Message process(){
+        return null;
     }
 
     @Override

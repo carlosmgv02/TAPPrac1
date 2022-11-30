@@ -5,7 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class ActorContext {
-    private final static HashMap<String,Actor>actorSet=new HashMap<>();
+    private final static Map<String,Actor>actorSet=new HashMap<>();
+    private final static Map<Actor,ActorProxy>proxySet=new HashMap<>();
     private static ActorContext actorInstance;
     private ActorContext(){
 
@@ -22,6 +23,7 @@ public class ActorContext {
         ActorProxy newActor = new ActorProxy(type,name);
         //new Thread(newActor).start();
         actorSet.put(name, type);
+        proxySet.put(type,newActor);
         //type.start();
 
         return newActor;
@@ -30,6 +32,14 @@ public class ActorContext {
         Actor act;
         if(actorSet.containsKey(id)){
             act= actorSet.get(id);
+            return act;
+        }
+        return null;
+    }
+    public static ActorProxy lookupProxy(Actor id){
+        ActorProxy act;
+        if(proxySet.containsKey(id)){
+            act= proxySet.get(id);
             return act;
         }
         return null;
@@ -52,7 +62,7 @@ public class ActorContext {
         actorSet.forEach((k,v)->System.out.println("Key: "+k+" Value: "+v));
     }
 
-    public static HashMap<String,Actor> getActorSet(){
+    public static Map<String,Actor> getActorSet(){
         return actorSet;
     }
 

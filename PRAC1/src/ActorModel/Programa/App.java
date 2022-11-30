@@ -1,11 +1,9 @@
 package ActorModel.Programa;
 
 import ActorModel.Data.*;
-import ActorModel.Data.Messages.*;
 import ActorModel.Data.Messages.Insult.*;
 import ActorModel.Data.Messages.Message;
-
-import ActorModel.Data.Messages.Message;
+import org.junit.jupiter.engine.descriptor.TestInstanceLifecycleUtils;
 
 import java.util.*;
 
@@ -32,17 +30,13 @@ public class App {
         //ActorProxy=Actor
 
 
-        ActorProxy ac1=ActorContext.spawnActor("carlos",new InsultActor());
+        ActorProxy a=ActorContext.spawnActor("prueba",new InsultActor());
+        a.send(new GetInsultMessage());
+        a.send(new GetAllInsultsMessage());
+        a.send(new AddInsultMessage("hola"));
+        a.receive();
 
-        ac1.send(new Message(null,"Esto es un mensaje de prueba"));
-        System.out.println("**********************");
-        ac1.send(new GetInsultMessage());
-        System.out.println("**********************");
-        ac1.send(new AddInsultMessage(null,"tonto"));
-        System.out.println("**********************");
-        ac1.send(new GetAllInsultsMessage());
-        Queue<Message> queue = ac1.getActor().getQueue();
-        System.out.println(Arrays.asList(queue));
+
         //probarCifrado();
 
 

@@ -2,12 +2,10 @@ package ActorModel.Data;
 
 import ActorModel.Data.Messages.Message;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
+//TODO TESTS DEL ACTOR PROXY PARA PROBAR QUE RECIBE BIEN LOS MENSAJES CON EL RECEIVE
 
 public class ActorProxy implements Receive{
     private final Actor a;
@@ -30,11 +28,14 @@ public class ActorProxy implements Receive{
     public List<Message> getProxyQueue(){
         return receiveQueue;
     }
+    public void offer(Message m){
+        receiveQueue.add(m);
+    }
 
     public void send(Message msg) {
         try{
             //TODO preguntar com hem d'afegir els missatges a la cua de cada actor
-            ActorContext.lookup(id).cua.offer(msg);
+            Objects.requireNonNull(ActorContext.lookup(id)).cua.offer(msg);
         }catch(NullPointerException e){
             e.printStackTrace();
         }
@@ -52,6 +53,26 @@ public class ActorProxy implements Receive{
 
     @Override
     public Message receive() {
+        Thread t=new Thread(){
+            @Override
+            public synchronized void run(){
+                while(true){
+                    if(!receiveQueue.isEmpty()){
+                        System.out.println("ACTOR PROXY *"+id+"* RESPONSE:");
+                        //Message msg=receiveQueue.get(0);
+                        System.out.println(receiveQueue.get(0));
+                        receiveQueue.remove(0);
+                        try {
+                            wait(500);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        //break;
+                    }
+                }
+            }
+        };
+        t.start();
         return null;
     }
 }

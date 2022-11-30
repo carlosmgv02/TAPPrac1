@@ -23,14 +23,14 @@ Practica 1 Técnicas Avanzadas de Programación. Consiste en implementar un sist
 Tareas pendientes que faltan por hacer:
 * [ ] Implementar el sistema de actores
   * [x] Patrón de singleton (Actor Context)
-    * [ ] Insult Actor
-      * [ ] GetInsultMessage
-      * [ ] GetAllInsultMessage
-      * [ ] AddInsultMessage
+    * [x] Insult Actor
+      * [x] GetInsultMessage
+      * [x] GetAllInsultMessage
+      * [x] AddInsultMessage
     * [x] HelloWorld Actor
   * [ ] Patrón de decorador
   * [ ] Patrón de proxy
-    * [ ] Actor Proxy
+    * [x] Actor Proxy
     * [ ] Dynamic Proxy
   * [ ] Patrón de observador
 * [ ] Validar funcionamiento

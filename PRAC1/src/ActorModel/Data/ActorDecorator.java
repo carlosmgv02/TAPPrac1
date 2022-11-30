@@ -2,9 +2,6 @@ package ActorModel.Data;
 
 import ActorModel.Data.Messages.Message;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class ActorDecorator extends Actor {
 
 
@@ -13,11 +10,11 @@ public class ActorDecorator extends Actor {
     }
 
     @Override
-    public void process() {
+    public Message process() {
         Message processedMessage;
         processedMessage = cua.element();
         cua.poll();
-
+        return processedMessage;
     }
 
 

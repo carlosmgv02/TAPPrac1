@@ -2,17 +2,16 @@ package ActorModel.Data;
 
 import ActorModel.Data.Messages.Message;
 
-import java.util.Queue;
-
 public class RingActor extends Actor{
 
 
 
     @Override
-    public void process() {
-        System.out.println("Printing Ring Actor");
+    public Message process() {
+        String printing_ring_actor = "Printing Ring Actor";
+        System.out.println(printing_ring_actor);
         cua.poll();
-
+        return new Message(this,printing_ring_actor);
     }
 
     @Override
