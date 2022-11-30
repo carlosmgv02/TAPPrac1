@@ -4,38 +4,55 @@ import ActorModel.Data.Messages.Message;
 
 import java.util.Queue;
 
-/*
-public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
 
-    public EncryptionDecorator() {
+public class EncryptionDecorator extends ActorDecorator implements ImplCifradoCesar {
+    private Actor act;
 
+    public EncryptionDecorator(Actor actor) {
+        this.act = actor;
     }
 
+    //A.K.A encrypt
     @Override
-    public void send(Message msg) {
-        //msg.setText(cifrar(msg.getText(), 1));
-        String txt=cifrar(msg.getText(), 1);
-        //TODO ELIMINAR PRINT CUANDO HAYAMOS ACABADO DE HACER PRUEBAS, DESDE LAS CLASES NO SE IMPRIME
-        System.out.println("El mensaje encriptado es: "+ txt);
-        cua.offer(new Message(msg.getFrom(),txt));
+    public void offer(Message msg) {
+        //ActorContext.lookupProxy(this).send());
+        act.offer(new Message(msg.getFrom(), cifrar(msg.getText())));
+
+//        ActorContext.lookupProxy(this).getActor().
+//                offer(new Message(msg.getFrom(), cifrar(msg.getText())));
     }
 
+    //A.K.A decrypt
     @Override
     public Message process() {
-        return null;
+        Message toProcess = act.cua.element();
+        String dec=descifrar(toProcess.getText());
+        System.out.println("Decrypted: " + descifrar(toProcess.getText()));
+        act.cua.poll();
+        return new Message(toProcess.getFrom(), dec);
+    }
+    //Sobreescribimos el metodo run para que procesemos si la instancia de actor tiene algun mensaje en cola
+    @Override
+    public void run(){
+        do{
+            if(!act.cua.isEmpty())
+                process();
+        }while(!act.isInterrupted());
     }
 
+
     @Override
-    public String cifrar(String mensaje, int clave){
+    public String cifrar(String mensaje) {
+        int clave = 7;
         //lo ponemos en minusculas
         mensaje = mensaje.toLowerCase();
         //creamos un stringbuilder para ir añadiendo los caracteres
         StringBuilder mensajeCifrado = new StringBuilder();
 
         //recorremos el mensaje
-        for (int i=0; i<mensaje.length(); i++){
+        for (int i = 0; i < mensaje.length(); i++) {
             //obtenemos el caracter
-            if (mensaje.charAt(i) == ' '){
+            if (mensaje.charAt(i) == ' ') {
                 //si es un espacio lo añadimos
                 mensajeCifrado.append(' ');
                 //si no es un espacio
@@ -53,16 +70,19 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
         //devolvemos el mensaje cifrado
         return mensajeCifrado.toString();
     }
+
     @Override
-    public String descifrar(String textoCifrado, int clave){
+    public String descifrar(String textoCifrado) {
+        int clave = 7;
+
         //lo ponemos en minusculas
         textoCifrado = textoCifrado.toLowerCase();
         //creamos un stringbuilder para ir añadiendo los caracteres
         String mensajeOriginal = "";
         //recorremos el mensaje
-        for (int i =0; i<textoCifrado.length(); i++){
+        for (int i = 0; i < textoCifrado.length(); i++) {
             //obtenemos el caracter
-            if(textoCifrado.charAt(i) == ' '){
+            if (textoCifrado.charAt(i) == ' ') {
                 //si es un espacio lo añadimos
                 mensajeOriginal += ' ';
                 //si no es un espacio
@@ -73,7 +93,7 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
             //obtenemos la posicion del caracter cifrado
             int valorClave = (posicionCaracter - clave) % 26;
             //obtenemos el caracter cifrado
-            if(valorClave < 0){
+            if (valorClave < 0) {
                 valorClave = alfabeto.length() + valorClave;
             }
             char sustituyeValor = alfabeto.charAt(valorClave);
@@ -84,5 +104,5 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
         return mensajeOriginal;
     }
 
+}
 
-*/

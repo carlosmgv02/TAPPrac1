@@ -36,6 +36,9 @@ public class ActorContext {
         }
         return null;
     }
+    public static boolean contains(Actor a){
+        return actorSet.containsValue(a);
+    }
     public static ActorProxy lookupProxy(Actor id){
         ActorProxy act;
         if(proxySet.containsKey(id)){

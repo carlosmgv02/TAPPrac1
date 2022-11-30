@@ -28,16 +28,19 @@ public class ActorProxy implements Receive{
     public List<Message> getProxyQueue(){
         return receiveQueue;
     }
+
     public void offer(Message m){
         receiveQueue.add(m);
     }
 
+    //Añadimos el mensaje obteniendo el actor a través del Actor Context y luego llamando al método offer
     public void send(Message msg) {
         try{
             //TODO preguntar com hem d'afegir els missatges a la cua de cada actor
-            Objects.requireNonNull(ActorContext.lookup(id)).cua.offer(msg);
+            Objects.requireNonNull(ActorContext.lookup(id)).offer(msg);
+            //Objects.requireNonNull(ActorContext.lookup(id)).cua.offer(msg);
         }catch(NullPointerException e){
-            e.printStackTrace();
+            System.out.println("ACTOR NOT FOUND");
         }
     }
 

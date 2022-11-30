@@ -1,26 +1,26 @@
 package ActorModel.Data;
 
+import ActorModel.Data.Messages.Insult.AddInsultMessage;
+import ActorModel.Data.Messages.Insult.GetInsultMessage;
 import ActorModel.Data.Messages.Message;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
-/*
-public class LambdaFirewallDecorator extends ActorDecorator{
 
-    Predicate<Message> predicado;
+public class LambdaFirewallDecorator extends FirewallDecorator{
 
-    public void addClosure(Predicate<Message> predicado){
-        this.predicado = predicado;
+    private List<Message> messages = new ArrayList<>();
+    public LambdaFirewallDecorator(Actor act) {
+        super(act);
+    }
+    public void addClosure(Message msg){
+        Lambda lm=(message)->{
+            if(!messages.contains(message))
+                messages.add(message);
+        };
     }
 
-    @Override
-    public void send(Message msg) {
-        if(predicado.test(msg)){
-            super.send(msg);
-        }
-    }
 
-    public LambdaFirewallDecorator(Predicate<Message> predicado) {
-        this.predicado = predicado;
-    }
 }
-*/

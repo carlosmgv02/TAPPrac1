@@ -29,4 +29,9 @@ public abstract class Actor extends Thread{
 
     public abstract Message process();
 
+    //Método usado para añadir un mensaje a la cola del actor
+    protected void offer(Message m){
+        cua.offer(m);
+    }
+
 }
