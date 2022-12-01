@@ -38,13 +38,19 @@ public class App {
 */
         Actor ac1=new InsultActor();
         ActorContext.spawnActor("prueba",ac1);
-        ActorProxy hello=ActorContext.spawnActor("name",new FirewallDecorator(new HelloWorldActor()));
+        ActorProxy hello=ActorContext.spawnActor("name",new InsultActor());
+        ActorProxy prova2=ActorContext.spawnActor("name2",new EncryptionDecorator(new HelloWorldActor()));
+        
+        hello.send(new GetAllInsultsMessage());
+        hello.send(new AddInsultMessage("tusmuertos"));
+
+        /*
         hello.send(new Message(ac1,"hola"));
         hello.send(new Message(null,"hola"));
         //probarCifrado();
         ActorProxy dec=ActorContext.spawnActor("dec",new EncryptionDecorator(new InsultActor()));
         dec.send(new Message(ac1,"hola"));
-
+*/
 
         //TESTING PROXY
 

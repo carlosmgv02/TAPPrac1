@@ -29,6 +29,9 @@ Tareas pendientes que faltan por hacer:
       * [x] AddInsultMessage
     * [x] HelloWorld Actor
   * [ ] Patrón de decorador
+    * [ ] ActorDecorator
+    * [x] Firewall decorator
+    * [x] Encryption decorator
   * [ ] Patrón de proxy
     * [x] Actor Proxy
     * [ ] Dynamic Proxy

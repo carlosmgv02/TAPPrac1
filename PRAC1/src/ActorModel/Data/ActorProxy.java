@@ -12,6 +12,9 @@ public class ActorProxy implements Receive{
     private final List<Message> receiveQueue;
     protected String id;
 
+
+
+
     //TODO com fer el recieve i crear el 2n proxy perque no es solapin els sends
 
     //llista nomes send
@@ -54,28 +57,34 @@ public class ActorProxy implements Receive{
         return this.a;
     }
 
+
     @Override
     public Message receive() {
+        final Message[] m = new Message[1];
+
         Thread t=new Thread(){
+
+
             @Override
             public synchronized void run(){
+
                 while(true){
                     if(!receiveQueue.isEmpty()){
                         System.out.println("ACTOR PROXY *"+id+"* RESPONSE:");
                         //Message msg=receiveQueue.get(0);
-                        System.out.println(receiveQueue.get(0));
+                        m[0] =receiveQueue.get(0);
                         receiveQueue.remove(0);
                         try {
                             wait(500);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
-                        //break;
+                        break;
                     }
                 }
             }
         };
         t.start();
-        return null;
+        return m[0];
     }
 }

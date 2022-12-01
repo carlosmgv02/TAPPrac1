@@ -4,7 +4,7 @@ import ActorModel.Data.Messages.Message;
 
 import java.util.NoSuchElementException;
 
-public class HelloWorldActor extends ActorDecorator {
+public class HelloWorldActor extends Actor {
     @Override
     public Message process() {
         System.out.println("From Hello World Actor: ");

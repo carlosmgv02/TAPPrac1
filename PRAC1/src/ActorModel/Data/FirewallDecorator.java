@@ -3,6 +3,8 @@ package ActorModel.Data;
 import ActorModel.Data.Exceptions.CannotProcessException;
 import ActorModel.Data.Messages.Message;
 
+import java.util.NoSuchElementException;
+
 public class FirewallDecorator extends ActorDecorator {
     Actor act;
     boolean thrown = false;
@@ -12,7 +14,9 @@ public class FirewallDecorator extends ActorDecorator {
 
     @Override
     public Message process() {
-        Message toProcess=act.cua.element();
+        Message toProcess;
+        try{
+        toProcess=act.cua.element();
         if(!ActorContext.contains(toProcess.getFrom())){
             try{
                 if(!thrown)
@@ -21,10 +25,14 @@ public class FirewallDecorator extends ActorDecorator {
                 thrown=true;
                 System.out.println(e.getMessage());
             }
-            return null;
+            //return null;
         }
         else
             return act.process();
+        }catch(NoSuchElementException e){
+
+        }
+        return null;
     }
     //Sobreescribimos el método para que al añadir un mensaje a la cola, se haga en la cola de la instancia de actor
     @Override

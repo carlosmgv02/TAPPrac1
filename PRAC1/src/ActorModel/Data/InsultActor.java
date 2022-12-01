@@ -14,7 +14,7 @@ si els insult message implementen o hereten de im i de mess
  */
 
 
-public class InsultActor extends ActorDecorator {
+public class InsultActor extends Actor {
 
     protected List<String> insultList = new ArrayList<>(Arrays.asList("tonto", "feo", "inútil", "gilipollas"));
 
