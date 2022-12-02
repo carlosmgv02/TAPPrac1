@@ -18,7 +18,7 @@ public class FirewallDecorator extends Actor {
     public Message process() {
         Message toProcess;
 
-        toProcess=act.getQueue().poll();
+        toProcess=act.getQueue().element();
             if (toProcess.getFrom() != null) {
                 if(ActorContext.contains(toProcess.getFrom().getActor())){
                     return act.process();

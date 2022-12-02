@@ -22,6 +22,7 @@ public class InsultActor extends Actor {
 
     @Override
     public synchronized Message process(){
+
         Message msg=cua.poll();
         switch(msg){
             case GetInsultMessage m1 -> {

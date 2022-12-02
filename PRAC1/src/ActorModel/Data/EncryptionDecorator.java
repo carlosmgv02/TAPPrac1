@@ -24,7 +24,7 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
     //A.K.A decrypt
     @Override
     public Message process() {
-        Message toProcess = act.cua.element();
+        Message toProcess = act.getQueue().element();
         String dec=descifrar(toProcess.getText());
         System.out.println("Decrypted: " + descifrar(toProcess.getText()));
         act.cua.poll();

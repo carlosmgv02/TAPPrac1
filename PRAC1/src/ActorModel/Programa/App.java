@@ -52,7 +52,7 @@ public class    App {
 
         ActorProxy act2=ActorContext.spawnActor("micimaus",micimaus);
         ActorProxy ac1=ActorContext.spawnActor("prueba",new InsultActor());
-        act2.send(new Message(null,"hola"));
+        act2.send(new Message(ac1,"hola"));
 
         //EncryptionDecorator ola=new EncryptionDecorator(micimaus);
 
