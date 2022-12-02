@@ -1,13 +1,19 @@
 package ActorModel.Data.Messages;
 
 import ActorModel.Data.Actor;
+import ActorModel.Data.ActorProxy;
 
 public class Message {
     private Actor from;
+    private ActorProxy source;
     private String text;
 
     public Message(Actor from,String message){
         this.from=from;
+        this.text=message;
+    }
+    public Message(ActorProxy from,String message){
+        this.source=from;
         this.text=message;
     }
     public Message(){

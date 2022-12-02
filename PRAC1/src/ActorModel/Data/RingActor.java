@@ -4,7 +4,7 @@ import ActorModel.Data.Messages.Message;
 
 public class RingActor extends Actor{
 
-
+    ActorProxy next;
 
     @Override
     public Message process() {

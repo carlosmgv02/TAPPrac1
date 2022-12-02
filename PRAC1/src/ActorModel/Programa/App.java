@@ -3,7 +3,7 @@ package ActorModel.Programa;
 import ActorModel.Data.*;
 import ActorModel.Data.Messages.Insult.*;
 import ActorModel.Data.Messages.Message;
-import org.junit.jupiter.engine.descriptor.TestInstanceLifecycleUtils;
+
 
 import java.util.*;
 
@@ -36,6 +36,8 @@ public class App {
         a.send(new AddInsultMessage("hola"));
         a.receive();
 */
+        LambdaFirewallDecorator lm=new LambdaFirewallDecorator(null);
+        lm.addClosure(msg->msg.getText().equals("carlos"));
         Actor ac1=new InsultActor();
         ActorContext.spawnActor("prueba",ac1);
         ActorProxy hello=ActorContext.spawnActor("name",new InsultActor());

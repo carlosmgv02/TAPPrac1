@@ -13,7 +13,12 @@ com ficar send i recieve als missatges
 si els insult message implementen o hereten de im i de mess
  */
 
-
+/*
+A l'hora de fer un receive hem de  fer:
+msg.getFrom.send;
+el getFrom és un ActorProxy.
+ActorProxy ac=ActorContext.spawnActor(
+ */
 public class InsultActor extends Actor {
 
     protected List<String> insultList = new ArrayList<>(Arrays.asList("tonto", "feo", "inútil", "gilipollas"));
@@ -29,7 +34,8 @@ public class InsultActor extends Actor {
                     System.out.println("\tFrom: "+this);
                     System.out.println("\tTo: "+ActorContext.lookupProxy(this).getProxyId());
 //                    System.out.println("GETINSULT *"+insultList.get(0)+"* *"+ActorContext.lookupProxy(this).getProxyId()+"*");
-                    ActorContext.lookupProxy(this).offer(new Message(this,insultList.get(0)));
+                    msg.getFrom().offer(new Message(this,insultList.get(0)));
+                    //ActorContext.lookupProxy(this).offer(new Message(this,insultList.get(0))); TODO
                     //System.out.println(insultList.get(0));
                     //cua.offer(new Message(m1.getFrom(), insultList.get(0)));
                     return new Message(this,insultList.get(0));
@@ -40,11 +46,13 @@ public class InsultActor extends Actor {
                 //TODO: cambiarlo para que no se envie el mensaje dos veces a la cola
                 System.out.println("GETALLINSULTS: "+ Arrays.asList(insultList));
                 System.out.println("\tFrom: "+this);
+                System.out.println("\tTo: "+msg.getFrom());
                 System.out.println("\tTo: "+ActorContext.lookupProxy(this).getProxyId());
                 insultList.forEach(e -> {
                     Message temp = new Message(this, e);
-//                    System.out.println("GETALLINSULTS SENT FROM INSULT ACTOR, TO: *"+ActorContext.lookupProxy(this).getProxyId()+"*");
-                    ActorContext.lookupProxy(this).offer(temp);
+//                    System.out.println("GETALLINSULTS SENT FROM INSULT ACTOR, TO: *"+ActorContext.lookupProxy(this).getProxyId()+"*"); TODO
+                    msg.getFrom().offer(temp);
+                    //ActorContext.lookupProxy(this).offer(temp);
                     //System.out.println(temp);
                     /*
                     if (msgIsValid(temp))

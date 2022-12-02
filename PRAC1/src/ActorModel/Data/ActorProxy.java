@@ -3,12 +3,11 @@ package ActorModel.Data;
 import ActorModel.Data.Messages.Message;
 
 import java.util.*;
-import java.util.concurrent.LinkedBlockingQueue;
 
 //TODO TESTS DEL ACTOR PROXY PARA PROBAR QUE RECIBE BIEN LOS MENSAJES CON EL RECEIVE
 
-public class ActorProxy implements Receive{
-    private final Actor a;
+public class ActorProxy {
+    private final Actor actor;
     private final List<Message> receiveQueue;
     protected String id;
 
@@ -22,10 +21,10 @@ public class ActorProxy implements Receive{
     //es fica a ell mateix com a sender i el actor crida al del proxy
 
     public ActorProxy(Actor act,String id){
-        this.a=act;
+        this.actor =act;
         this.id=id;
         receiveQueue = Collections.synchronizedList((new ArrayList<>()));
-        a.start();
+        actor.start();
     }
 
     public List<Message> getProxyQueue(){
@@ -40,7 +39,7 @@ public class ActorProxy implements Receive{
     public void send(Message msg) {
         try{
             //TODO preguntar com hem d'afegir els missatges a la cua de cada actor
-            Objects.requireNonNull(ActorContext.lookup(id)).offer(msg);
+           this.actor.offer(msg);
             //Objects.requireNonNull(ActorContext.lookup(id)).cua.offer(msg);
         }catch(NullPointerException e){
             System.out.println("ACTOR NOT FOUND");
@@ -54,37 +53,23 @@ public class ActorProxy implements Receive{
     }
 
     public Actor getActor(){
-        return this.a;
+        return this.actor;
     }
 
 
-    @Override
+
     public Message receive() {
-        final Message[] m = new Message[1];
-
-        Thread t=new Thread(){
-
-
-            @Override
-            public synchronized void run(){
-
+        Message m;
+//TODO ELIMINAR THREAD Y QUITAR MÉTODO RUN
                 while(true){
                     if(!receiveQueue.isEmpty()){
                         System.out.println("ACTOR PROXY *"+id+"* RESPONSE:");
                         //Message msg=receiveQueue.get(0);
-                        m[0] =receiveQueue.get(0);
+                        m =receiveQueue.get(0);
                         receiveQueue.remove(0);
-                        try {
-                            wait(500);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
                         break;
                     }
                 }
-            }
-        };
-        t.start();
-        return m[0];
+        return m;
     }
 }
