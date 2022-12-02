@@ -1,5 +1,3 @@
-package ActorModel.Programa;
-
 import ActorModel.Data.*;
 import ActorModel.Data.Messages.Insult.*;
 import ActorModel.Data.Messages.Message;
