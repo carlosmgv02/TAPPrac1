@@ -1,49 +1,75 @@
 package ActorModel.Data;
 
-import ActorModel.Data.Exceptions.CannotProcessException;
 import ActorModel.Data.Messages.Message;
 
-import java.util.NoSuchElementException;
 import java.util.Queue;
 
+/**
+ * Class used to filter the messages processed by an actor
+ * <p>
+ *     It is a decorator that wraps an actor.
+ * </p>
+ */
 public class FirewallDecorator extends Actor {
     Actor act;
     boolean thrown = false;
+
     public FirewallDecorator(Actor act) {
-        this.act=act;
+        this.act = act;
     }
 
-
+    /**
+     * Method that processes the message
+     *
+     * @return the processed message
+     */
     @Override
     public Message process() {
         Message toProcess;
 
-        toProcess=act.getQueue().element();
-            if (toProcess.getFrom() != null) {
-                if(ActorContext.contains(toProcess.getFrom().getActor())){
-                    return act.process();
-                }
-
+        toProcess = act.getQueue().element();
+        if (toProcess.getFrom() != null) {
+            if (ActorContext.contains(toProcess.getFrom().getActor())) {
+                return act.process();
             }
+
+        }
+        if (!thrown) {
             System.out.println("Actor cannot process the message");
+            thrown = true;
+        }
         return null;
     }
-    //Sobreescribimos el método para que al añadir un mensaje a la cola, se haga en la cola de la instancia de actor
+
+    /**
+     * Method overriten to add the message to the actor's instance queue
+     *
+     * @param m the message to add
+     */
     @Override
-    public void offer(Message m){
+    public void offer(Message m) {
         act.offer(m);
     }
+
+    /**
+     * Method overriten to return the actor's instance queue
+     *
+     * @return the actor's instance queue
+     */
     @Override
     public Queue<Message> getQueue() {
         return act.getQueue();
     }
 
-    //Sobreescribimos el metodo run para que procesemos si la instancia de actor tiene algun mensaje en cola
+
+    /**
+     * Method overriten to process the actor's instance queue
+     */
     @Override
-    public void run(){
-        do{
-            if(!act.getQueue().isEmpty())
+    public void run() {
+        do {
+            if (!act.getQueue().isEmpty())
                 process();
-        }while(!act.isInterrupted());
+        } while (!act.isInterrupted());
     }
 }

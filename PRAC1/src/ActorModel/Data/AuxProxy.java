@@ -2,17 +2,29 @@ package ActorModel.Data;
 
 import ActorModel.Data.Messages.Message;
 
+/**
+ * Class used as an auxiliary proxy to send messages back to the proxy
+ */
 public class AuxProxy {
     private final ActorProxy actorProxy;
-    public AuxProxy(ActorProxy actorProxy){
-        this.actorProxy=actorProxy;
+
+    /**
+     * Class constructor
+     * @param actorProxy
+     */
+    public AuxProxy(ActorProxy actorProxy) {
+        this.actorProxy = actorProxy;
     }
-    public void send(Message m){
+
+    /**
+     * Method used to send a message to the proxy
+     * @param m the message to be sent
+     * @see ActorProxy#send(Message) ActorProxy.send
+     */
+    public void send(Message m) {
         //TODO
-        if(actorProxy!=null)
+        if (actorProxy != null)
             actorProxy.offer(m);
     }
-    public ActorProxy getActorProxy(){
-        return actorProxy;
-    }
+
 }

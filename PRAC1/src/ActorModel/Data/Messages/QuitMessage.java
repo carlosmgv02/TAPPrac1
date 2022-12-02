@@ -1,7 +1,8 @@
 package ActorModel.Data.Messages;
 
-import ActorModel.Data.Actor;
-
+/**
+ * Class used to stop an actor from receiving messages
+ */
 public class QuitMessage extends Message {
 
 }

@@ -13,13 +13,17 @@ import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Class used to test the HelloWorld actor
+ */
 public class HelloWorldTest {
-    @Before
-    public void redirectOut(){
-    }
-    @After
-    public void cleanUpOut(){
-    }
+    /**
+     * Method used to test the hello world actor.
+     * <p>
+     *     As the hello world actor only prints a message, we will test it by redirecting the output to a file.
+     * </p>
+     * @throws IOException exception is thrown in case we can't read the file.
+     */
     @Test
     public void helloWorldTest() throws IOException {
         System.out.println("-> TESTING HELLO WORLD ACTOR...");

@@ -4,8 +4,8 @@ import ActorModel.Data.Messages.Message;
 
 public class DynamicProxy extends Actor {
     private final String id;
-    private Thread t;
     private final Actor actor;
+    private Thread t;
 
     public DynamicProxy(String id, Actor actor) {
         this.id = id;
@@ -14,7 +14,7 @@ public class DynamicProxy extends Actor {
 
 
     @Override
-    public Message process(){
+    public Message process() {
         return null;
     }
 

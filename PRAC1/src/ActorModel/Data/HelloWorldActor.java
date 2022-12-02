@@ -4,30 +4,31 @@ import ActorModel.Data.Messages.Message;
 
 import java.util.NoSuchElementException;
 
+/**
+ * Class used to test the actor inheritance and the return of messages to proxies
+ * <p>
+ *     This class will overrite the {@link Actor#process()} method to return a message to the proxy
+ * </p>
+ */
 public class HelloWorldActor extends Actor {
+    /**
+     * Method that processes the message
+     *
+     * @return the processed message
+     * @see Actor#process() Actor.process
+     */
     @Override
     public Message process() {
         System.out.println("From Hello World Actor: ");
-        //- Returns the head of the queue.
-        try{
-
-        Message processedMessage = cua.element();
-        System.out.println(processedMessage);
-        cua.poll();
-        return processedMessage;
-        }catch(NoSuchElementException e){
-            //e.printStackTrace();
+        try {
+            Message processedMessage = cua.element();
+            System.out.println(processedMessage);
+            cua.poll();
+            return processedMessage;
+        } catch (NoSuchElementException ignored) {
         }
-        //System.out.println(" processed: "+processedMessage.getText());
-        //- Deletes the head of the queue.
         return null;
     }
 
-    @Override
-    public int getQueLength() {
-        return cua.size();
-    }
-
-    
 
 }

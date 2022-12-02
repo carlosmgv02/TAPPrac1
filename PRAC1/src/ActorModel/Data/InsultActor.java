@@ -1,54 +1,66 @@
 package ActorModel.Data;
 
-import ActorModel.Data.Messages.Insult.*;
+import ActorModel.Data.Messages.Insult.AddInsultMessage;
+import ActorModel.Data.Messages.Insult.GetAllInsultsMessage;
+import ActorModel.Data.Messages.Insult.GetInsultMessage;
 import ActorModel.Data.Messages.Message;
+
 import java.util.*;
 
-/*
-Preguntes a Pedro:
-com ficar send i recieve als missatges
-si els insult message implementen o hereten de im i de mess
- */
-
-/*
-A l'hora de fer un receive hem de  fer:
-msg.getFrom.send;
-el getFrom és un ActorProxy.
-ActorProxy ac=ActorContext.spawnActor(
+/**
+ * Class that represents an Insult Actor.
+ * <p>
+ *     It has its own process method that processes the messages and inherits the rest of the methods from the Actor class.
+ * </p>
  */
 public class InsultActor extends Actor {
 
     protected List<String> insultList = new ArrayList<>(Arrays.asList("tonto", "feo", "inútil", "gilipollas"));
 
+    /**
+     * Method that processes the message.
+     * <p>
+     *     It processes the message via a pattern matching, depending on the type of message passed by parameter.
+     * </p>
+     *     Available messages:
+     *     <ul>
+     *         <li>Message</li>
+     *         <li>GetInsultMessage</li>
+     *         <li>GetAllInsultsMessage</li>
+     *         <li>AddInsultMessage</li>
+     *     </ul>
+     * @return the processed message
+     * @see Actor#process() Actor.process
+     */
     @Override
-    public synchronized Message process(){
+    public synchronized Message process() {
 
-        Message msg=cua.poll();
-        switch(msg){
+        Message msg = cua.poll();
+        switch (msg) {
             case GetInsultMessage m1 -> {
                 Collections.shuffle(insultList);
-                if (msgIsValid(m1)){
-                    System.out.println("GETINSULT: "+insultList.get(0));
-                    System.out.println("\tFrom: "+this);
-                    System.out.println("\tTo: "+msg.getFrom());
+                if (msgIsValid(m1)) {
+                    System.out.println("GETINSULT: " + insultList.get(0));
+                    System.out.println("\tFrom: " + this);
+                    System.out.println("\tTo: " + msg.getFrom());
 //                    System.out.println("GETINSULT *"+insultList.get(0)+"* *"+ActorContext.lookupProxy(this).getProxyId()+"*");
                     AuxProxy auxProxy = new AuxProxy(msg.getFrom());
-                    Message m=new Message(msg.getFrom(),insultList.get(0));
+                    Message m = new Message(msg.getFrom(), insultList.get(0));
                     auxProxy.send(m);
                     //msg.getFrom().offer(new Message(this,insultList.get(0)));
                     //ActorContext.lookupProxy(this).offer(new Message(this,insultList.get(0))); TODO
                     //System.out.println(insultList.get(0));
                     //cua.offer(new Message(m1.getFrom(), insultList.get(0)));
-                    return new Message(msg.getFrom(),insultList.get(0));
+                    return new Message(msg.getFrom(), insultList.get(0));
                 }
             }
             case GetAllInsultsMessage m3 -> {
                 //Collections.shuffle(insultList);
                 //TODO: cambiarlo para que no se envie el mensaje dos veces a la cola
-                System.out.println("GETALLINSULTS: "+ Arrays.asList(insultList));
-                System.out.println("\tFrom: "+this);
+                System.out.println("GETALLINSULTS: " + Collections.singletonList(insultList));
+                System.out.println("\tFrom: " + this);
                 //System.out.println("\tTo: "+msg.getFrom());
-                System.out.println("\tTo: "+msg.getFrom());
+                System.out.println("\tTo: " + msg.getFrom());
 
                 insultList.forEach(e -> {
                     AuxProxy auxProxy = new AuxProxy(msg.getFrom());
@@ -63,22 +75,24 @@ public class InsultActor extends Actor {
                         cua.offer(temp);
                     */
                 });
-                return new Message(msg.getFrom(),Arrays.asList(insultList).toString());
+                return new Message(msg.getFrom(), Collections.singletonList(insultList).toString());
             }
             case AddInsultMessage m4 -> {
                 String insult = msg.getText();
-                System.out.println("ADDINSULT: "+insult);
-                System.out.println("\tFrom: "+this);
-                System.out.println("\tTo: "+this+".insultList");
-                if(!insultList.contains(msg.getText()))
+                System.out.println("ADDINSULT: " + insult);
+                System.out.println("\tFrom: " + this);
+                System.out.println("\tTo: " + this + ".insultList");
+                if (!insultList.contains(msg.getText()))
                     insultList.add(insult);
                 //System.out.println(Arrays.asList(insultList));
                 //insultList.add(InsultGenerator.getRandomInsult());
-                return new Message(msg.getFrom(),insult);
+                return new Message(msg.getFrom(), insult);
             }
-            case null -> {}
+            case null -> {
+                return null;
+            }
             default -> {
-                System.out.println(msg);
+                return msg;
                 /*if (msgIsValid(msg))
                     cua.offer(msg);*/
             }
@@ -86,27 +100,21 @@ public class InsultActor extends Actor {
         return null;
     }
 
+    /**
+     * Method to verify if the message is already in the queue
+     * @param m the message to verify
+     * @return true if the message is not in the queue, false otherwise
+     */
     private boolean msgIsValid(Message m) {
         return !cua.contains(m);
     }
 
-
-
-    @Override
-    public Queue<Message> getQueue() {
-        //return null;
-        return cua;
-    }
-    public List<String> getInsultList(){
+    /**
+     * Method to get the insult list
+     * @return the insult list
+     */
+    public List<String> getInsultList() {
         return insultList;
     }
 
-
-    private static class InsultGenerator {
-        private static final List<String> insultos = new ArrayList<>(Arrays.asList("cabron", "gusano", "soplapollas", "anacleto", "betta", "nobita", "pringao", "capullo", "estúpido"));
-
-        public static String getRandomInsult() {
-            return insultos.get((int) (Math.random() * insultos.size()));
-        }
-    }
 }
