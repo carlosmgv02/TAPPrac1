@@ -6,7 +6,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * Class that represents an actor
+ * Class that represents an actor.
  * <p>
  *     We will use this class to establish communication between actors and simulate the queue message sending.
  *     Each actor will have a queue and actors who want to communicate with it, will leave messages in its queue.
