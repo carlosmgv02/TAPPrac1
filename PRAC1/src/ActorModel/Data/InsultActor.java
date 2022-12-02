@@ -34,11 +34,13 @@ public class InsultActor extends Actor {
                     System.out.println("\tFrom: "+this);
                     System.out.println("\tTo: "+ActorContext.lookupProxy(this).getProxyId());
 //                    System.out.println("GETINSULT *"+insultList.get(0)+"* *"+ActorContext.lookupProxy(this).getProxyId()+"*");
-                    msg.getFrom().offer(new Message(this,insultList.get(0)));
+                    AuxProxy auxProxy = new AuxProxy(ActorContext.lookupProxy(this));
+                    auxProxy.send(insultList.get(0));
+                    //msg.getFrom().offer(new Message(this,insultList.get(0)));
                     //ActorContext.lookupProxy(this).offer(new Message(this,insultList.get(0))); TODO
                     //System.out.println(insultList.get(0));
                     //cua.offer(new Message(m1.getFrom(), insultList.get(0)));
-                    return new Message(this,insultList.get(0));
+                    return new Message(msg.getFrom(),insultList.get(0));
                 }
             }
             case GetAllInsultsMessage m3 -> {
@@ -49,9 +51,11 @@ public class InsultActor extends Actor {
                 System.out.println("\tTo: "+msg.getFrom());
                 System.out.println("\tTo: "+ActorContext.lookupProxy(this).getProxyId());
                 insultList.forEach(e -> {
-                    Message temp = new Message(this, e);
+                    AuxProxy auxProxy = new AuxProxy(msg.getFrom());
+                    Message temp = new Message(msg.getFrom(), e);
 //                    System.out.println("GETALLINSULTS SENT FROM INSULT ACTOR, TO: *"+ActorContext.lookupProxy(this).getProxyId()+"*"); TODO
-                    msg.getFrom().offer(temp);
+                    auxProxy.send(e);
+                    //msg.getFrom().offer(temp);
                     //ActorContext.lookupProxy(this).offer(temp);
                     //System.out.println(temp);
                     /*
@@ -59,7 +63,7 @@ public class InsultActor extends Actor {
                         cua.offer(temp);
                     */
                 });
-                return new Message(this,Arrays.asList(insultList).toString());
+                return new Message(msg.getFrom(),Arrays.asList(insultList).toString());
             }
             case AddInsultMessage m4 -> {
                 String insult = msg.getText();
@@ -70,7 +74,7 @@ public class InsultActor extends Actor {
                     insultList.add(insult);
                 //System.out.println(Arrays.asList(insultList));
                 //insultList.add(InsultGenerator.getRandomInsult());
-                return new Message(this,insult);
+                return new Message(msg.getFrom(),insult);
             }
             case null -> {}
             default -> {

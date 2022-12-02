@@ -20,7 +20,7 @@ public class ProxyClient extends Thread{
     }
 
     public void send(Message msg){
-        Actor aux = msg.getFrom();
+        Actor aux = msg.getFrom().getActor();
         //msg.setReceiver(aux);
         aux.getQueue().add(msg);
     }

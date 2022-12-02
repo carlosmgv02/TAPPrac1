@@ -36,13 +36,13 @@ public class App {
         a.send(new AddInsultMessage("hola"));
         a.receive();
 */
-        LambdaFirewallDecorator lm=new LambdaFirewallDecorator(null);
-        lm.addClosure(msg->msg.getText().equals("carlos"));
+        /*LambdaFirewallDecorator lm=new LambdaFirewallDecorator(null);
+        lm.addClosure(msg->msg.getText().equals("carlos"));*/
         Actor ac1=new InsultActor();
         ActorContext.spawnActor("prueba",ac1);
         ActorProxy hello=ActorContext.spawnActor("name",new InsultActor());
-        ActorProxy prova2=ActorContext.spawnActor("name2",new EncryptionDecorator(new HelloWorldActor()));
-        
+
+        hello.send(new GetInsultMessage());
         hello.send(new GetAllInsultsMessage());
         hello.send(new AddInsultMessage("tusmuertos"));
 
@@ -92,17 +92,7 @@ public class App {
      * Method used to test the Actor context class
      */
     public static void provarContext(){
-        Actor act=new InsultActor();
-        Actor act2=new InsultActor();
-        Actor act3=new InsultActor();
 
-
-        act.start();
-        ActorProxy hello = ActorContext.spawnActor("name", act);
-        //hello=ActorContext.spawnActor("carlos",new InsultActor());
-        hello.send(new Message(act2, "hello world"));
-        hello.send(new Message(act3, "olaa"));
-        hello.send(new Message(null, "prova thread"));
 
         //Ini the app w the singleton
         ActorContext.getInstance();

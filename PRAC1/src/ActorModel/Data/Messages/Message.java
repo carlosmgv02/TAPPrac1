@@ -4,25 +4,26 @@ import ActorModel.Data.Actor;
 import ActorModel.Data.ActorProxy;
 
 public class Message {
-    private Actor from;
-    private ActorProxy source;
+    private ActorProxy from;
+
     private String text;
 
-    public Message(Actor from,String message){
+    public Message(ActorProxy from,String message){
         this.from=from;
         this.text=message;
     }
+    /*
     public Message(ActorProxy from,String message){
         this.source=from;
         this.text=message;
-    }
+    }*/
     public Message(){
         text="";
     }
     public String getText(){
         return text;
     }
-    public Actor getFrom(){
+    public ActorProxy getFrom(){
         return from;
     }
     @Override

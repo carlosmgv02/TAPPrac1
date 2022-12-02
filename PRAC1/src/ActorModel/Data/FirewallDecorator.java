@@ -17,14 +17,14 @@ public class FirewallDecorator extends ActorDecorator {
         Message toProcess;
         try{
         toProcess=act.cua.element();
-        if(!ActorContext.contains(toProcess.getFrom())){
-            try{
-                if(!thrown)
-            throw new CannotProcessException(String.valueOf(act.getId()));
-            }catch(CannotProcessException e){
-                thrown=true;
-                System.out.println(e.getMessage());
-            }
+        if(!ActorContext.contains(toProcess.getFrom().getActor())){
+
+                if(!thrown){
+                    System.out.println("Actor with id: "+ActorContext.lookupProxy(toProcess.getFrom().getActor())+" cannot process the message");
+                    thrown=true;
+                }
+
+
             //return null;
         }
         else

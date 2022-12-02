@@ -11,7 +11,7 @@ public class RingActor extends Actor{
         String printing_ring_actor = "Printing Ring Actor";
         System.out.println(printing_ring_actor);
         cua.poll();
-        return new Message(this,printing_ring_actor);
+        return new Message(ActorContext.lookupProxy(this),printing_ring_actor);
     }
 
     @Override
