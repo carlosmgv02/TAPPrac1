@@ -5,9 +5,8 @@ import ActorModel.Data.Messages.Message;
 import java.util.Queue;
 
 
-public class EncryptionDecorator extends ActorDecorator implements ImplCifradoCesar {
+public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
     private Actor act;
-
     public EncryptionDecorator(Actor actor) {
         this.act = actor;
     }
@@ -35,7 +34,7 @@ public class EncryptionDecorator extends ActorDecorator implements ImplCifradoCe
     @Override
     public void run(){
         do{
-            if(!act.cua.isEmpty())
+            if(!act.getQueue().isEmpty())
                 process();
         }while(!act.isInterrupted());
     }
@@ -104,5 +103,9 @@ public class EncryptionDecorator extends ActorDecorator implements ImplCifradoCe
         return mensajeOriginal;
     }
 
+    @Override
+    public Queue<Message> getQueue() {
+        return act.getQueue();
+    }
 }
 

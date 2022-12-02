@@ -4,34 +4,28 @@ import ActorModel.Data.Exceptions.CannotProcessException;
 import ActorModel.Data.Messages.Message;
 
 import java.util.NoSuchElementException;
+import java.util.Queue;
 
-public class FirewallDecorator extends ActorDecorator {
+public class FirewallDecorator extends Actor {
     Actor act;
     boolean thrown = false;
     public FirewallDecorator(Actor act) {
         this.act=act;
     }
 
+
     @Override
     public Message process() {
         Message toProcess;
-        try{
-        toProcess=act.cua.element();
-        if(!ActorContext.contains(toProcess.getFrom().getActor())){
 
-                if(!thrown){
-                    System.out.println("Actor with id: "+ActorContext.lookupProxy(toProcess.getFrom().getActor())+" cannot process the message");
-                    thrown=true;
+        toProcess=act.getQueue().poll();
+            if (toProcess.getFrom() != null) {
+                if(ActorContext.contains(toProcess.getFrom().getActor())){
+                    return act.process();
                 }
 
-
-            //return null;
-        }
-        else
-            return act.process();
-        }catch(NoSuchElementException e){
-
-        }
+            }
+            System.out.println("Actor cannot process the message");
         return null;
     }
     //Sobreescribimos el método para que al añadir un mensaje a la cola, se haga en la cola de la instancia de actor
@@ -39,12 +33,16 @@ public class FirewallDecorator extends ActorDecorator {
     public void offer(Message m){
         act.offer(m);
     }
+    @Override
+    public Queue<Message> getQueue() {
+        return act.getQueue();
+    }
 
     //Sobreescribimos el metodo run para que procesemos si la instancia de actor tiene algun mensaje en cola
     @Override
     public void run(){
         do{
-            if(!act.cua.isEmpty())
+            if(!act.getQueue().isEmpty())
                 process();
         }while(!act.isInterrupted());
     }

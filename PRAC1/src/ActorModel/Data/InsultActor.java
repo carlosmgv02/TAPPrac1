@@ -2,9 +2,6 @@ package ActorModel.Data;
 
 import ActorModel.Data.Messages.Insult.*;
 import ActorModel.Data.Messages.Message;
-import jdk.swing.interop.SwingInterOpUtils;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 /*
@@ -32,10 +29,11 @@ public class InsultActor extends Actor {
                 if (msgIsValid(m1)){
                     System.out.println("GETINSULT: "+insultList.get(0));
                     System.out.println("\tFrom: "+this);
-                    System.out.println("\tTo: "+ActorContext.lookupProxy(this).getProxyId());
+                    System.out.println("\tTo: "+msg.getFrom());
 //                    System.out.println("GETINSULT *"+insultList.get(0)+"* *"+ActorContext.lookupProxy(this).getProxyId()+"*");
-                    AuxProxy auxProxy = new AuxProxy(ActorContext.lookupProxy(this));
-                    auxProxy.send(insultList.get(0));
+                    AuxProxy auxProxy = new AuxProxy(msg.getFrom());
+                    Message m=new Message(msg.getFrom(),insultList.get(0));
+                    auxProxy.send(m);
                     //msg.getFrom().offer(new Message(this,insultList.get(0)));
                     //ActorContext.lookupProxy(this).offer(new Message(this,insultList.get(0))); TODO
                     //System.out.println(insultList.get(0));
@@ -48,13 +46,14 @@ public class InsultActor extends Actor {
                 //TODO: cambiarlo para que no se envie el mensaje dos veces a la cola
                 System.out.println("GETALLINSULTS: "+ Arrays.asList(insultList));
                 System.out.println("\tFrom: "+this);
+                //System.out.println("\tTo: "+msg.getFrom());
                 System.out.println("\tTo: "+msg.getFrom());
-                System.out.println("\tTo: "+ActorContext.lookupProxy(this).getProxyId());
+
                 insultList.forEach(e -> {
                     AuxProxy auxProxy = new AuxProxy(msg.getFrom());
                     Message temp = new Message(msg.getFrom(), e);
 //                    System.out.println("GETALLINSULTS SENT FROM INSULT ACTOR, TO: *"+ActorContext.lookupProxy(this).getProxyId()+"*"); TODO
-                    auxProxy.send(e);
+                    auxProxy.send(temp);
                     //msg.getFrom().offer(temp);
                     //ActorContext.lookupProxy(this).offer(temp);
                     //System.out.println(temp);

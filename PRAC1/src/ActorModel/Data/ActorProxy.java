@@ -1,5 +1,6 @@
 package ActorModel.Data;
 
+import ActorModel.Data.Messages.Insult.GetInsultMessage;
 import ActorModel.Data.Messages.Message;
 
 import java.util.*;
@@ -10,9 +11,6 @@ public class ActorProxy {
     private final Actor actor;
     private final List<Message> receiveQueue;
     protected String id;
-
-
-
 
     //TODO com fer el recieve i crear el 2n proxy perque no es solapin els sends
 
@@ -27,6 +25,7 @@ public class ActorProxy {
         actor.start();
     }
 
+
     public List<Message> getProxyQueue(){
         return receiveQueue;
     }
@@ -38,6 +37,12 @@ public class ActorProxy {
     //Añadimos el mensaje obteniendo el actor a través del Actor Context y luego llamando al método offer
     public void send(Message msg) {
         try{
+
+                if(!(msg instanceof Message)){
+                    msg.setFrom(this);
+                }
+
+
             //TODO preguntar com hem d'afegir els missatges a la cua de cada actor
            this.actor.offer(msg);
             //Objects.requireNonNull(ActorContext.lookup(id)).cua.offer(msg);
@@ -66,6 +71,8 @@ public class ActorProxy {
                         System.out.println("ACTOR PROXY *"+id+"* RESPONSE:");
                         //Message msg=receiveQueue.get(0);
                         m =receiveQueue.get(0);
+                        System.out.println(m);
+                        //System.out.println(m);
                         receiveQueue.remove(0);
                         break;
                     }

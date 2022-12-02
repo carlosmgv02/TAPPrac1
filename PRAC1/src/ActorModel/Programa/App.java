@@ -20,7 +20,7 @@ PREGUNTES:
  */
 
 
-public class App {
+public class    App {
     static Scanner sc=new Scanner(System.in);
 
     public static void main(String[] args) throws InterruptedException {
@@ -36,17 +36,47 @@ public class App {
         a.send(new AddInsultMessage("hola"));
         a.receive();
 */
-        /*LambdaFirewallDecorator lm=new LambdaFirewallDecorator(null);
-        lm.addClosure(msg->msg.getText().equals("carlos"));*/
+        /*
+        LambdaFirewallDecorator lm=new LambdaFirewallDecorator(new HelloWorldActor());
+        ActorProxy a=ActorContext.spawnActor("lambda",lm);
+        lm.addClosureMessage(msg->msg.getText().equals("carlos"));
+        a.send(new Message(null,"carlos"));
+        System.out.println();
+
+
+*/
+
+
+        EncryptionDecorator brrr =new EncryptionDecorator(new InsultActor());
+        FirewallDecorator micimaus =new FirewallDecorator(brrr);
+
+        ActorProxy act2=ActorContext.spawnActor("micimaus",micimaus);
+        ActorProxy ac1=ActorContext.spawnActor("prueba",new InsultActor());
+        act2.send(new Message(null,"hola"));
+
+        //EncryptionDecorator ola=new EncryptionDecorator(micimaus);
+
+        //prueba2.send(new Message(act2,"ola"));
+
+
+
+
+//        lamb.addClosureMessage(msg->msg.getText().equals("TAP"));
+
+
+
+/*
         Actor ac1=new InsultActor();
         ActorContext.spawnActor("prueba",ac1);
         ActorProxy hello=ActorContext.spawnActor("name",new InsultActor());
-
         hello.send(new GetInsultMessage());
+        hello.getActor().sleep(1000);
+        hello.receive();
         hello.send(new GetAllInsultsMessage());
+        hello.getActor().sleep(1000);
         hello.send(new AddInsultMessage("tusmuertos"));
 
-        /*
+  */      /*
         hello.send(new Message(ac1,"hola"));
         hello.send(new Message(null,"hola"));
         //probarCifrado();

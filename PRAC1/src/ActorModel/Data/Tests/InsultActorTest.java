@@ -19,7 +19,7 @@ public class InsultActorTest {
         act.send(new GetInsultMessage());
         Message msg=act.getActor().process();
         System.out.println(msg.getText());
-        //assertEquals(msg.getFrom(), act.getActor());
+//        assertEquals();
     }
     @Test
     public void addInsult() throws InterruptedException {

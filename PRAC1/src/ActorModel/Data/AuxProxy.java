@@ -7,10 +7,10 @@ public class AuxProxy {
     public AuxProxy(ActorProxy actorProxy){
         this.actorProxy=actorProxy;
     }
-    public void send(String m){
+    public void send(Message m){
         //TODO
         if(actorProxy!=null)
-     actorProxy.offer(new Message(actorProxy,m));
+            actorProxy.offer(m);
     }
     public ActorProxy getActorProxy(){
         return actorProxy;

@@ -24,12 +24,12 @@ public class ActorContext {
         //new Thread(newActor).start();
         actorSet.put(name, type);
         proxySet.put(type,newActor);
-        //type.start();
 
         return newActor;
     }
     public static Actor lookup(String id){
         Actor act;
+
         if(actorSet.containsKey(id)){
             act= actorSet.get(id);
             return act;

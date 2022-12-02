@@ -7,5 +7,9 @@ public class AddInsultMessage extends Message {
     public AddInsultMessage(String message) {
         super(null, message);
     }
+    @Override
+    public void setFrom (ActorProxy source){
+        super.from=source;
+    }
 }
 

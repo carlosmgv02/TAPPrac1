@@ -13,17 +13,24 @@ import java.util.function.Predicate;
 public class LambdaFirewallDecorator extends FirewallDecorator{
     //Tenemos que pasar un predicate para filtrar los mensajes
 
+    private Predicate<Message> filter;
 
-    private List<Message> messages = new ArrayList<>();
     public LambdaFirewallDecorator(Actor act) {
         super(act);
     }
-    public void addClosure(Predicate<Message> pred){
+
+    public void addClosureMessage(Predicate<Message> pred){
         //System.out.println(messages.stream().filter(pred));
-
+        this.filter=pred;
     }
-
-
-
+    @Override
+    public Message process(){
+        Message toProcess=super.act.cua.poll();
+        if(filter.test(toProcess)) {
+            //System.out.println(toProcess);
+             return super.act.process();
+        }
+        return  null;
+    }
 
 }

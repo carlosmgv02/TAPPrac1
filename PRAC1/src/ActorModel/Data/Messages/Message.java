@@ -4,7 +4,7 @@ import ActorModel.Data.Actor;
 import ActorModel.Data.ActorProxy;
 
 public class Message {
-    private ActorProxy from;
+    protected ActorProxy from;
 
     private String text;
 
@@ -26,9 +26,9 @@ public class Message {
     public ActorProxy getFrom(){
         return from;
     }
-    @Override
-    public String toString(){
-        return "Message from "+from+" : "+text;
+
+    public void setFrom(ActorProxy source){
+        from=source;
     }
 
 
@@ -38,5 +38,9 @@ public class Message {
             return ((Message) obj).getFrom().equals(this.getFrom())&&((Message) obj).getText().equals(this.getText());
         }
         return super.equals(obj);
+    }
+
+    public String str(){
+        return "Message from "+from.getProxyId()+" : "+text;
     }
 }

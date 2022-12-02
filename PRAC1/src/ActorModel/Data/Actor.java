@@ -22,8 +22,11 @@ public abstract class Actor extends Thread{
     @Override
     public void run(){
         do{
-            if(!cua.isEmpty())
+            if(!cua.isEmpty()){
+
                 process();
+            }
+
         }while(!isInterrupted());
     }
 
