@@ -1,0 +1,78 @@
+Index: src/mickimaus/Data/InsultActor.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/mickimaus/Data/InsultActor.java b/src/mickimaus/Data/InsultActor.java
+new file mode 100644
+--- /dev/null	(date 1666264528647)
++++ b/src/mickimaus/Data/InsultActor.java	(date 1666264528647)
+@@ -0,0 +1,46 @@
++package mickimaus.Data;
++
++import java.util.ArrayList;
++import java.util.LinkedList;
++import java.util.List;
++import java.util.Queue;
++
++public class InsultActor implements Actor {
++
++    private List<String> insultList  = new ArrayList<String>();
++
++    @Override
++    public void send(Message msg) {
++
++    }
++
++    @Override
++    public Message process() {
++        return null;
++    }
++
++    @Override
++    public int getQueLength() {
++        return 0;
++    }
++
++    @Override
++    public Queue<Message> getQue() {
++        return null;
++    }
++    public String getInsultMessage(int index){
++        if(insultList.size()==0){
++            return "No items";
++        }
++        else{
++            return insultList.get(index);
++        }
++
++    }
++    public void addInsultMessage(String insult){
++        insultList.add(insult);
++    }
++    public List<String> GetAllInsultsMessage(){
++        return insultList;
++    }
++}
+Index: src/mickimaus/Programa/App.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package mickimaus.Programa;\r\n\r\nimport mickimaus.Data.*;\r\n\r\nimport java.util.Queue;\r\n\r\npublic class App {\r\n\r\n    public static void main(String[] args) {\r\n\r\n        ActorContext ac = ActorContext.getInstance();\r\n        ActorProxy actor1 = ActorContext.spawnActor(\"Thread1\", new Actor() {\r\n            @Override\r\n            public void send(Message msg) {\r\n\r\n            }\r\n\r\n            @Override\r\n            public Message process() {\r\n                return null;\r\n            }\r\n\r\n            @Override\r\n            public int getQueLength() {\r\n                return 0;\r\n            }\r\n\r\n            @Override\r\n            public Queue<Message> getQue() {\r\n                return null;\r\n            }\r\n        });\r\n        ActorProxy actor2=new ActorProxy(\"Thread2\");\r\n        actor1.send(new Message(new ActorProxy(\"Carlos\"), \"Hello wol\"));\r\n        actor1.send(new Message(new ActorProxy(\"Nil\"), \"Hellouu\"));\r\n        actor1.send(new Message(new ActorProxy(\"Genis\"), \"Hello\"));\r\n        actor1.send(new Message(new ActorProxy(\"Pedro\"), \"Hello\"));\r\n        actor2.send(new Message(new ActorProxy(\"Juan\"), \"Prueba2.1\"));\r\n        actor2.send(new Message(new ActorProxy(\"Luis\"), \"Prueba2.2\"));\r\n\r\n        /*Thread t1=new Thread(actor1);\r\n        Thread t2=new Thread(actor2);\r\n        t1.start();\r\n        //t1.stop();\r\n        t2.start();\r\n        System.out.println(actor1.process());*/\r\n\r\n        actor1.start();\r\n        actor2.start();\r\n\r\n        //actor1.getQue().forEach((s)-> System.out.println(s));\r\n\r\n\r\n\r\n    }\r\n\r\n    }\r\n\r\n/*\r\n\r\n\r\n   public static void main(String[] args) {\r\n\r\n        provaInstancia();\r\n\r\n    }\r\n    //fot el mateix k abans\r\n    public static void provaInstancia(){\r\n        Thread t1=new Thread(new Runnable() {\r\n            @Override\r\n            public void run() {\r\n                Actor a1=Actor.getInstance();\r\n                System.out.println(a1.hashCode());\r\n\r\n            }\r\n        });\r\n        Thread t2=new Thread(new Runnable() {\r\n            @Override\r\n            public void run() {\r\n                Actor a2=Actor.getInstance();\r\n                System.out.println(a2.hashCode());\r\n            }\r\n        });\r\n        t1.start();\r\n        t2.start();\r\n    }\r\n */
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/mickimaus/Programa/App.java b/src/mickimaus/Programa/App.java
+--- a/src/mickimaus/Programa/App.java	(revision 48315a44e975e656abd40ea0acfc1c2f0d8f8f5c)
++++ b/src/mickimaus/Programa/App.java	(date 1666264528594)
+@@ -51,6 +51,11 @@
+         //actor1.getQue().forEach((s)-> System.out.println(s));
+ 
+ 
++        //Testing insuultActor:
++        ActorProxy iActor = new ActorProxy("Thread 3");
++        iActor.
++
++
+ 
+     }
+ 
