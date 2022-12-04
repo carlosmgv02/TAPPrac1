@@ -2,37 +2,25 @@ package ActorModel.Data;
 
 import ActorModel.Data.Messages.Message;
 
-public class DynamicProxy extends Actor {
-    private final String id;
-    private final Actor actor;
-    private Thread t;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
-    public DynamicProxy(String id, Actor actor) {
-        this.id = id;
-        this.actor = actor;
+public class DynamicProxy implements InvocationHandler {
+
+    private static DynamicProxy dpInstance;
+
+    private DynamicProxy() {
+
     }
 
-
-    @Override
-    public Message process() {
+    public static InsultService intercept(ActorProxy insult) {
         return null;
     }
 
     @Override
-    public int getQueLength() {
-        return actor.getQueLength();
+    public Object invoke (Object proxy, Method method, Object[]args) throws Throwable {
+        return null;
     }
-
-    @Override
-    public void run() {
-        actor.run();
-    }
-
-    @Override
-    public void start() {
-        actor.start();
-    }
-
 
 }
 

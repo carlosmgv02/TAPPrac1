@@ -11,7 +11,7 @@ import java.util.*;
  *     This class will create the actors and the proxies and will send messages to the actors.
  * </p>
  */
-public class    App {
+public class App {
     public static void main(String[] args) {
         //provarHelloWorld();
         //provarInsultActor();
@@ -33,8 +33,6 @@ public class    App {
         System.out.println();
 
 
-*/
-
 
         EncryptionDecorator brrr =new EncryptionDecorator(new InsultActor());
         FirewallDecorator micimaus =new FirewallDecorator(brrr);
@@ -42,7 +40,13 @@ public class    App {
         ActorProxy act2=ActorContext.spawnActor("micimaus",micimaus);
         ActorProxy ac1=ActorContext.spawnActor("prueba",new InsultActor());
         act2.send(new GetAllInsultsMessage());
+ */
+        //Testing dynamic proxy -> proxy constructed at runtime (not compiletime )
 
+        ActorProxy insult = ActorContext.spawnActor(  "provaDynProx",new InsultActor());
+        InsultService insulter = DynamicProxy.intercept(insult);
+        insulter.addInsult("stupid");
+        System.out.println(insulter.getInsult());
 
 
     }
