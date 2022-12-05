@@ -29,7 +29,7 @@ public class App {
         ActorProxy act2=ActorContext.spawnActor("micimaus",micimaus);
         ActorProxy ac1=ActorContext.spawnActor("prueba",new InsultActor());
         act2.send(new GetAllInsultsMessage());
- */
+ 
         //Testing dynamic proxy -> proxy constructed at runtime (not compiletime )
 
         ActorProxy insult = ActorContext.spawnActor(  "provaDynProx",new InsultActor());
