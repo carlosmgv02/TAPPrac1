@@ -31,7 +31,7 @@ public class ActorContextTest {
         System.out.println("-> TESTING LOOKUP...");
         Actor act=new InsultActor();
         ActorContext.spawnActor("hola",act);
-        assertEquals(act,ActorContext.lookup("hola"));
+        assertEquals(act, ActorContext.lookup("hola"));
 
     }
 

@@ -23,22 +23,29 @@ public class App {
         */
 
 
-        EncryptionDecorator brrr = new EncryptionDecorator(new InsultActor());
-        FirewallDecorator micimaus = new FirewallDecorator(brrr);
-        LambdaFirewallDecorator lm = new LambdaFirewallDecorator(micimaus);
-        ActorProxy act2 = ActorContext.spawnActor("micimaus", micimaus);
-        ActorProxy ac1 = ActorContext.spawnActor("prueba", new InsultActor());
-        act2.send(new GetAllInsultsMessage());
 
+        EncryptionDecorator brrr =new EncryptionDecorator(new InsultActor());
+        FirewallDecorator micimaus =new FirewallDecorator(brrr);
+        LambdaFirewallDecorator lm=new LambdaFirewallDecorator(micimaus);
+        ActorProxy act2=ActorContext.spawnActor("micimaus",micimaus);
+        ActorProxy ac1=ActorContext.spawnActor("prueba",new InsultActor());
+        act2.send(new GetAllInsultsMessage());
+ 
+        //Testing dynamic proxy -> proxy constructed at runtime (not compiletime )
+
+        ActorProxy insult = ActorContext.spawnActor(  "provaDynProx",new InsultActor());
+        InsultService insulter = DynamicProxy.intercept(insult);
+        insulter.addInsult("stupid");
+        System.out.println(insulter.getInsult());
 
     }
 
     /**
      * Method used to test the sendActor method
      */
-    public static void provarSendActor() {
-        ActorProxy ac1 = ActorContext.spawnActor("carlos", new InsultActor());
-        ActorProxy ac2 = ActorContext.spawnActor("genis", new InsultActor());
+    public static void provarSendActor(){
+        ActorProxy ac1= ActorContext.spawnActor("carlos",new InsultActor());
+        ActorProxy ac2=ActorContext.spawnActor("genis",new InsultActor());
 
         ac1.send(new Message(null, "hola buenos dias"));
         ac2.send(new Message(null, "hola buenos dias"));

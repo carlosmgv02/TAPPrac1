@@ -134,18 +134,18 @@ The idea is to create a MonitorService that can obtain runtime information about
 Using the Observer pattern, create an ActorListener enabling to receive information about four
 Actor Events (creation, finalization, incorrect finalization, and received message). Incorrect
 finalization means that the Actor stopped without receiving a QuitMessage (it halted abruptly due to
-an error).
+an error).<br><br>
 The MonitorService can subscribe to some specific Actors (monitorActor(name)) or to all Actors in
 the system (monitorAllActors()). The service will offer information about Actor message traffic
 (LOW<5 messages, MEDIUM>5 <15, HIGH >15). A method (getTraffic) can be used to obtain a
-Map where the key is the traffic (LOW, MEDIUM, HIG) and the value is the list of actor names.
+Map where the key is the traffic (LOW, MEDIUM, HIG) and the value is the list of actor names.<br><br>
 The Monitor Service also offers methods to getNumberofMessages for a givenActor, to log all
 messages from one or more Actors, and to log all events.
 The MonitorService also offers a getSentMessages method working over the message log, which
 returns a Map where the key is the Actor, and the value is the messages sent by that actor. You can
 also implement the analogous getReceivedMessages returning a Map where the key is the Actor,
 and the value is the list of Messages sent by that Actor. You can use Java streams and Lambdas in
-this task.
+this task.<br><br>
 The MonitorService also offers a getEvents method working over the event log, which returns a
 Map where the key is the enum (CREATED, STOPPED, ERROR), and the value contains the
 aforementioned events.
