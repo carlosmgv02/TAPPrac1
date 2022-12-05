@@ -1,6 +1,6 @@
 unnamed package
 ActorModel.Data
-ActorModel.Data.Exceptions
-ActorModel.Data.Messages
-ActorModel.Data.Messages.Insult
-ActorModel.Data.Tests
+ActorModel.Exceptions
+ActorModel.Messages
+ActorModel.Messages.Insult
+Tests

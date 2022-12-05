@@ -1,6 +1,6 @@
-import ActorModel.Data.*;
-import ActorModel.Data.Messages.Insult.GetAllInsultsMessage;
-import ActorModel.Data.Messages.Message;
+import ActorModel.*;
+import ActorModel.Messages.Insult.GetAllInsultsMessage;
+import ActorModel.Messages.Message;
 
 import java.util.Set;
 
