@@ -1,6 +1,5 @@
-import ActorModel.Data.*;
-import ActorModel.Data.Messages.Insult.*;
-import ActorModel.Data.Messages.Message;
+import ActorModel.*;
+import ActorModel.Messages.Message;
 
 
 import java.util.*;
@@ -55,7 +54,7 @@ public class App {
      * Method used to test the sendActor method
      */
     public static void provarSendActor(){
-        ActorProxy ac1=ActorContext.spawnActor("carlos",new InsultActor());
+        ActorProxy ac1= ActorContext.spawnActor("carlos",new InsultActor());
         ActorProxy ac2=ActorContext.spawnActor("genis",new InsultActor());
 
         ac1.send(new Message(null,"hola buenos dias"));
