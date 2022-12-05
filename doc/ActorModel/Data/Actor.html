@@ -92,7 +92,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://download.java.net/java/early_access/jdk19/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="https://download.java.net/java/early_access/jdk19/docs/api/java.base/java/lang/Thread.html" title="class or interface in java.lang" class="external-link">java.lang.Thread</a>
-<div class="inheritance">ActorModel.Data.Actor</div>
+<div class="inheritance">ActorModel.Actor</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
@@ -133,7 +133,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected <a href="https://download.java.net/java/early_access/jdk19/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="Messages/Message.html" title="class in ActorModel.Data.Messages">Message</a>&gt;</code></div>
+<div class="col-first even-row-color"><code>protected <a href="https://download.java.net/java/early_access/jdk19/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="Messages/Message.html" title="class in ActorModel.Messages">Message</a>&gt;</code></div>
 <div class="col-second even-row-color"><code><a href="#cua" class="member-name-link">cua</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Queue in which the messages sent from other actors will be stored.</div>
@@ -173,17 +173,17 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the length of the queue</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://download.java.net/java/early_access/jdk19/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="Messages/Message.html" title="class in ActorModel.Data.Messages">Message</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://download.java.net/java/early_access/jdk19/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="Messages/Message.html" title="class in ActorModel.Messages">Message</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getQueue()" class="member-name-link">getQueue</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the queue of the actor</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#offer(ActorModel.Data.Messages.Message)" class="member-name-link">offer</a><wbr>(<a href="Messages/Message.html" title="class in ActorModel.Data.Messages">Message</a>&nbsp;m)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#offer(ActorModel.Data.Messages.Message)" class="member-name-link">offer</a><wbr>(<a href="Messages/Message.html" title="class in ActorModel.Messages">Message</a>&nbsp;m)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Method that adds a message to the queue</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="Messages/Message.html" title="class in ActorModel.Data.Messages">Message</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="Messages/Message.html" title="class in ActorModel.Messages">Message</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#process()" class="member-name-link">process</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Method that processes the message</div>
@@ -216,7 +216,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="cua">
 <h3>cua</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://download.java.net/java/early_access/jdk19/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="Messages/Message.html" title="class in ActorModel.Data.Messages">Message</a>&gt;</span>&nbsp;<span class="element-name">cua</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://download.java.net/java/early_access/jdk19/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="Messages/Message.html" title="class in ActorModel.Messages">Message</a>&gt;</span>&nbsp;<span class="element-name">cua</span></div>
 <div class="block">Queue in which the messages sent from other actors will be stored.</div>
 </section>
 </li>
@@ -256,7 +256,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getQueue()">
 <h3>getQueue</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://download.java.net/java/early_access/jdk19/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="Messages/Message.html" title="class in ActorModel.Data.Messages">Message</a>&gt;</span>&nbsp;<span class="element-name">getQueue</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://download.java.net/java/early_access/jdk19/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="Messages/Message.html" title="class in ActorModel.Messages">Message</a>&gt;</span>&nbsp;<span class="element-name">getQueue</span>()</div>
 <div class="block">Returns the queue of the actor</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -280,7 +280,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="process()">
 <h3>process</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="Messages/Message.html" title="class in ActorModel.Data.Messages">Message</a></span>&nbsp;<span class="element-name">process</span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="Messages/Message.html" title="class in ActorModel.Messages">Message</a></span>&nbsp;<span class="element-name">process</span>()</div>
 <div class="block">Method that processes the message</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -291,7 +291,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="offer(ActorModel.Data.Messages.Message)">
 <h3>offer</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">offer</span><wbr><span class="parameters">(<a href="Messages/Message.html" title="class in ActorModel.Data.Messages">Message</a>&nbsp;m)</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">offer</span><wbr><span class="parameters">(<a href="Messages/Message.html" title="class in ActorModel.Messages">Message</a>&nbsp;m)</span></div>
 <div class="block">Method that adds a message to the queue</div>
 <dl class="notes">
 <dt>Parameters:</dt>
