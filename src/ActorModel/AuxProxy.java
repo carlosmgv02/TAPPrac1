@@ -10,6 +10,7 @@ public class AuxProxy {
 
     /**
      * Class constructor
+     *
      * @param actorProxy
      */
     public AuxProxy(ActorProxy actorProxy) {
@@ -18,6 +19,7 @@ public class AuxProxy {
 
     /**
      * Method used to send a message to the proxy
+     *
      * @param m the message to be sent
      * @see ActorProxy#send(Message) ActorProxy.send
      */

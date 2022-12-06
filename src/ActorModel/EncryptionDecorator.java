@@ -13,8 +13,10 @@ import java.util.Queue;
 public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
     private final Actor act;
 
+
     public EncryptionDecorator(Actor actor) {
         this.act = actor;
+
     }
 
     /**
@@ -39,7 +41,6 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
     @Override
     public Message process() {
         Message toProcess = act.process();
-
         String dec = descifrar(toProcess.getText());
         System.out.println("Decrypted: " + dec);
         act.cua.poll();
@@ -54,7 +55,7 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
         do {
             if (!act.getQueue().isEmpty())
                 process();
-        } while (!act.isInterrupted());
+        } while (true);
     }
 
     /**

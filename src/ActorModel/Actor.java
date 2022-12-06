@@ -8,11 +8,15 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * Class that represents an actor.
  * <p>
- *     We will use this class to establish communication between actors and simulate the queue message sending.
- *     Each actor will have a queue and actors who want to communicate with it, will leave messages in its queue.
+ * We will use this class to establish communication between actors and simulate the queue message sending.
+ * Each actor will have a queue and actors who want to communicate with it, will leave messages in its queue.
  * </p>
  */
-public abstract class Actor extends Thread {
+
+public abstract class Actor implements Runnable {
+    //Thread implementation has been moved from Thread extension to Runnable implementation
+    //This is because we want to be able to use the same thread for multiple actors, E.G. the same thread for the Encryption and the actor
+
     /**
      * Queue in which the messages sent from other actors will be stored.
      */
@@ -44,10 +48,15 @@ public abstract class Actor extends Thread {
     public void run() {
         do {
             if (!cua.isEmpty()) {
+                try {
+                    Thread.currentThread().sleep(100);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 process();
             }
 
-        } while (!isInterrupted());
+        } while (true);
     }
 
     /**
@@ -62,7 +71,7 @@ public abstract class Actor extends Thread {
      *
      * @param m the message to add
      */
-    protected void offer(Message m) {
+    protected synchronized void offer(Message m) {
         this.cua.offer(m);
     }
 

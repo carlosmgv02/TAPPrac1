@@ -10,7 +10,7 @@ import ActorModel.Messages.Message;
  */
 public class RingActor extends Actor {
 
-    ActorProxy next;
+    private ActorProxy next;
 
     /**
      * Method that processes the message
@@ -21,8 +21,16 @@ public class RingActor extends Actor {
     @Override
     public Message process() {
         String printing_ring_actor = "Printing Ring Actor";
-        System.out.println(printing_ring_actor);
         Message msg = cua.poll();
+
+        System.out.println("You're on: "+ActorContext.getActorName(this)+"\n\t"+msg);
         return new Message(msg != null ? msg.getFrom() : null, printing_ring_actor);
+    }
+
+    public void setNext(ActorProxy next) {
+        this.next = next;
+    }
+    public ActorProxy getNext() {
+        return next;
     }
 }

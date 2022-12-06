@@ -10,22 +10,23 @@ public class InsultService extends InsultActor {
     //InsultService class with methods addInsult,
     // getAllInsults, getInsult.
 
-    public InsultService(){
+    public InsultService() {
         super();
 
     }
 
-    public void addInsult(String insult){
+    public void addInsult(String insult) {
         this.ia.insultList.add(insult);
     }
 
-    public String getInsult(){
+    public String getInsult() {
         return this.ia.insultList.get(0);
     }
-    public List getAllInsults(){
+
+    public List getAllInsults() {
         List a = new ArrayList<String>(this.ia.insultList);
         return a;
-    };
+    }
 
 
 }

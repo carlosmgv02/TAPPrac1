@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 /**
  * Class used to test the actor inheritance and the return of messages to proxies
  * <p>
- *     This class will overrite the {@link Actor#process()} method to return a message to the proxy
+ * This class will overrite the {@link Actor#process()} method to return a message to the proxy
  * </p>
  */
 public class HelloWorldActor extends Actor {

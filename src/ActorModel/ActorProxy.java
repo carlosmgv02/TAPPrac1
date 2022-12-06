@@ -1,6 +1,7 @@
 package ActorModel;
 
 import ActorModel.Messages.Message;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,7 +24,7 @@ public class ActorProxy {
         this.actor = act;
         this.id = id;
         receiveQueue = Collections.synchronizedList((new ArrayList<>()));
-        actor.start();
+        //actor.start();
     }
 
 

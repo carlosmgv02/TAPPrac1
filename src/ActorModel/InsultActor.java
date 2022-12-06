@@ -4,13 +4,17 @@ import ActorModel.Messages.Insult.AddInsultMessage;
 import ActorModel.Messages.Insult.GetAllInsultsMessage;
 import ActorModel.Messages.Insult.GetInsultMessage;
 import ActorModel.Messages.Message;
+import ActorModel.Messages.QuitMessage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Class that represents an Insult Actor.
  * <p>
- *     It has its own process method that processes the messages and inherits the rest of the methods from the Actor class.
+ * It has its own process method that processes the messages and inherits the rest of the methods from the Actor class.
  * </p>
  */
 public class InsultActor extends Actor {
@@ -20,22 +24,26 @@ public class InsultActor extends Actor {
     /**
      * Method that processes the message.
      * <p>
-     *     It processes the message via a pattern matching, depending on the type of message passed by parameter.
+     * It processes the message via a pattern matching, depending on the type of message passed by parameter.
      * </p>
-     *     Available messages:
-     *     <ul>
-     *         <li>Message</li>
-     *         <li>GetInsultMessage</li>
-     *         <li>GetAllInsultsMessage</li>
-     *         <li>AddInsultMessage</li>
-     *     </ul>
+     * Available messages:
+     * <ul>
+     *     <li>Message</li>
+     *     <li>GetInsultMessage</li>
+     *     <li>GetAllInsultsMessage</li>
+     *     <li>AddInsultMessage</li>
+     * </ul>
+     *
      * @return the processed message
      * @see Actor#process() Actor.process
      */
     @Override
     public synchronized Message process() {
 
-        Message msg = cua.poll();
+        Message msg;
+        synchronized (cua) {
+            msg = cua.poll();
+        }
         switch (msg) {
             case GetInsultMessage m1 -> {
                 Collections.shuffle(insultList);
@@ -91,7 +99,11 @@ public class InsultActor extends Actor {
             case null -> {
                 return null;
             }
+            case QuitMessage m4->{
+                Thread.currentThread().interrupt();
+            }
             default -> {
+                System.out.println(msg);
                 return msg;
                 /*if (msgIsValid(msg))
                     cua.offer(msg);*/
@@ -102,6 +114,7 @@ public class InsultActor extends Actor {
 
     /**
      * Method to verify if the message is already in the queue
+     *
      * @param m the message to verify
      * @return true if the message is not in the queue, false otherwise
      */
@@ -111,6 +124,7 @@ public class InsultActor extends Actor {
 
     /**
      * Method to get the insult list
+     *
      * @return the insult list
      */
     public List<String> getInsultList() {

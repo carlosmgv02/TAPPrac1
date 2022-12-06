@@ -7,11 +7,11 @@ import java.util.function.Predicate;
 /**
  * Class that represents a decorator that filters the messages.
  * <p>
- *     It will filter the messages that are not accepted by the predicate, which is passed as a parameter
- *     to the {@link LambdaFirewallDecorator#addClosureMessage(Predicate)}.
+ * It will filter the messages that are not accepted by the predicate, which is passed as a parameter
+ * to the {@link LambdaFirewallDecorator#addClosureMessage(Predicate)}.
  * </p>
  * <p>
- *     We will use the closure to filter the messages processed by the Firewall decorator.
+ * We will use the closure to filter the messages processed by the Firewall decorator.
  * </p>
  */
 public class LambdaFirewallDecorator extends FirewallDecorator {
@@ -19,6 +19,7 @@ public class LambdaFirewallDecorator extends FirewallDecorator {
 
     /**
      * Constructor of the class
+     *
      * @param act the actor to decorate
      */
     public LambdaFirewallDecorator(Actor act) {
@@ -27,6 +28,7 @@ public class LambdaFirewallDecorator extends FirewallDecorator {
 
     /**
      * Method that adds a closure message to the actor
+     *
      * @param pred the predicate to filter the messages
      */
     public void addClosureMessage(Predicate<Message> pred) {
@@ -37,8 +39,9 @@ public class LambdaFirewallDecorator extends FirewallDecorator {
     /**
      * Method that processes the message.
      * <p>
-     *     We will call the actor's process method and then we will filter the message
+     * We will call the actor's process method and then we will filter the message
      * </p>
+     *
      * @return the processed message
      * @see Actor#process() Actor.process
      */

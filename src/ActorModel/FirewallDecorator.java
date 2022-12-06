@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * Class used to filter the messages processed by an actor
  * <p>
- *     It is a decorator that wraps an actor.
+ * It is a decorator that wraps an actor.
  * </p>
  */
 public class FirewallDecorator extends Actor {
@@ -70,6 +70,6 @@ public class FirewallDecorator extends Actor {
         do {
             if (!act.getQueue().isEmpty())
                 process();
-        } while (!act.isInterrupted());
+        } while (true);
     }
 }

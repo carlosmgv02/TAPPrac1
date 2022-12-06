@@ -11,6 +11,7 @@ public interface ImplCifradoCesar {
 
     /**
      * Method to encrypt the message
+     *
      * @param mensaje the message to encrypt
      * @return the encrypted message
      */
@@ -18,6 +19,7 @@ public interface ImplCifradoCesar {
 
     /**
      * Method to decrypt the message
+     *
      * @param mensaje the message to decrypt
      * @return the decrypted message
      */

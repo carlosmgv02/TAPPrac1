@@ -8,7 +8,12 @@ import java.util.Set;
  * Class that contains the actors, based on the singleton pattern
  */
 public class ActorContext {
-    private final static Map<String, Actor> actorSet = new HashMap<>();
+    public final static Map<String, Actor> actorSet = new HashMap<>();
+    /**
+     * Temporary variable used to store the actor's thread to track its behaviour
+     */
+    public final static Map<Runnable, Thread> prova = new HashMap<>();
+
     private static ActorContext actorInstance;
 
     private ActorContext() {
@@ -35,10 +40,16 @@ public class ActorContext {
      * @return the actor proxy that controls the actor
      */
     public static ActorProxy spawnActor(String name, Actor type) {
+
         ActorProxy newActor = new ActorProxy(type, name);
         //new Thread(newActor).start();
         actorSet.put(name, type);
-
+        /**
+         * Thread implementation has been moved from Thread extension to Runnable implementation
+         */
+        Thread t = new Thread(type); //We now create the thread manually and pass the Runnable object
+        prova.put(type, t); //We temporarily store the thread to keep track of its behaviour
+        t.start(); //We start the thread
 
         return newActor;
     }
@@ -92,7 +103,7 @@ public class ActorContext {
      * @param actor the actor
      * @return the name of the actor
      */
-    public String getActorName(Actor actor) {
+    public static String getActorName(Actor actor) {
         for (Map.Entry<String, Actor> entry : actorSet.entrySet()) {
             if (entry.getValue().equals(actor)) {
                 return entry.getKey();
