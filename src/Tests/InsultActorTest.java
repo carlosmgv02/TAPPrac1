@@ -39,8 +39,10 @@ public class InsultActorTest {
     public void addInsult() throws InterruptedException {
         ActorProxy act= ActorContext.spawnActor("prueba",new InsultActor());
         List<String> ins= ((InsultActor)act.getActor()).getInsultList();
+
         act.send(new AddInsultMessage("payaso"));
-        act.getActor().sleep(10);
+        //act.getActor().sleep(10);
+        Thread.currentThread().sleep(10); //le damos tiempo a que procese el mensaje
         assertTrue(((InsultActor) act.getActor()).getInsultList().contains("payaso"));
     }
 }

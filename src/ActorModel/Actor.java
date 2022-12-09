@@ -43,20 +43,35 @@ public abstract class Actor implements Runnable {
 
     /**
      * Method that defines the behaviour of the actor
+     * <p>
+     * Message processing will automatically stop if a message hasn't been received in 2 seconds.<br>
+     * Message processing won't stop if there are still messages in the queue.
+     * </p>
      */
     @Override
     public void run() {
+        long start = System.currentTimeMillis();
+        long end = start + 2 * 1000; // 2 seconds * 1000 ms/sec
+        boolean as=false;
+        long aux=start;
         do {
             if (!cua.isEmpty()) {
                 try {
-                    Thread.currentThread().sleep(100);
+                    Thread.sleep(0);
+                    process();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                process();
+                as=false;
             }
-
-        } while (true);
+            else{
+                if(!as){
+                    start= System.currentTimeMillis();
+                    end= start + 2 * 1000;
+                    as=true;
+                }
+            }
+        } while (System.currentTimeMillis()< end || !as);
     }
 
     /**

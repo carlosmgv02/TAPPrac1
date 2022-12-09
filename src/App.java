@@ -1,8 +1,10 @@
 import ActorModel.*;
 import ActorModel.Messages.Insult.GetAllInsultsMessage;
 import ActorModel.Messages.Message;
+import com.jcabi.aspects.Timeable;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Class that represents the main program.
@@ -14,6 +16,9 @@ public class App {
     public static void main(String[] args) {
         //TODO: VALIDATION (TESTING & JAVADOC)
         RingActor ra=createRingActor(3);
+        ActorProxy prox=ActorContext.spawnActor("ins",new InsultActor());
+        while(true)
+            prox.send(new Message(null,"hola"));
 
         /*
         LambdaFirewallDecorator lm=new LambdaFirewallDecorator(new HelloWorldActor());
@@ -94,21 +99,39 @@ public class App {
         insultActor.send(new Message(null, " Message sent after waiting 3 seconds"));
 
     }
+
+    /**
+     * In order to test the message passing, we've created a ring of actors.
+     * <p>
+     *     The purpose of this method is to create a ring of actors and send a message from the first to the following and so on.
+     * </p>
+     * <p>
+     *     We've disabled the auto-start of the actors, so we can create the actor ring and then start the actors.
+     * </p>
+     * @param n Number of actor we want the ring to have
+     * @return The actor ring created.
+     */
     public static RingActor createRingActor(int n){
         RingActor ra=new RingActor();
         ActorProxy ringActor=ActorContext.spawnActor("ring",ra);
-        ActorProxy ap = null,temp=ringActor;
+        ActorProxy ap,temp=ringActor;
         int i=0;
+        Message tOsend=new Message(temp,"Hello RING ACTOR");
         for(i=1;i<=n;i++){
 
             ap=ActorContext.spawnActor("ring"+i,new RingActor());
             ra.setNext(ap);
-            ap.send(new Message(temp,"Hey ring"+i+", I'm "+ ActorContext.getActorName(temp.getActor())));
+
+            ap.send(new Message(temp,tOsend.getText()));
             temp=ap;
+            tOsend=temp.getActor().getQueue().element();
+            ra=(RingActor)ap.getActor();
         }
-        ringActor.send(new Message(ap,"Hello trial message"));
+        ringActor.send(tOsend);
+        //ActorContext.enableProcessing();
         return ra;
     }
+
 
 }
 

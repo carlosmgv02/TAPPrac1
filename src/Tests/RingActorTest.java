@@ -15,15 +15,24 @@ public class RingActorTest {
     }
     @Test
     public void testMessageSent(){
-        ActorProxy ap=null,temp=ringActor;
-        int i;
-        for(i=1;i<=10;i++){
+        RingActor ra=new RingActor();
+        ActorProxy ringActor=ActorContext.spawnActor("ring",ra);
+        ActorProxy ap,temp=ringActor;
+        int i=0;
+        Message tOsend=new Message(temp,"Hello RING ACTOR");
+        for(i=1;i<=1000;i++){
+
             ap=ActorContext.spawnActor("ring"+i,new RingActor());
-            ((RingActor)ringActor.getActor()).setNext(ap);
-            ap.send(new Message(temp,"Hey ring"+i+", I'm "+ ActorContext.getActorName(temp.getActor())));
+            ra.setNext(ap);
+            tOsend=new Message(temp,tOsend.getText());
+            ap.send(tOsend);
             temp=ap;
+            //tOsend=temp.getActor().getQueue().element();
+            ra=(RingActor)ap.getActor();
         }
-        ringActor.send(new Message(ap,"Hello from the last ring actor"));
-        assertTrue(ringActor.getActor().getQueue().element().getFrom().equals(ap));
+        tOsend=new Message(temp,tOsend.getText());
+        ringActor.send(tOsend);
+        //ActorContext.enableProcessing();
+        assertTrue(ringActor.getActor().getQueue().element().getFrom().equals(temp));
     }
 }

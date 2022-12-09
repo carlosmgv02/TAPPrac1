@@ -12,7 +12,7 @@ public class ActorContext {
     /**
      * Temporary variable used to store the actor's thread to track its behaviour
      */
-    public final static Map<Runnable, Thread> prova = new HashMap<>();
+    public final static Map<Runnable, Thread> threadMap = new HashMap<>();
 
     private static ActorContext actorInstance;
 
@@ -47,9 +47,11 @@ public class ActorContext {
         /**
          * Thread implementation has been moved from Thread extension to Runnable implementation
          */
-        Thread t = new Thread(type); //We now create the thread manually and pass the Runnable object
-        prova.put(type, t); //We temporarily store the thread to keep track of its behaviour
-        t.start(); //We start the thread
+        Thread t=new Thread(type);
+//        Thread t = Thread.startVirtualThread(type); //We now create the thread manually and pass the Runnable object
+        threadMap.put(type, t); //We temporarily store the thread to keep track of its behaviour
+        t.start(); //UNCOMMENT THIS LINE TO START THE THREAD AUTOMATICALLY
+
 
         return newActor;
     }
@@ -68,6 +70,14 @@ public class ActorContext {
             return act;
         }
         return null;
+    }
+
+    public static void enableProcessing() {
+        threadMap.forEach(
+                (key, value) -> {
+                    value.start();
+                }
+        );
     }
 
     /**

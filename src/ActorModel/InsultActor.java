@@ -99,11 +99,11 @@ public class InsultActor extends Actor {
             case null -> {
                 return null;
             }
-            case QuitMessage m4->{
+            case QuitMessage m4 -> {
                 Thread.currentThread().interrupt();
             }
             default -> {
-                System.out.println(msg);
+                //System.out.println(msg);
                 return msg;
                 /*if (msgIsValid(msg))
                     cua.offer(msg);*/

@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="jcabi.aspects" type="repository">
+    <properties maven-id="com.jcabi:jcabi-aspects:0.24.1" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/jcabi/jcabi-aspects/0.24.1/jcabi-aspects-0.24.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/jcabi/jcabi-log/0.17/jcabi-log-0.17.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.5/slf4j-api-1.7.5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/aspectj/aspectjrt/1.9.9.1/aspectjrt-1.9.9.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/javax/validation/validation-api/2.0.1.Final/validation-api-2.0.1.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
