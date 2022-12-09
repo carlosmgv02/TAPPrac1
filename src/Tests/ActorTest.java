@@ -1,4 +1,3 @@
-package Tests;
 
 import ActorModel.Actor;
 import ActorModel.ActorContext;

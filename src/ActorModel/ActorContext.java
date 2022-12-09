@@ -50,7 +50,7 @@ public class ActorContext {
         Thread t=new Thread(type);
 //        Thread t = Thread.startVirtualThread(type); //We now create the thread manually and pass the Runnable object
         threadMap.put(type, t); //We temporarily store the thread to keep track of its behaviour
-        t.start(); //UNCOMMENT THIS LINE TO START THE THREAD AUTOMATICALLY
+//        t.start(); //UNCOMMENT THIS LINE TO START THE THREAD AUTOMATICALLY
 
 
         return newActor;

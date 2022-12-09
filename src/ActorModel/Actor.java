@@ -64,14 +64,15 @@ public abstract class Actor implements Runnable {
                 }
                 as=false;
             }
-            else{
+            /*else{
                 if(!as){
                     start= System.currentTimeMillis();
                     end= start + 2 * 1000;
                     as=true;
                 }
-            }
-        } while (System.currentTimeMillis()< end || !as);
+            }*/
+        //} while (System.currentTimeMillis()< end || !as);
+        } while (true);
     }
 
     /**
