@@ -1,6 +1,7 @@
 package ActorModel;
 
 import ActorModel.Messages.Message;
+import ActorModel.Messages.QuitMessage;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -60,27 +61,42 @@ public abstract class Actor implements Runnable {
                     Thread.sleep(0);
                     process();
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Actor has been interrupted");
                 }
                 as=false;
             }
-            /*else{
+            else{
                 if(!as){
                     start= System.currentTimeMillis();
                     end= start + 2 * 1000;
                     as=true;
                 }
-            }*/
-        //} while (System.currentTimeMillis()< end || !as);
-        } while (true);
+            }
+        } while (System.currentTimeMillis()< end || !as);
+        //} while (true);
     }
 
     /**
      * Method that processes the message
-     *
      * @return the processed message
      */
-    public abstract Message process();
+    public Message process(){
+        Message msg = cua.poll();
+        switch (msg){
+            case QuitMessage m1->{
+                Thread.currentThread().interrupt();
+            }
+            default->{
+                return msg;
+            }
+            case null->{
+                return null;
+            }
+        }
+
+        return msg;
+
+    }
 
     /**
      * Method that adds a message to the queue
