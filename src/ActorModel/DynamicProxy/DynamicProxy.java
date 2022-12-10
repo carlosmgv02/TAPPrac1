@@ -1,4 +1,7 @@
-package ActorModel;
+package ActorModel.DynamicProxy;
+
+import ActorModel.ActorProxy;
+import ActorModel.InsultService;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

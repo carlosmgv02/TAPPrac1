@@ -1,5 +1,7 @@
-package ActorModel;
+package ActorModel.Decorator;
 
+import ActorModel.Actor;
+import ActorModel.ImplCifradoCesar;
 import ActorModel.Messages.Message;
 
 import java.util.Queue;
@@ -43,7 +45,7 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
         Message toProcess = act.process();
         String dec = descifrar(toProcess.getText());
         System.out.println("Decrypted: " + dec);
-        act.cua.poll();
+        act.getQueue().poll();
         return new Message(toProcess.getFrom(), dec);
     }
 

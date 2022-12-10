@@ -1,6 +1,6 @@
 import ActorModel.ActorContext;
 import ActorModel.ActorProxy;
-import ActorModel.EncryptionDecorator;
+import ActorModel.Decorator.EncryptionDecorator;
 import ActorModel.InsultActor;
 import ActorModel.Messages.Message;
 import org.junit.Before;

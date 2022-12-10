@@ -1,5 +1,6 @@
 package ActorModel;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -122,5 +123,11 @@ public class ActorContext {
         return null;
     }
 
-
+    /**
+     * Method used to obtain all actors from the actor context
+     * @return the collection of actors
+     */
+    public static Collection<? extends Actor> getActors() {
+        return actorSet.values();
+    }
 }

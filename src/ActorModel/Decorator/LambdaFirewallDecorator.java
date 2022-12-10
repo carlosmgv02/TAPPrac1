@@ -1,5 +1,6 @@
-package ActorModel;
+package ActorModel.Decorator;
 
+import ActorModel.Actor;
 import ActorModel.Messages.Message;
 
 import java.util.function.Predicate;
@@ -47,7 +48,7 @@ public class LambdaFirewallDecorator extends FirewallDecorator {
      */
     @Override
     public Message process() {
-        Message toProcess = super.act.cua.poll();
+        Message toProcess = super.act.getQueue().poll();
         if (filter.test(toProcess)) {
             //System.out.println(toProcess);
             return super.act.process();

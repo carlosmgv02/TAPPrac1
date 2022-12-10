@@ -1,5 +1,7 @@
-package ActorModel;
+package ActorModel.Decorator;
 
+import ActorModel.Actor;
+import ActorModel.ActorContext;
 import ActorModel.Messages.Message;
 
 import java.util.Queue;
