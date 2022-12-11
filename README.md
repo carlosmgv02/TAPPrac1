@@ -1,6 +1,21 @@
 # PRACTICA TAP
 Practica 1 Técnicas Avanzadas de Programación. Consiste en implementar un sistema de actores en `Java`.<br>
 ## NOTES
+### Monitor service:
+Ha de tenir una llista d'actors als que està subscrit.
+  * Interface observer (unic mètode update)
+    * Implementar observer desde actorListener -> estat()
+    * Implementar observer desde monitorService -> traffic
+  * Interface observable: attach | dettach | notifyAll
+    * Implementar observable desde Actor (attach | dettach | notifyAll)
+
+### Dynamic proxy
+Hem de fer una adaptació del proxy que utilitzi reflection.
+Si li passem un objecte de tipus *getMessage*, haurem de cridar a aquest mètode per a facilitar l'execució del codi.
+D'aquesta forma, no ho hem de mirar al process, si no que quan rebem un objecte, fem un binding amb el mètode.
+* Com relacionar el invoke amb el intercept
+* Com difefrenciar el reflectiveActor amb el dynProxy
+
 ### Consells Pedro
 * Actor proxy no ha de ser un thread pero necessita tenir una cua per poder rebre missatges un cop ja n'ha enviat.
 * Proxy ha de ser una interfície.
@@ -149,6 +164,10 @@ this task.<br><br>
 The MonitorService also offers a getEvents method working over the event log, which returns a
 Map where the key is the enum (CREATED, STOPPED, ERROR), and the value contains the
 aforementioned events.
+
+
+
+
 
 ### Validation
 To demonstrate that the Actor system is running correctly we propose two simple examples: Ring

@@ -38,11 +38,7 @@ public class MonitorService implements Observable {
         this.actor.addAll(ActorContext.getActors());
     }
 
-    public void notifyObservers(Status status){
-        for(Observer o : observers){
-            o.update(status);
-        }
-    }
+
 
     public void setTrafico(Actor act){
         if(act.getQueLength()<5){
@@ -105,7 +101,7 @@ public class MonitorService implements Observable {
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObservers(Status status) {
         for(Observer o : observers){
             o.update(status);
         }
