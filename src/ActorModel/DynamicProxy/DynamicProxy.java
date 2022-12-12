@@ -1,17 +1,29 @@
 package ActorModel.DynamicProxy;
 
 import ActorModel.ActorProxy;
+import ActorModel.InsultActor;
 import ActorModel.InsultService;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
 
 public class DynamicProxy implements InvocationHandler {
 
     private static DynamicProxy dpInstance;
+    private InsultService insultService;
+    private Object target = null;
 
-    private DynamicProxy() {
-
+    public static Object newInstance(Object target){
+        Class targetClass = target.getClass();
+        Class interfaces[] = targetClass.getInterfaces();
+        return Proxy. newProxyInstance(targetClass.getClassLoader(),
+                interfaces, new DynamicProxy(target));
+    }
+    private DynamicProxy(Object target) {
+        this.target = target;
     }
 
     public static InsultService intercept(ActorProxy insult) {
@@ -20,8 +32,25 @@ public class DynamicProxy implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        return null;
+        Object invocationResult = null;
+        try
+        {
+            //aquí tenemos que acceder al campo del mensaje donde guardamos el método
+            System.out.println("Before method " + method.getName());
+            invocationResult = method.invoke(this.target, args);
+            System.out.println("After method " + method.getName());
+        }
+        catch(InvocationTargetException ite)
+        {
+            throw ite.getTargetException();
+        }
+        catch(Exception e)
+        {
+            System.err.println("Invocation of " + method.getName() + " failed");
+        }
+        finally{
+            return invocationResult;
+        }
     }
-
 }
 

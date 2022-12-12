@@ -1,26 +1,34 @@
 # PRACTICA TAP
 Practica 1 Técnicas Avanzadas de Programación. Consiste en implementar un sistema de actores en `Java`.<br>
 ## NOTES
-### Monitor service:
-Ha de tenir una llista d'actors als que està subscrit.
-  * Interface observer (unic mètode update)
-    * Implementar observer desde actorListener -> estat()
-    * Implementar observer desde monitorService -> traffic
-  * Interface observable: attach | dettach | notifyAll
-    * Implementar observable desde Actor (attach | dettach | notifyAll)
-
-### Dynamic proxy
-Hem de fer una adaptació del proxy que utilitzi reflection.
-Si li passem un objecte de tipus *getMessage*, haurem de cridar a aquest mètode per a facilitar l'execució del codi.
-D'aquesta forma, no ho hem de mirar al process, si no que quan rebem un objecte, fem un binding amb el mètode.
-* Com relacionar el invoke amb el intercept
-* Com difefrenciar el reflectiveActor amb el dynProxy
 
 ### Consells Pedro
-* Actor proxy no ha de ser un thread pero necessita tenir una cua per poder rebre missatges un cop ja n'ha enviat.
-* Proxy ha de ser una interfície.
-* Actor ha de ser una classe, no una interfície, y les classes han d'heretar d'ella.
-* Nos bloqueamos cuando hacemos un receive para esperar la respuesta.
+#### MonitorService
+* Per a retornar els missatges enviats per un actor:<br>
+Creem un HashMap<Actor, ArrayList<Message>> per a guardar els missatges enviats per cada actor.<br>
+* Ho podem ficar a l'actor context.
+* MonitorService pot tenir un HashMap amb els actors i una llista dels seus observadors.
+* MonitorService que sigui opcional per a no implicar un cost en l'execució si no volem utilitzar-lo. (Decorator)
+##### Observer
+* Podem fer 3 classes diferents d'observer, o una classe amb diferents mètodes.
+##### ActorListener
+* Ha de ser una interfície.
+* Fer un mètode per a cada tipus de missatge
+#### DynamicProxy
+* substituir al codi del new instance al dyn procsi pel intercept
+* Al invoke fer un send
+##### InsultService
+* InsultService extends Actor.
+* Mètodes *getUnsult, addInsult, getAllInsults*.
+##### ReflectiveActor
+* Reflective actor quan cridem el mètode addInsult per exemple, enviem missatge a la cua amb el tipus d'objecte que correspon: <br>
+.send(new AddInsultMessage("insulto"))
+* Crear una altra classe de Message, que contingui un camp from, per saber quin mètode l'ha cridat.
+#### Remote development
+* En lloc de fer RMI, podem utilitzar [XML-RPC](https://www.youtube.com/watch?v=FTU4lUAfEeI).
+* Alternativament podem fer servir [RMI](https://www.youtube.com/watch?v=bMPd-k-ncoQ).
+#### Threads
+* Per a la implementació de Platform threads / virtual threads, ho podem implementar seguint el patró *Factory Design Pattern*.
 ## Contenido
 * [TODO](#todo)
 * [Introducción](#introducción)
@@ -193,73 +201,3 @@ the Actor system. Compare the performance of both systems using the Ring example
 * Carlos Martínez - [carlosmgv02](https://github.com/carlosmgv02)
 * Nil Monfort - [nilm9](https://github.com/nilm9)
 * Genís Martínez - [genismartinez](https://github.com/genismartinez)
-## Apuntes
-
-El patrón de `actores` sirve para evitar problemas entre concurrencias.
-
-La entidad es un actor.
-Un actor es un thread infinito.
-
-Actor -> `Mailbox` = cola de mensajes
-         Comportamiento = estado iterno del actor
-
- Para que un actor se comunique con otro, debe enviarle un mensaje.
- El actor recibe el mensaje y lo procesa.
-
- Todas las peticiones que se le encolan al actor las lee en orden.
- Por eso no hay problemas de concurrencias.
-
- Para cada actor necesitaremos un `hilo/thread` y una `cola`.
-```java
- p1= PlayerActor() //crea un actor
-   p1 ! "hola" //envia un mensaje al actor
-      p1 ! "adios"
-```
-```java
- ActorProxy hello = ActorContext.spawnActor("actor1", new RingActor());
- hello.send(new Message(null, "hola"));
-```
-
- Tendremos un `diccionario/HashMap` de actores para poder buscarlos por nombre.
-
-### Como crear un actor que responda a lo que queremos
-
- Que ocurra si queremos que el actor responda y me dé un resultado?<br>
- Podemos hacer que el proxy tenga su propia cola.
-```java
- Actor insult = ActorContext.spawnActor("actor1", new InsultActor());
- insult.send(new GetInsultMessage());
- Message result = insult.receive();
- System.out.println(result.getText());
-```
-
- 
-
- [Actor Decorator](https://www.geeksforgeeks.org/decorator-design-pattern-in-java-with-example/): 
- Actor que envuelve a otro actor y le añade funcionalidad.
-
-    //hay que crear un patrón factoría para que nuestros actores puedan funcionar con Java Threads y con virtualThreads
-
-</div>
-
-
-//pot ser que el proxy nomes envia i no te llista
-
-
-//interficie
-Actor (metodes declarats)
-
-//classes implementen actor
--Cadascuna té llista de missatges i caracteristiues de processar
-ringActor
-helloWorldActor
-...
-//ActorProxy->
-No te llista i nomes serveix per conectar els actors entre si i comunicarlos i donarels hi un nom
-
-
-
-
-
-
-

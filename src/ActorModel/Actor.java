@@ -3,6 +3,7 @@ package ActorModel;
 import ActorModel.Messages.Message;
 import ActorModel.Messages.QuitMessage;
 
+import ActorModel.Observer.MonitorService;
 import ActorModel.Observer.Observable;
 import ActorModel.Observer.Observer;
 import ActorModel.Observer.Status;
@@ -118,11 +119,13 @@ public class Actor implements Runnable, Observable {
 
     @Override
     public void attach(Observer o) {
-        observers.add(o);
+        MonitorService.attach(this,o);
+
     }
 
     @Override
     public void detach(Observer o) {
+        MonitorService.detach(this,o);
         observers.remove(o);
     }
 

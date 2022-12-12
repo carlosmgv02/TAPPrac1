@@ -1,5 +1,7 @@
 package ActorModel;
 
+import ActorModel.Observer.MonitorService;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,8 +18,9 @@ public class ActorContext {
     public final static Map<Runnable, Thread> threadMap = new HashMap<>();
 
     private static ActorContext actorInstance;
+    private MonitorService monitorService;
 
-    private ActorContext() {
+    protected ActorContext() {
 
     }
 

@@ -1,5 +1,12 @@
 import ActorModel.*;
+import ActorModel.Decorator.EncryptionDecorator;
+import ActorModel.Decorator.FirewallDecorator;
+import ActorModel.Decorator.LambdaFirewallDecorator;
+import ActorModel.Messages.Insult.GetAllInsultsMessage;
 import ActorModel.Messages.Message;
+import ActorModel.Observer.ActorListener;
+import ActorModel.Observer.MonitorService;
+import ActorModel.Observer.Status;
 
 import java.util.Set;
 
@@ -12,31 +19,24 @@ import java.util.Set;
 public class App {
     public static void main(String[] args) {
         //TODO: VALIDATION (TESTING & JAVADOC)
-        RingActor ra = createRingActor(3);
-        ActorProxy prox = ActorContext.spawnActor("ins", new InsultActor());
-
-
-
 
         /*
-        LambdaFirewallDecorator lm=new LambdaFirewallDecorator(new HelloWorldActor());
-        ActorProxy a=ActorContext.spawnActor("lambda",lm);
-        lm.addClosureMessage(msg->msg.getText().equals("carlos"));
-        a.send(new Message(null,"carlos"));
-        System.out.println();
-
-        ActorProxy act = ActorContext.spawnActor("enc", new EncryptionDecorator(new FirewallDecorator(new HelloWorldActor())));
-
-        ActorProxy act1 = ActorContext.spawnActor("fir", new FirewallDecorator(new EncryptionDecorator(new HelloWorldActor())));
-        act1.send(new Message(null, "hello"));
-        EncryptionDecorator brrr = new EncryptionDecorator(new InsultActor());
-        FirewallDecorator micimaus = new FirewallDecorator(brrr);
-        LambdaFirewallDecorator lm = new LambdaFirewallDecorator(micimaus);
-        ActorProxy act2 = ActorContext.spawnActor("micimaus", micimaus);
-        ActorProxy ac1 = ActorContext.spawnActor("prueba", new InsultActor());
-        act2.send(new GetAllInsultsMessage());
-
+        RingActor ra = createRingActor(3);
+        ActorProxy prox = ActorContext.spawnActor("ins", new InsultActor());
         */
+
+        MonitorService monitor = new MonitorService();
+
+        /**
+         * Prueba temporal para comprobar el funcionamiento.
+         */
+        Actor actor=new InsultActor();
+        actor.attach(new ActorListener());
+        monitor.monitorActor(actor);
+        monitor.setStatus(actor, Status.MESSAGE);
+
+
+
 
     }
 
@@ -129,6 +129,29 @@ public class App {
         ringActor.send(tOsend);
         //ActorContext.enableProcessing();
         return ra;
+    }
+
+    public static void ProvaDecorator(){
+
+        LambdaFirewallDecorator lm=new LambdaFirewallDecorator(new HelloWorldActor());
+        ActorProxy a=ActorContext.spawnActor("lambda",lm);
+        lm.addClosureMessage(msg->msg.getText().equals("carlos"));
+        a.send(new Message(null,"carlos"));
+        System.out.println();
+
+        ActorProxy act = ActorContext.spawnActor("enc", new EncryptionDecorator(new FirewallDecorator(new HelloWorldActor())));
+
+        ActorProxy act1 = ActorContext.spawnActor("fir", new FirewallDecorator(new EncryptionDecorator(new HelloWorldActor())));
+        act1.send(new Message(null, "hello"));
+        EncryptionDecorator brrr = new EncryptionDecorator(new InsultActor());
+        FirewallDecorator micimaus = new FirewallDecorator(brrr);
+        LambdaFirewallDecorator lm = new LambdaFirewallDecorator(micimaus);
+        ActorProxy act2 = ActorContext.spawnActor("micimaus", micimaus);
+        ActorProxy ac1 = ActorContext.spawnActor("prueba", new InsultActor());
+        act2.send(new GetAllInsultsMessage());
+
+
+
     }
 
 

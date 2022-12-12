@@ -3,43 +3,136 @@ package ActorModel.Observer;
 import ActorModel.*;
 import ActorModel.Messages.Message;
 
+import javax.swing.plaf.nimbus.State;
 import java.util.*;
 
+/**
+ * Decorator class for the ActorContext. It adds the ability to monitor the actors and their traffic.
+ * <p>
+ *     This class will allow us to monitor the message sending between actors and the traffic of each actor.
+ *     We'll also implement the observer pattern to notify every observer when a change in the status of an actor occurs.
+ * </p>
+ * @see ActorContext
+ * @see Observer
+ * @see Status
+ * @see Traffic
+ */
+public class MonitorService extends ActorContext {
 
-public class MonitorService implements Observable {
+    private static Map<Actor, ArrayList<Message>> sentMessages = new HashMap<>();
+    private static Map<Actor, ArrayList<Observer>> observerList = new HashMap<>();
+    private static Map<Status, ArrayList<Actor>>status=new HashMap<>();
+    private static Map<Traffic, ArrayList<Actor>>traffic=new HashMap<>();
 
-    //TODO PREGUNTAR SI FA FALTA TENIR UN ACTORLISTENER A PART O SI ES LO MATEIX QUE EL MONITOR SERVICE
 
-    protected ArrayList<Actor> actor;
-    protected List<Observer>observers=new ArrayList<>();
-    protected Status status; //TODO PREGUNTAR SI FA FALTA TENIR AQUESTA VARIABLE
-    Map<String, ArrayList<Actor>> mapTraffic = new HashMap<>();
-
-    public Status getStatus(){
-        return this.status;
+    public int getNumberOfMessages(Actor a) {
+        return a.getQueLength();
     }
-    public void setStatus(Status status){
-        this.status = status;
+
+    /**
+     * Method used to attach a new Observer to an actor
+     *
+     * @param act the actor to which the observer will be attached
+     * @param obs the observer to attach
+     */
+    public static void attach(Actor act, Observer obs) {
+        if (observerList.containsKey(act))
+            observerList.get(act).add(obs);
+        else {
+            ArrayList<Observer> list = new ArrayList<>();
+            list.add(obs);
+            observerList.put(act, list);
+        }
+    }
+
+    /**
+     * Method used to detach an observer from an actor
+     *
+     * @param act the actor from which the observer will be detached
+     * @param obs
+     */
+    public static void detach(Actor act, Observer obs) {
+        if (observerList.containsKey(act))
+            observerList.get(act).remove(obs);
+    }
+
+
+    public MonitorService() {
+        super();
     }
 
 
     /**
      * Method used to monitor the actor passed by parameter.
+     * AKA ATTACH
+     *
      * @param actor the actor we want to monitor.
      */
-    public void monitorActor(Actor actor){
-        this.actor.add(actor);
+    public void monitorActor(Actor actor) {
+        if(!observerList.containsKey(actor))
+            observerList.put(actor, new ArrayList<>());
     }
 
     /**
      * This methods monitors all the actors
      */
-    public void monitorAllActors(){
-        this.actor.addAll(ActorContext.getActors());
+    public void monitorAllActors() {
+        for(Actor a: ActorContext.getActors())
+            observerList.put(a, new ArrayList<>());
     }
 
+    /**
+     * Method used to update an actor's traffic
+     * @param a the actor to update
+     */
+    public void setTraffic(Actor a) {
+        var queue=a.getQueLength();
+        Traffic st=null;
+        if(queue<5)
+            st=Traffic.LOW;
+        else if(queue>5 && queue<15)
+            st=Traffic.MEDIUM;
+        else if(queue>15)
+            st=Traffic.HIGH;
 
+        if(traffic.containsKey(st)){
+            traffic.get(st).add(a);
+        }
+        else {
+            ArrayList<Actor> list = new ArrayList<>();
+            list.add(a);
+            traffic.put(st, list);
+        }
+    }
 
+    /**
+     * Method used to update an actor's status
+     * @param a the actor to update
+     * @param stat the status to set
+     */
+    public void setStatus(Actor a, Status stat){
+        if (status.containsKey(stat)) {
+            status.get(stat).add(a);
+        } else {
+            ArrayList<Actor> list = new ArrayList<>();
+            list.add(a);
+            status.put(stat, list);
+        }
+        notifyAllObservers(a, stat);
+    }
+
+    /**
+     * Method used to notify all the observers of an actor
+     * @param act the actor to notify
+     * @param update the status of the actor
+     */
+    public void notifyAllObservers(Actor act, Status update){
+        for (Observer observer : observerList.get(act)) {
+            observer.update(update);
+        }
+    }
+
+    /**
     public void setTrafico(Actor act){
         if(act.getQueLength()<5){
             if(mapTraffic.containsKey("LOW")) {
@@ -69,9 +162,6 @@ public class MonitorService implements Observable {
         mapTraffic.get(trafico);
         return mapTraffic;
     }
-    public int getNumberOfMessages(Actor act){
-        return act.getQueLength();
-    }
 
     //TODO BUSCAR OTRA MANERA DE HACERLO
     public Collection<Collection<Message>> getMessageLog(ArrayList<Actor>actor){
@@ -81,29 +171,6 @@ public class MonitorService implements Observable {
         }
         return messageLog;
     }
+**/
 
-    /**
-     * Method used to add an observer to the list of observers.
-     * @param o the observer we want to add.
-     */
-    @Override
-    public void attach(Observer o) {
-        observers.add(o);
-    }
-
-    /**
-     * Method used to remove an observer from the list of observers.
-     * @param o the observer we want to remove.
-     */
-    @Override
-    public void detach(Observer o) {
-        observers.remove(o);
-    }
-
-    @Override
-    public void notifyObservers(Status status) {
-        for(Observer o : observers){
-            o.update(status);
-        }
-    }
 }

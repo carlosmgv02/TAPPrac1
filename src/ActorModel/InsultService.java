@@ -3,7 +3,7 @@ package ActorModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InsultService extends InsultActor {
+public class InsultService extends Actor {
 
     private InsultActor ia;
     //For example, an
