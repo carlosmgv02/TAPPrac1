@@ -19,30 +19,31 @@ public class InsultActorTest {
     /**
      * Method used to test the getInsultMessage functioning.
      * <p>
-     *     Tipically, we won't explicitly call the process method, but we do so in the test not to deppend on threads.
-     *     The purpose of the test is to print the message previously sent to the actor's queue.
+     * Tipically, we won't explicitly call the process method, but we do so in the test not to deppend on threads.
+     * The purpose of the test is to print the message previously sent to the actor's queue.
      * </p>
      */
     @Test
-    public void messagesToProcess(){
-        ActorProxy act= ActorContext.spawnActor("prueba",new InsultActor());
+    public void messagesToProcess() {
+        ActorProxy act = ActorContext.spawnActor("prueba", new InsultActor());
         act.send(new GetInsultMessage());
-        Message msg=act.getActor().process();
+        Message msg = act.getActor().process();
         System.out.println(msg.getText());
     }
 
     /**
      * Mehtod used to test the addInsult method.
+     *
      * @throws InterruptedException Exception thrown when the thread is interrupted.
      */
     @Test
     public void addInsult() throws InterruptedException {
-        ActorProxy act= ActorContext.spawnActor("prueba",new InsultActor());
-        List<String> ins= ((InsultActor)act.getActor()).getInsultList();
+        ActorProxy act = ActorContext.spawnActor("prueba", new InsultActor());
+        List<String> ins = ((InsultActor) act.getActor()).getInsultList();
 
         act.send(new AddInsultMessage("payaso"));
         //act.getActor().sleep(10);
-        Thread.currentThread().sleep(10); //le damos tiempo a que procese el mensaje
+        Thread.sleep(10); //le damos tiempo a que procese el mensaje
         assertTrue(((InsultActor) act.getActor()).getInsultList().contains("payaso"));
     }
 }

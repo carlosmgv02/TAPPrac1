@@ -1,5 +1,6 @@
 package ActorModel;
 
+import ActorModel.DynamicProxy.InsultService;
 import ActorModel.Messages.Message;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Class that represents an Actor Proxy, which controls the access to the actor
  */
-public class ActorProxy {
+public class ActorProxy implements InsultService, ActorInterface {
     private final Actor actor;
     private final List<Message> receiveQueue;
     protected String id;
@@ -78,5 +79,19 @@ public class ActorProxy {
             }
         }
         return m;
+    }
+
+    @Override
+    public void addInsult(String insult) {
+    }
+
+    @Override
+    public Message getInsult() {
+        return null;
+    }
+
+    @Override
+    public Message getAllInsults() {
+        return null;
     }
 }

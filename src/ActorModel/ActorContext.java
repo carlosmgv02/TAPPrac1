@@ -51,14 +51,15 @@ public class ActorContext {
         /**
          * Thread implementation has been moved from Thread extension to Runnable implementation
          */
-        Thread t=new Thread(type);
+        Thread t = new Thread(type);
 //        Thread t = Thread.startVirtualThread(type); //We now create the thread manually and pass the Runnable object
         threadMap.put(type, t); //We temporarily store the thread to keep track of its behaviour
-//        t.start(); //UNCOMMENT THIS LINE TO START THE THREAD AUTOMATICALLY
+        t.start(); //UNCOMMENT THIS LINE TO START THE THREAD AUTOMATICALLY
 
 
         return newActor;
     }
+
 
     /**
      * Method to get the actor corresponding to the name
@@ -128,6 +129,7 @@ public class ActorContext {
 
     /**
      * Method used to obtain all actors from the actor context
+     *
      * @return the collection of actors
      */
     public static Collection<? extends Actor> getActors() {

@@ -73,7 +73,7 @@ public class InsultActor extends Actor {
                 insultList.forEach(e -> {
                     AuxProxy auxProxy = new AuxProxy(msg.getFrom());
                     Message temp = new Message(msg.getFrom(), e);
-//                    System.out.println("GETALLINSULTS SENT FROM INSULT ACTOR, TO: *"+ActorContext.lookupProxy(this).getProxyId()+"*"); TODO
+                    //System.out.println("GETALLINSULTS SENT FROM INSULT ACTOR, TO: *"+auxProxy+"*");
                     auxProxy.send(temp);
                     //msg.getFrom().offer(temp);
                     //ActorContext.lookupProxy(this).offer(temp);
@@ -131,4 +131,18 @@ public class InsultActor extends Actor {
         return insultList;
     }
 
+    /*public void addInsult(String insult) {
+        cua.offer(new AddInsultMessage(insult));
+    }
+
+    public Message getInsult() {
+        Collections.shuffle(insultList);
+        Message m = cua.poll();
+        return new Message(m.getFrom(), insultList.get(0));
+    }
+
+    public Message getAllInsults() {
+        cua.offer(new GetAllInsultsMessage());
+        return null; //TO BE CHANGED
+    }*/
 }

@@ -1,4 +1,3 @@
-
 import ActorModel.Actor;
 import ActorModel.ActorContext;
 import ActorModel.ActorProxy;
@@ -9,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Class used to test the Actor class
@@ -28,7 +26,6 @@ public class ActorTest {
     }
 
 
-
     /**
      * Method to test the actor's thread functioning: it should be dead after the actor has finished
      *
@@ -39,17 +36,18 @@ public class ActorTest {
         Actor act = new InsultActor();
 //        assertFalse(act.isAlive());
     }
+
     @ParameterizedTest
-    @ValueSource(longs = {10,100,10000,1000000,5000000,10000000,20000000})
-    public void pingPongProcessing(long num){
-        ActorProxy act1= ActorContext.spawnActor("insult1",new InsultActor());
-        ActorProxy act2= ActorContext.spawnActor("insult2",new InsultActor());
-        long n=0L;
-        long start=System.currentTimeMillis();
-        long end=start+1*1000;
-        while(n<num){
-            act1.send(new Message(act2,"ping"));
-            act2.send(new Message(act1,"pong"));
+    @ValueSource(longs = {10, 100, 10000, 1000000, 5000000, 10000000, 20000000})
+    public void pingPongProcessing(long num) {
+        ActorProxy act1 = ActorContext.spawnActor("insult1", new InsultActor());
+        ActorProxy act2 = ActorContext.spawnActor("insult2", new InsultActor());
+        long n = 0L;
+        long start = System.currentTimeMillis();
+        long end = start + 1000;
+        while (n < num) {
+            act1.send(new Message(act2, "ping"));
+            act2.send(new Message(act1, "pong"));
             n++;
         }
         try {

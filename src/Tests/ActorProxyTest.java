@@ -22,7 +22,7 @@ class ActorProxyTest {
         Message msg = new Message(null, "Hello World");
         ActorProxy proxy = ActorContext.spawnActor("prueba", new InsultActor());
         proxy.send(msg);
-        assertTrue(ActorContext.lookup("prueba").getQueLength() == 1);
+        assertEquals(1, ActorContext.lookup("prueba").getQueLength());
     }
 
     /**

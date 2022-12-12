@@ -1,5 +1,5 @@
 package ActorModel.Observer;
 
 public enum Status {
-    CREATED, STOPPED, ERROR,MESSAGE;
+    CREATED, STOPPED, ERROR, MESSAGE
 }
