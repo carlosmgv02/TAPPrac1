@@ -3,6 +3,7 @@ import ActorModel.Decorator.EncryptionDecorator;
 import ActorModel.Decorator.FirewallDecorator;
 import ActorModel.Decorator.LambdaFirewallDecorator;
 import ActorModel.DynamicProxy.DynamicProxy;
+
 import ActorModel.DynamicProxy.InsultService;
 import ActorModel.DynamicProxy.InsultServiceImpl;
 import ActorModel.Messages.Insult.GetAllInsultsMessage;

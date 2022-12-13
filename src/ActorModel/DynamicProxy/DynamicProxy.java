@@ -72,6 +72,8 @@ public class DynamicProxy implements InvocationHandler {
                     cla = Class.forName("ActorModel.Messages.Insult.GetAllInsultsMessage");
                     obj = cla.newInstance();
                     break;
+                default:
+                    break;
             }
             actor.send((Message) obj);
             Thread.sleep(10);
