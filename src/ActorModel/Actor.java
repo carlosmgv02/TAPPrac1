@@ -17,7 +17,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * </p>
  */
 
-public class Actor implements Runnable, Observable {
+public class Actor implements Runnable {
     //Thread implementation has been moved from Thread extension to Runnable implementation
     //This is because we want to be able to use the same thread for multiple actors, E.G. the same thread for the Encryption and the actor
 
@@ -109,7 +109,6 @@ public class Actor implements Runnable, Observable {
      */
     public synchronized void offer(Message m) {
         this.cua.offer(m);
-        //MonitorService.setStatus(this,Status.MESSAGE);
     }
 
 

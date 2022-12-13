@@ -1,6 +1,7 @@
 package ActorModel.DynamicProxy;
 
 import ActorModel.ActorProxy;
+import ActorModel.Messages.Insult.AddInsultMessage;
 import ActorModel.Messages.Message;
 
 import java.lang.reflect.*;
@@ -12,7 +13,7 @@ public class DynamicProxy implements InvocationHandler {
 
     //private InsultService insultService;
     private Object target = null;
-    private static ActorProxy ap;
+    private static ActorProxy actor;
 
     private DynamicProxy(Object target) {
         this.target = target;
@@ -21,7 +22,7 @@ public class DynamicProxy implements InvocationHandler {
     public static Object intercept(Object target,ActorProxy ap) {
         Class<? extends Object> targetClass = target.getClass();
         Class[] interfaces = targetClass.getInterfaces();
-        //this.ap=ap;
+        actor=ap;
         return Proxy.newProxyInstance(targetClass.getClassLoader(),
                 interfaces, new DynamicProxy(target));
         //return new InsultService(targetClass,interfaces,new DynamicProxy(target));
@@ -74,9 +75,17 @@ public class DynamicProxy implements InvocationHandler {
                     cla = Class.forName("ActorModel.Messages.Insult.GetAllInsultsMessage");
                     obj = cla.newInstance();
                     break;
+                default:
+                    break;
             }
 
-            invocationResult = temp.invoke(this.target, obj);
+            actor.send((Message) obj);
+            if(!(obj instanceof AddInsultMessage)){
+                Message msg=actor.receive();
+                System.out.println(msg);
+            }
+
+            //invocationResult = temp.invoke(this.target, obj);
             System.out.println("After method " + method.getName());
         } catch (InvocationTargetException ite) {
             throw ite.getTargetException();
