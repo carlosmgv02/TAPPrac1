@@ -4,6 +4,7 @@ import ActorModel.Decorator.FirewallDecorator;
 import ActorModel.Decorator.LambdaFirewallDecorator;
 import ActorModel.DynamicProxy.DynamicProxy;
 import ActorModel.DynamicProxy.InsultService;
+import ActorModel.DynamicProxy.InsultServiceImpl;
 import ActorModel.Messages.Insult.GetAllInsultsMessage;
 import ActorModel.Messages.Message;
 import ActorModel.Observer.ActorListener;
@@ -26,7 +27,7 @@ public class App {
         //RingActor ra = createRingActor(3);
         ActorProxy prox = ActorContext.spawnActor("ins", new InsultActor());
 
-        InsultService o = (InsultService) DynamicProxy.intercept(prox);
+        InsultServiceImpl o = (InsultServiceImpl) DynamicProxy.intercept(new InsultServiceImpl(),prox);
         o.getAllInsults();
         o.addInsult("You are a bad person");
 

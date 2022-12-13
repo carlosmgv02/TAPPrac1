@@ -135,45 +135,6 @@ public class MonitorService extends ActorContext {
         }
     }
 
-    /**
-     public void setTrafico(Actor act){
-     if(act.getQueLength()<5){
-     if(mapTraffic.containsKey("LOW")) {
-     mapTraffic.get("LOW").add(act);
-     }else{
-     mapTraffic.put("LOW", new ArrayList<>());
-     mapTraffic.get("LOW").add(act);
-     }
-     mapTraffic.get("LOW").add(act);
-     } else if(act.getQueLength()>5 && act.getQueLength()<15){
-     if(mapTraffic.containsKey("MEDIUM")){
-     mapTraffic.get("MEDIUM").add(act);
-     } else {
-     mapTraffic.put("MEDIUM", new ArrayList<>());
-     mapTraffic.get("MEDIUM").add(act);
-     }
-     } else if(act.getQueLength()>15){
-     if (mapTraffic.containsKey("HIGH")){
-     mapTraffic.get("HIGH").add(act);
-     } else {
-     mapTraffic.put("HIGH", new ArrayList<>());
-     mapTraffic.get("HIGH").add(act);
-     }
-     }
-     }
-     public Map<String, ArrayList<Actor>> getTraffic(Actor trafico) {
-     mapTraffic.get(trafico);
-     return mapTraffic;
-     }
 
-     //TODO BUSCAR OTRA MANERA DE HACERLO
-     public Collection<Collection<Message>> getMessageLog(ArrayList<Actor>actor){
-     Collection<Collection<Message>>messageLog=new ArrayList<>();
-     for(Actor act:actor){
-     messageLog.add(act.getQueue());
-     }
-     return messageLog;
-     }
-     **/
 
 }

@@ -17,7 +17,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * </p>
  */
 
-public class Actor implements Runnable, Observable, ActorInterface {
+public class Actor implements Runnable, Observable {
     //Thread implementation has been moved from Thread extension to Runnable implementation
     //This is because we want to be able to use the same thread for multiple actors, E.G. the same thread for the Encryption and the actor
 
@@ -113,23 +113,4 @@ public class Actor implements Runnable, Observable, ActorInterface {
     }
 
 
-    @Override
-    public void attach(Observer o) {
-        MonitorService.attach(this, o);
-
-    }
-
-    @Override
-    public void detach(Observer o) {
-        MonitorService.detach(this, o);
-        observers.remove(o);
-    }
-
-    @Override
-    public void notifyObservers(Status status) {
-        for (Observer observer : observers) {
-            observer.update(status);
-        }
-
-    }
 }
