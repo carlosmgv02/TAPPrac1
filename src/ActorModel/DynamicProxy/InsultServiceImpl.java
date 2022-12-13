@@ -2,7 +2,7 @@ package ActorModel.DynamicProxy;
 
 import ActorModel.Messages.Message;
 
-public class InsultServiceImpl  implements InsultService{
+public class InsultServiceImpl implements InsultService {
     @Override
     public void addInsult(String insult) {
 

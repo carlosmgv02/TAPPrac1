@@ -2,7 +2,9 @@ package ActorModel;
 
 import ActorModel.Messages.Message;
 import ActorModel.Messages.QuitMessage;
-import ActorModel.Observer.*;
+import ActorModel.Observer.MonitorService;
+import ActorModel.Observer.Observer;
+import ActorModel.Observer.Status;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,16 +19,16 @@ import java.util.concurrent.LinkedBlockingQueue;
  * </p>
  */
 
-public class Actor implements Runnable, Observable {
+public class Actor implements Runnable {
     //Thread implementation has been moved from Thread extension to Runnable implementation
     //This is because we want to be able to use the same thread for multiple actors, E.G. the same thread for the Encryption and the actor
 
+    private final Status status = Status.CREATED; //TODO PREGUNTAR COM CANVIAR ELS ESTATS DE CADA ACTOR (ACTOR, ACTORCONTEXT...)
     /**
      * Queue in which the messages sent from other actors will be stored.
      */
     protected Queue<Message> cua = new LinkedBlockingQueue<>();
     protected Collection<Observer> observers = new ArrayList<>(); //TODO PREGUNTAR SI FA FALTA TENIR AQUESTA VARIABLE
-    private final Status status = Status.CREATED; //TODO PREGUNTAR COM CANVIAR ELS ESTATS DE CADA ACTOR (ACTOR, ACTORCONTEXT...)
 
     /**
      * Returns the length of the queue
@@ -81,6 +83,7 @@ public class Actor implements Runnable, Observable {
         //} while (true);
     }
 
+
     /**
      * Method that processes the message
      *
@@ -109,6 +112,7 @@ public class Actor implements Runnable, Observable {
      */
     public synchronized void offer(Message m) {
         this.cua.offer(m);
+        MonitorService.addReceivedMessage(m.getFrom().getActor(),m);
         //MonitorService.setStatus(this,Status.MESSAGE);
     }
 

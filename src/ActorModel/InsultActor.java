@@ -48,9 +48,9 @@ public class InsultActor extends Actor {
             case GetInsultMessage m1 -> {
                 Collections.shuffle(insultList);
                 if (msgIsValid(m1)) {
-                    System.out.println("GETINSULT: " + insultList.get(0));
+                    /*System.out.println("GETINSULT: " + insultList.get(0));
                     System.out.println("\tFrom: " + this);
-                    System.out.println("\tTo: " + msg.getFrom());
+                    System.out.println("\tTo: " + msg.getFrom());*/
 //                    System.out.println("GETINSULT *"+insultList.get(0)+"* *"+ActorContext.lookupProxy(this).getProxyId()+"*");
                     AuxProxy auxProxy = new AuxProxy(msg.getFrom());
                     Message m = new Message(msg.getFrom(), insultList.get(0));
@@ -65,10 +65,10 @@ public class InsultActor extends Actor {
             case GetAllInsultsMessage m3 -> {
                 //Collections.shuffle(insultList);
                 //TODO: cambiarlo para que no se envie el mensaje dos veces a la cola
-                System.out.println("GETALLINSULTS: " + Collections.singletonList(insultList));
+                /*System.out.println("GETALLINSULTS: " + Collections.singletonList(insultList));
                 System.out.println("\tFrom: " + this);
                 //System.out.println("\tTo: "+msg.getFrom());
-                System.out.println("\tTo: " + msg.getFrom());
+                System.out.println("\tTo: " + msg.getFrom());*/
 
                 insultList.forEach(e -> {
                     AuxProxy auxProxy = new AuxProxy(msg.getFrom());
@@ -87,9 +87,9 @@ public class InsultActor extends Actor {
             }
             case AddInsultMessage m4 -> {
                 String insult = msg.getText();
-                System.out.println("ADDINSULT: " + insult);
+                /*System.out.println("ADDINSULT: " + insult);
                 System.out.println("\tFrom: " + this);
-                System.out.println("\tTo: " + this + ".insultList");
+                System.out.println("\tTo: " + this + ".insultList");*/
                 if (!insultList.contains(msg.getText()))
                     insultList.add(insult);
                 //System.out.println(Arrays.asList(insultList));
@@ -105,8 +105,7 @@ public class InsultActor extends Actor {
             default -> {
                 //System.out.println(msg);
                 return msg;
-                /*if (msgIsValid(msg))
-                    cua.offer(msg);*/
+
             }
         }
         return null;

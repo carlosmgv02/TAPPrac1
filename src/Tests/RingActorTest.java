@@ -32,13 +32,11 @@ public class RingActorTest {
                     ap = ActorContext.spawnActor("ring" + i, new RingActor());
                     ra.setNext(ap);
                 }
-
                 tOsend = new Message(temp, tOsend.getText());
                 ap.send(tOsend);
                 temp = ap;
                 //tOsend=temp.getActor().getQueue().element();
                 ra = (RingActor) ap.getActor();
-
             }
             first = true;
             tOsend = new Message(temp, tOsend.getText());
@@ -46,7 +44,7 @@ public class RingActorTest {
             ap = ringActor;
 
         }
-        //ActorContext.enableProcessing();
+
         assertEquals(ringActor.getActor().getQueue().element().getFrom(), temp);
     }
 }

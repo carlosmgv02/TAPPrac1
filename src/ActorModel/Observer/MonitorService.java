@@ -22,7 +22,9 @@ import java.util.Map;
  */
 public class MonitorService extends ActorContext {
 
+    private static final Map<Actor,Integer>numberOfMessages= new HashMap<>();
     private static final Map<Actor, ArrayList<Message>> sentMessages = new HashMap<>();
+    private static final Map<Actor, ArrayList<Message>> receivedMessages = new HashMap<>();
     private static final Map<Actor, ArrayList<Observer>> observerList = new HashMap<>();
     private static final Map<Status, ArrayList<Actor>> status = new HashMap<>();
     private static final Map<Traffic, ArrayList<Actor>> traffic = new HashMap<>();
@@ -134,7 +136,35 @@ public class MonitorService extends ActorContext {
             traffic.put(st, list);
         }
     }
+    public static void addActorMessage(Actor actor,Message msg){
+        if(sentMessages.containsKey(actor)){
+            sentMessages.get(actor).add(msg);
+        }else{
+            ArrayList<Message> list = new ArrayList<>();
+            list.add(msg);
+            sentMessages.put(actor,list);
+        }
+    }
+    public static void addReceivedMessage(Actor from,Message msg){
+        if(receivedMessages.containsKey(from)){
 
+            receivedMessages.get(from).add(msg);
+        }
+        else{
+            ArrayList<Message> list = new ArrayList<>();
+            list.add(msg);
+            receivedMessages.put(from,list);
+        }
+    }
+    public static void getAllSentMessages(){
+        sentMessages.forEach((k,v)->{
+            //System.out.println("Actor: "+k);
+            v.forEach(System.out::println);
+        });
+    }
+    public static void getAllReceivedMessages(){
+
+    }
 
 
 }

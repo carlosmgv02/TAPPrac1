@@ -27,21 +27,25 @@ public class App {
         //RingActor ra = createRingActor(3);
         ActorProxy prox = ActorContext.spawnActor("ins", new InsultActor());
 
-        InsultServiceImpl o = (InsultServiceImpl) DynamicProxy.intercept(new InsultServiceImpl(),prox);
+        InsultService o = (InsultService) DynamicProxy.intercept(new InsultServiceImpl(), prox);
         o.getAllInsults();
         o.addInsult("You are a bad person");
+        o.getInsult();
 
 
+        /*
         MonitorService monitor = new MonitorService();
 
-        /**
-         * Prueba temporal para comprobar el funcionamiento.
-         */
+
         Actor actor = new InsultActor();
-        actor.attach(new ActorListener());
         monitor.monitorActor(actor);
         MonitorService.setStatus(actor, Status.MESSAGE);
-
+        MonitorService.attach(actor, new ActorListener());
+        */
+        System.out.println("****************");
+        MonitorService.getAllSentMessages();
+        System.out.println("****************");
+        MonitorService.getAllReceivedMessages();
 
     }
 

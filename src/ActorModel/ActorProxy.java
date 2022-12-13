@@ -1,7 +1,7 @@
 package ActorModel;
 
-import ActorModel.DynamicProxy.InsultService;
 import ActorModel.Messages.Message;
+import ActorModel.Observer.MonitorService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Class that represents an Actor Proxy, which controls the access to the actor
  */
-public class ActorProxy implements InsultService {
+public class ActorProxy {
     private final Actor actor;
     private final List<Message> receiveQueue;
     protected String id;
@@ -67,18 +67,16 @@ public class ActorProxy implements InsultService {
     public Message receive() {
         Message m;
 //TODO ELIMINAR THREAD Y QUITAR MÉTODO RUN
-        while (true) {
-            if (!receiveQueue.isEmpty()) {
-                System.out.println("ACTOR PROXY *" + id + "* RESPONSE:");
-                //Message msg=receiveQueue.get(0);
-                m = receiveQueue.get(0);
-                System.out.println(m);
-                //System.out.println(m);
-                receiveQueue.remove(0);
-                break;
-            }
+
+        String txt = "\n\t";
+        while (!receiveQueue.isEmpty()) {
+            m = receiveQueue.get(0);
+            txt += m.toString() + "\n\t";
+            //MonitorService.addActorMessage(m.getFrom().getActor(), m);
+            receiveQueue.remove(0);
         }
-        return m;
+        return new Message(null, txt);
+
     }
 
 }
