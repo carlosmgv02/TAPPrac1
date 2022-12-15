@@ -162,8 +162,8 @@ public class MonitorService extends ActorContext {
             v.forEach(System.out::println);
         });
     }
-    public static void getAllReceivedMessages(){
-
+    public static  Map<Actor, ArrayList<Message>> getAllReceivedMessages(){
+        return receivedMessages;
     }
 
 

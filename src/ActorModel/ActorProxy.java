@@ -48,6 +48,8 @@ public class ActorProxy {
 
             //TODO preguntar com hem d'afegir els missatges a la cua de cada actor
             this.actor.offer(msg);
+
+
             //Objects.requireNonNull(ActorContext.lookup(id)).cua.offer(msg);
         } catch (NullPointerException e) {
             System.out.println("ACTOR NOT FOUND");

@@ -22,10 +22,19 @@ import java.util.Set;
  */
 public class App {
     public static void main(String[] args) {
-        //TODO: VALIDATION (TESTING & JAVADOC)
+        //TODO: VALIDATION (TESTING & JAVADOC)m
 
+        MonitorService ms = new MonitorService();
 
+        Actor insultProva = new InsultActor();
+        ActorProxy insultActor = ActorContext.spawnActor("Thread3", insultProva);
+
+        MonitorService.attach(insultProva, new ActorListener());
+        MonitorService.addActorMessage(insultProva, new Message(null, " trial msg from t1"));
+        insultActor.send(new Message(null, " trial msg from t1, 2"));
+        MonitorService.getAllReceivedMessages();
         //RingActor ra = createRingActor(3);
+          /*
         ActorProxy prox = ActorContext.spawnActor("ins", new InsultActor());
 
         InsultService o = (InsultService) DynamicProxy.intercept(new InsultServiceImpl(), prox);
@@ -34,7 +43,7 @@ public class App {
         o.getInsult();
 
 
-        /*
+
         MonitorService monitor = new MonitorService();
 
 
