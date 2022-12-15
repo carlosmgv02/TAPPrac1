@@ -30,6 +30,7 @@ public class App {
         ActorProxy insultActor = ActorContext.spawnActor("Thread3", insultProva);
 
         MonitorService.attach(insultProva, new ActorListener());
+        
         MonitorService.addActorMessage(insultProva, new Message(null, " trial msg from t1"));
         insultActor.send(new Message(null, " trial msg from t1, 2"));
         MonitorService.getAllReceivedMessages();

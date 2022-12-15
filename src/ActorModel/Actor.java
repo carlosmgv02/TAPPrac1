@@ -112,8 +112,12 @@ public class Actor implements Runnable {
      */
     public synchronized void offer(Message m) {
         this.cua.offer(m);
-        MonitorService.addReceivedMessage(m.getFrom().getActor(),m);
-        //MonitorService.setStatus(this,Status.MESSAGE);
+
+        ActorProxy ap=m.getFrom();
+
+        MonitorService.addReceivedMessage(ap!=null?ap.getActor():null,m);
+
+        MonitorService.setStatus(this,Status.MESSAGE);
     }
 
 
