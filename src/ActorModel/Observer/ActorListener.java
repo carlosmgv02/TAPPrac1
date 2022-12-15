@@ -7,7 +7,9 @@ public class ActorListener extends Actor implements Observer {
 
     @Override
     public void update(Status state) {
-        System.out.println("Status has been changed to -> " + state);
-        status = state;
+        if (status != state) {
+            System.out.println("Status has been changed to -> " + state);
+            status = state;
+        }
     }
 }

@@ -2,10 +2,12 @@ package ActorModel.Observer;
 
 import ActorModel.Actor;
 import ActorModel.ActorContext;
+import ActorModel.ActorProxy;
 import ActorModel.Messages.Message;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +24,7 @@ import java.util.Map;
  */
 public class MonitorService extends ActorContext {
 
-    private static final Map<Actor,Integer>numberOfMessages= new HashMap<>();
+    private static final Map<Actor, Integer> numberOfMessages = new HashMap<>();
     private static final Map<Actor, ArrayList<Message>> sentMessages = new HashMap<>();
     private static final Map<Actor, ArrayList<Message>> receivedMessages = new HashMap<>();
     private static final Map<Actor, ArrayList<Observer>> observerList = new HashMap<>();
@@ -85,12 +87,47 @@ public class MonitorService extends ActorContext {
      * @param update the status of the actor
      */
     private static void notifyAllObservers(Actor act, Status update) {
-        for (Observer observer : observerList.get(act)) {
-            observer.update(update);
+        try {
+
+            for (Observer observer : observerList.get(act)) {
+                observer.update(update);
+            }
+        } catch (NullPointerException e) {
+            //System.out.println("No observers for this actor");
         }
     }
 
-    public int getNumberOfMessages(Actor a) {
+    public static void addActorMessage(Actor actor, Message msg) {
+        if (sentMessages.containsKey(actor)) {
+            sentMessages.get(actor).add(msg);
+        } else {
+            ArrayList<Message> list = new ArrayList<>();
+            list.add(msg);
+            sentMessages.put(actor, list);
+        }
+    }
+
+    public static void addReceivedMessage(Actor from, Message msg) {
+        if (receivedMessages.containsKey(from)) {
+
+            receivedMessages.get(from).add(msg);
+        } else {
+            ArrayList<Message> list = new ArrayList<>();
+            list.add(msg);
+            receivedMessages.put(from, list);
+        }
+        addActorMessage(msg.getFrom()!=null?msg.getFrom().getActor():null, msg);
+    }
+
+    public static ArrayList<Message> getAllSentMessages(Actor act) {
+        return receivedMessages.get(act);
+    }
+
+    public static Map<Actor, ArrayList<Message>> getAllReceivedMessages() {
+        return receivedMessages;
+    }
+
+    public static int getNumberOfMessages(Actor a) {
         return a.getQueLength();
     }
 
@@ -118,7 +155,7 @@ public class MonitorService extends ActorContext {
      *
      * @param a the actor to update
      */
-    public void setTraffic(Actor a) {
+    public static void setTraffic(Actor a) {
         var queue = a.getQueLength();
         Traffic st = null;
         if (queue < 5)
@@ -136,34 +173,8 @@ public class MonitorService extends ActorContext {
             traffic.put(st, list);
         }
     }
-    public static void addActorMessage(Actor actor,Message msg){
-        if(sentMessages.containsKey(actor)){
-            sentMessages.get(actor).add(msg);
-        }else{
-            ArrayList<Message> list = new ArrayList<>();
-            list.add(msg);
-            sentMessages.put(actor,list);
-        }
-    }
-    public static void addReceivedMessage(Actor from,Message msg){
-        if(receivedMessages.containsKey(from)){
-
-            receivedMessages.get(from).add(msg);
-        }
-        else{
-            ArrayList<Message> list = new ArrayList<>();
-            list.add(msg);
-            receivedMessages.put(from,list);
-        }
-    }
-    public static void getAllSentMessages(){
-        sentMessages.forEach((k,v)->{
-            //System.out.println("Actor: "+k);
-            v.forEach(System.out::println);
-        });
-    }
-    public static  Map<Actor, ArrayList<Message>> getAllReceivedMessages(){
-        return receivedMessages;
+    public static Map<Traffic, ArrayList<Actor>>getTraffic(){
+        return traffic;
     }
 
 

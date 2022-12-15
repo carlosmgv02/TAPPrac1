@@ -5,7 +5,7 @@ import ActorModel.InsultActor;
 import ActorModel.Messages.Message;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class FirewallDecoratorTest {
 
@@ -27,7 +27,7 @@ public class FirewallDecoratorTest {
      *
      * @Before is used to execute this method before each test
      */
-    public void create(){
+    public void create() {
         actor = ActorContext.spawnActor("firewall", new FirewallDecorator(new InsultActor()));
         actorContext = ActorContext.getInstance();
         msg = new Message(null, "mensaje");
@@ -36,7 +36,7 @@ public class FirewallDecoratorTest {
     /**
      * This method checks if the message comes from a proxy or not
      */
-    public void shouldNotBeProxy(){
+    public void shouldNotBeProxy() {
         actor.send(msg);
         assertFalse(msg.getFrom() instanceof ActorProxy);
     }

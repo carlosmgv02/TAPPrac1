@@ -1,9 +1,7 @@
 package ActorModel;
 
 import ActorModel.Messages.Message;
-import ActorModel.Observer.MonitorService;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,20 +41,12 @@ public class ActorProxy {
         try {
             if (!Message.class.equals(msg.getClass())) {
                 msg.setFrom(this);
-
             }
-
-            //TODO preguntar com hem d'afegir els missatges a la cua de cada actor
             this.actor.offer(msg);
-
-
-            //Objects.requireNonNull(ActorContext.lookup(id)).cua.offer(msg);
         } catch (NullPointerException e) {
             System.out.println("ACTOR NOT FOUND");
         }
     }
-
-    //Method that processes the message and deletes it from the queue
 
     public String getProxyId() {
         return this.id;
@@ -69,17 +59,12 @@ public class ActorProxy {
 
     public Message receive() {
         Message m;
-//TODO ELIMINAR THREAD Y QUITAR MÉTODO RUN
-
         String txt = "\n\t";
         while (!receiveQueue.isEmpty()) {
             m = receiveQueue.get(0);
             txt += m.toString() + "\n\t";
-            //MonitorService.addActorMessage(m.getFrom().getActor(), m);
             receiveQueue.remove(0);
         }
         return new Message(null, txt);
-
     }
-
 }

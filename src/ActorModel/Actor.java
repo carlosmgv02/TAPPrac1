@@ -64,12 +64,15 @@ public class Actor implements Runnable {
         long aux = start;
         do {
             if (!cua.isEmpty()) {
+
                 try {
                     Thread.sleep(0);
                     process();
+                    MonitorService.setTraffic(this);
                 } catch (InterruptedException e) {
                     System.out.println("Actor has been interrupted");
                     MonitorService.setStatus(this, Status.STOPPED);
+                    break;
                 }
                 as = false;
             } else {
@@ -89,11 +92,15 @@ public class Actor implements Runnable {
      *
      * @return the processed message
      */
-    public Message process() {
+    public Message process() throws InterruptedException {
         Message msg = cua.poll();
         switch (msg) {
             case QuitMessage m1 -> {
-                Thread.currentThread().interrupt();
+
+
+                throw new InterruptedException();
+
+
             }
             default -> {
                 return msg;
@@ -102,8 +109,8 @@ public class Actor implements Runnable {
                 return null;
             }
         }
-        return msg;
     }
+
 
     /**
      * Method that adds a message to the queue
@@ -113,11 +120,12 @@ public class Actor implements Runnable {
     public synchronized void offer(Message m) {
         this.cua.offer(m);
 
-        ActorProxy ap=m.getFrom();
+        ActorProxy ap = m.getFrom();
 
-        MonitorService.addReceivedMessage(ap!=null?ap.getActor():null,m);
+        MonitorService.addReceivedMessage(ap != null ? ap.getActor() : null, m);
+        MonitorService.setTraffic(this);
 
-        MonitorService.setStatus(this,Status.MESSAGE);
+        MonitorService.setStatus(this, Status.MESSAGE);
     }
 
 

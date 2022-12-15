@@ -1,6 +1,9 @@
 package Tests;
 
 import ActorModel.*;
+import ActorModel.Factory.AbstractContext;
+import ActorModel.Factory.AbstractContextFactory;
+import ActorModel.Factory.PlatformContextFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,9 +20,13 @@ public class ActorContextTest {
      * @see ActorContext#spawnActor(String, Actor) ActorContext.spawnActor
      */
     @Test
-    void spawnActor() {
+    public void spawnActor() {
+        AbstractContextFactory factory = new PlatformContextFactory();
+
+        AbstractContext context = factory.create();
         System.out.println("-> TESTING SPAWN ACTOR...");
-        ActorProxy act = ActorContext.spawnActor("hola", new HelloWorldActor());
+
+        //ActorProxy act = PlatformContext.spawnActor("hola", new HelloWorldActor());
         assertTrue(ActorContext.getNames().contains("hola"));
     }
 
@@ -34,7 +41,6 @@ public class ActorContextTest {
         Actor act = new InsultActor();
         ActorContext.spawnActor("hola", act);
         assertEquals(act, ActorContext.lookup("hola"));
-
     }
 
     /**

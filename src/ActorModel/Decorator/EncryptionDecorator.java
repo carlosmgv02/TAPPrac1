@@ -41,7 +41,7 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
      * @return the processed message = decrypted message
      */
     @Override
-    public Message process() {
+    public Message process() throws InterruptedException {
         Message toProcess = act.process();
         String dec = descifrar(toProcess.getText());
         System.out.println("Decrypted: " + dec);
@@ -55,8 +55,13 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
     @Override
     public void run() {
         do {
-            if (!act.getQueue().isEmpty())
-                process();
+            if (!act.getQueue().isEmpty()) {
+                try {
+                    process();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         } while (true);
     }
 

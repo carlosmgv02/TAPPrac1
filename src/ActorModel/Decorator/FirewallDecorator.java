@@ -26,7 +26,7 @@ public class FirewallDecorator extends Actor {
      * @return the processed message
      */
     @Override
-    public Message process() {
+    public Message process() throws InterruptedException {
         Message toProcess;
 
         toProcess = act.getQueue().element();
@@ -70,8 +70,13 @@ public class FirewallDecorator extends Actor {
     @Override
     public void run() {
         do {
-            if (!act.getQueue().isEmpty())
-                process();
+            if (!act.getQueue().isEmpty()) {
+                try {
+                    process();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         } while (true);
     }
 }

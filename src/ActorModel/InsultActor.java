@@ -38,7 +38,7 @@ public class InsultActor extends Actor {
      * @see Actor#process() Actor.process
      */
     @Override
-    public synchronized Message process() {
+    public synchronized Message process() throws InterruptedException {
 
         Message msg;
         synchronized (cua) {
@@ -100,10 +100,11 @@ public class InsultActor extends Actor {
                 return null;
             }
             case QuitMessage m4 -> {
-                Thread.currentThread().interrupt();
+                throw new InterruptedException();
+
             }
             default -> {
-                //System.out.println(msg);
+                System.out.println(msg);
                 return msg;
 
             }
