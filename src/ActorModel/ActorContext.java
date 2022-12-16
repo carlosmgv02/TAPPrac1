@@ -15,7 +15,7 @@ public class ActorContext {
     /**
      * Temporary variable used to store the actor's thread to track its behaviour
      */
-    public final static Map<Runnable, Thread> threadMap = new HashMap<>();
+    public final static Map<Actor, Thread> threadMap = new HashMap<>();
 
     private static ActorContext actorInstance;
     private MonitorService monitorService;
@@ -36,16 +36,6 @@ public class ActorContext {
         return actorInstance;
     }
 
-///**
-//     * Method to spawn an actor
-//     *
-//     * @param name the name of the actor
-//     * @param type the type of the actor
-//     * @return the actor proxy that controls the actor
-//     */
-//    public static ActorProxy spawnActor(String name, Actor type){
-//        return null;
-//    }
 
 
     /**
@@ -93,11 +83,6 @@ public class ActorContext {
         return actorSet.keySet();
     }
 
-    /*
-    public static void getActorsContext() {
-        System.out.println("The actors we have registered in the system are:\n");
-        actorSet.forEach((k, v) -> System.out.println("Key: " + k + " Value: " + v));
-    }*/
 
     /**
      * Method to obtain the name of the actor

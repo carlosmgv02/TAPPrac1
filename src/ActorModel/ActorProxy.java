@@ -8,23 +8,26 @@ import java.util.List;
 
 /**
  * Class that represents an Actor Proxy, which controls the access to the actor
+ *
+ * <ul>
+ *     <li>Send</li>
+ *     <li>Receive</li>
+ *     <li>Offer</li>
+ *
+ * </ul>
+ *
+ *
  */
 public class ActorProxy {
     private final Actor actor;
     private final List<Message> receiveQueue;
     protected String id;
 
-    //TODO com fer el recieve i crear el 2n proxy perque no es solapin els sends
-
-    //llista nomes send
-    //nomes el pot tenir el proxy
-    //es fica a ell mateix com a sender i el actor crida al del proxy
 
     public ActorProxy(Actor act, String id) {
         this.actor = act;
         this.id = id;
         receiveQueue = Collections.synchronizedList((new ArrayList<>()));
-        //actor.start();
     }
 
 
@@ -36,7 +39,6 @@ public class ActorProxy {
         receiveQueue.add(m);
     }
 
-    //Añadimos el mensaje obteniendo el actor a través del Actor Context y luego llamando al método offer
     public void send(Message msg) {
         try {
             if (!Message.class.equals(msg.getClass())) {

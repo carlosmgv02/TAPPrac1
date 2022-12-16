@@ -47,8 +47,8 @@ public class LambdaFirewallDecorator extends FirewallDecorator {
      * @see Actor#process() Actor.process
      */
     @Override
-    public Message process() throws InterruptedException {
-        Message toProcess = super.act.getQueue().poll();
+    public Message process() throws InterruptedException, NullPointerException {
+        Message toProcess = super.act.getQueue().element();
         if (filter.test(toProcess)) {
             //System.out.println(toProcess);
             return super.act.process();

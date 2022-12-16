@@ -1,5 +1,8 @@
-import ActorModel.ActorContext;
 import ActorModel.ActorProxy;
+import ActorModel.Factory.AbstractContext;
+import ActorModel.Factory.AbstractContextFactory;
+import ActorModel.Factory.PlatformContextFactory;
+import ActorModel.Factory.VirtualContextFactory;
 import ActorModel.Messages.Message;
 import ActorModel.RingActor;
 import org.junit.Before;
@@ -9,11 +12,16 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.Assert.assertEquals;
 
 public class RingActorTest {
+
+    AbstractContextFactory factory = new VirtualContextFactory();
+    AbstractContext context = factory.create();
+
+
     ActorProxy ringActor;
 
     @Before
     public void initialize() {
-        ringActor = ActorContext.spawnActor("ring", new RingActor());
+        ringActor = context.spawnActor("ring", new RingActor());
     }
 
     @ParameterizedTest
@@ -21,7 +29,7 @@ public class RingActorTest {
     public void testMessageSent(long n) {
         //TODO ARREGLAR FUNCIONAMIENTO
         RingActor ra = new RingActor();
-        ActorProxy ringActor = ActorContext.spawnActor("ring", ra);
+        ActorProxy ringActor = context.spawnActor("ring", ra);
         ActorProxy ap = null, temp = ringActor;
         int i = 0;
         boolean first = false;
@@ -29,7 +37,7 @@ public class RingActorTest {
         for (int j = 0; j < n; j++) {
             for (i = 1; i <= n; i++) {
                 if (!first) {
-                    ap = ActorContext.spawnActor("ring" + i, new RingActor());
+                    ap = context.spawnActor("ring" + i, new RingActor());
                     ra.setNext(ap);
                 }
                 tOsend = new Message(temp, tOsend.getText());
@@ -44,7 +52,6 @@ public class RingActorTest {
             ap = ringActor;
 
         }
-
         assertEquals(ringActor.getActor().getQueue().element().getFrom(), temp);
     }
 }

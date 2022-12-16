@@ -21,7 +21,7 @@ public class HelloWorldTest {
      * @throws IOException exception is thrown in case we can't read the file.
      */
     @Test
-    public void helloWorldTest() throws IOException {
+    public void helloWorldTest() throws IOException, InterruptedException {
         System.out.println("-> TESTING HELLO WORLD ACTOR...");
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));

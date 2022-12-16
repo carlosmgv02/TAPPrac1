@@ -1,6 +1,10 @@
 import ActorModel.Actor;
 import ActorModel.ActorContext;
 import ActorModel.ActorProxy;
+import ActorModel.Factory.AbstractContext;
+import ActorModel.Factory.AbstractContextFactory;
+import ActorModel.Factory.PlatformContextFactory;
+import ActorModel.Factory.VirtualContextFactory;
 import ActorModel.InsultActor;
 import ActorModel.Messages.Message;
 import org.junit.jupiter.api.Test;
@@ -13,6 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Class used to test the Actor class
  */
 public class ActorTest {
+    AbstractContextFactory factory = new PlatformContextFactory();
+
+    AbstractContext context = factory.create();
     /**
      * Method used to test the send method.
      */
@@ -29,7 +36,6 @@ public class ActorTest {
     /**
      * Method to test the actor's thread functioning: it should be dead after the actor has finished
      *
-     * @see Actor#run() Actor.run
      */
     @Test
     public void actorShouldBeSleeping() {
@@ -40,8 +46,8 @@ public class ActorTest {
     @ParameterizedTest
     @ValueSource(longs = {10, 100, 10000, 1000000, 5000000, 10000000, 20000000})
     public void pingPongProcessing(long num) {
-        ActorProxy act1 = ActorContext.spawnActor("insult1", new InsultActor());
-        ActorProxy act2 = ActorContext.spawnActor("insult2", new InsultActor());
+        ActorProxy act1 = context.spawnActor("insult1", new InsultActor());
+        ActorProxy act2 = context.spawnActor("insult2", new InsultActor());
         long n = 0L;
         long start = System.currentTimeMillis();
         long end = start + 1000;

@@ -12,20 +12,25 @@ import java.lang.reflect.*;
 public class DynamicProxy implements InvocationHandler {
 
     private static ActorProxy actor;
-    //private InsultService insultService;
+
     private Object target = null;
 
     private DynamicProxy(Object target) {
         this.target = target;
     }
 
+    /**
+     * Method to intercept the Actor
+     * @param target
+     * @param ap
+     * @return Object
+     */
     public static Object intercept(Object target, ActorProxy ap) {
         Class<? extends Object> targetClass = target.getClass();
         Class[] interfaces = targetClass.getInterfaces();
         actor = ap;
         return Proxy.newProxyInstance(targetClass.getClassLoader(),
                 interfaces, new DynamicProxy(target));
-        //return new InsultService(targetClass,interfaces,new DynamicProxy(target));
     }
 
     /**
@@ -49,12 +54,11 @@ public class DynamicProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         Object invocationResult = null;
+        Message msg=null;
         String str = "";
         Class cla = null;
         Object obj = null;
         try {
-            //aquí tenemos que acceder al campo del mensaje donde guardamos el método
-            //Method temp = target.getClass().getDeclaredMethod("send", Message.class);
             if (args != null)
                 str = args[0].toString();
 
@@ -77,16 +81,17 @@ public class DynamicProxy implements InvocationHandler {
             }
             actor.send((Message) obj);
             Thread.sleep(10);
+
             if (!(obj instanceof AddInsultMessage)) {
-                Message msg = actor.receive();
-                System.out.println("Proxy response: \n" + msg);
+                msg = actor.receive();
+                //System.out.println("Proxy response: \n" + msg);
             }
         } catch (InvocationTargetException ite) {
             throw ite.getTargetException();
         } catch (Exception e) {
             System.err.println("Invocation of " + method.getName() + " failed");
         } finally {
-            return invocationResult;
+            return msg;
         }
     }
 }

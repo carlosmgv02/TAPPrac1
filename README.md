@@ -80,13 +80,13 @@ that receives and send messages using Message Queues, and a single thread that r
 those messages sequentially. The sequential process of messages is extremely useful for
 concurrency reasons, avoiding race conditions in the access to the state of the actor.
 To create an actor we will use an ActorContext entity based on Singleton pattern. The API of the
-Actor Context is: ActorContext.spawnActor(“name”,new ActorInstance()),
+Actor Context is: context.spawnActor(“name”,new ActorInstance()),
 ActorContext.lookup(name), and ActorContext.getNames().<br>
 Example:
 
 
 ```java
-ActorProxy hello = ActorContext.spawnActor(“name”,new RingActor());
+ActorProxy hello = context.spawnActor(“name”,new RingActor());
 hello.send(new Message(null,”Hello World”);
 ```
 ActorProxy only defines a method send(Message) that submits this message to the queue of the
@@ -111,7 +111,7 @@ Demonstrate that you can communicate with Actors using Proxies.<br>
 Example:
 
 ```java
-Actor insult = ActorContext.spawnActor(“name”,new InsultActor());
+Actor insult = context.spawnActor(“name”,new InsultActor());
 insult.send(new GetInsultMessage());
 Message result = insult.receive();
 System.out.println(result.getText());
@@ -129,7 +129,7 @@ Demonstrate a pipeline of Decorators connecting EncryptionDecorator with Firewal
 Example:
 
 ```java
-ActorProxy hello = ActorContext.spawnActor(“name”,new FireWallDecorator(new
+ActorProxy hello = context.spawnActor(“name”,new FireWallDecorator(new
 RingActor()));
 ```
 ### Reflection and Dynamic Proxy
@@ -138,7 +138,7 @@ InsultService class with methods addInsult, getAllInsults, getInsult.<br>
 Example:
     
 ```java
-Actor insult = ActorContext.spawnActor(“name”,new InsultActor());
+Actor insult = context.spawnActor(“name”,new InsultActor());
 InsultService insulter = DynamicProxy.intercept(insult);
 insulter.addInsult(“stupid”);
 System.out.println(insulter.getInsult());
@@ -150,7 +150,7 @@ class.<br>
 Example:
     
 ```java
-Actor insult = ActorContext.spawnActor(“name”,new ReflectiveActor(new InsultService()));
+Actor insult = context.spawnActor(“name”,new ReflectiveActor(new InsultService()));
 ```
 ### MonitorService and Observer Pattern
 The idea is to create a MonitorService that can obtain runtime information about the ActorSystem.

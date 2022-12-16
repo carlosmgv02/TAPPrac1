@@ -1,9 +1,7 @@
-package Tests;
+
 
 import ActorModel.*;
-import ActorModel.Factory.AbstractContext;
-import ActorModel.Factory.AbstractContextFactory;
-import ActorModel.Factory.PlatformContextFactory;
+import ActorModel.Factory.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,10 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Class used to test the ActorContext class.
  */
 public class ActorContextTest {
+    AbstractContextFactory factory=new VirtualContextFactory();
+    AbstractContext context=factory.create();
     /**
      * Method used to test the creation of an actor.
      *
-     * @see ActorContext#spawnActor(String, Actor) ActorContext.spawnActor
      */
     @Test
     public void spawnActor() {
@@ -26,7 +25,7 @@ public class ActorContextTest {
         AbstractContext context = factory.create();
         System.out.println("-> TESTING SPAWN ACTOR...");
 
-        //ActorProxy act = PlatformContext.spawnActor("hola", new HelloWorldActor());
+        //ActorProxy act = context.spawnActor("hola", new HelloWorldActor());
         assertTrue(ActorContext.getNames().contains("hola"));
     }
 
@@ -39,7 +38,8 @@ public class ActorContextTest {
     void lookup() {
         System.out.println("-> TESTING LOOKUP...");
         Actor act = new InsultActor();
-        ActorContext.spawnActor("hola", act);
+
+        context.spawnActor("hola", act);
         assertEquals(act, ActorContext.lookup("hola"));
     }
 
@@ -51,7 +51,7 @@ public class ActorContextTest {
     @Test
     void getNames() {
         System.out.println("-> TESTING GET NAMES...");
-        ActorProxy act = ActorContext.spawnActor("hola", new HelloWorldActor());
+        ActorProxy act = context.spawnActor("hola", new HelloWorldActor());
         assertTrue(ActorContext.getNames().contains("hola"));
     }
 
@@ -64,7 +64,7 @@ public class ActorContextTest {
     void getActorName() {
         System.out.println("-> TESTING GET ACTOR NAME...");
         Actor act = new InsultActor();
-        ActorContext.spawnActor("hola", act);
+        context.spawnActor("hola", act);
         assertEquals("hola", ActorContext.getInstance().getActorName(act));
     }
 }

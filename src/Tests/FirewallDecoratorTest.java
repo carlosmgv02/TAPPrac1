@@ -1,6 +1,10 @@
 import ActorModel.ActorContext;
 import ActorModel.ActorProxy;
 import ActorModel.Decorator.FirewallDecorator;
+import ActorModel.Factory.AbstractContext;
+import ActorModel.Factory.AbstractContextFactory;
+import ActorModel.Factory.PlatformContextFactory;
+import ActorModel.Factory.VirtualContextFactory;
 import ActorModel.InsultActor;
 import ActorModel.Messages.Message;
 import org.junit.jupiter.api.Test;
@@ -8,7 +12,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class FirewallDecoratorTest {
+    AbstractContextFactory factory = new PlatformContextFactory();
 
+    AbstractContext context = factory.create();
     /**
      * Class used to test Firewall Decorator
      * <p>
@@ -25,10 +31,9 @@ public class FirewallDecoratorTest {
     /**
      * This method is used to create the actor context and the actor proxy
      *
-     * @Before is used to execute this method before each test
      */
     public void create() {
-        actor = ActorContext.spawnActor("firewall", new FirewallDecorator(new InsultActor()));
+        actor = context.spawnActor("firewall", new FirewallDecorator(new InsultActor()));
         actorContext = ActorContext.getInstance();
         msg = new Message(null, "mensaje");
     }

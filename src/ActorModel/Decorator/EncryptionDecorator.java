@@ -1,7 +1,6 @@
 package ActorModel.Decorator;
 
 import ActorModel.Actor;
-import ActorModel.ImplCifradoCesar;
 import ActorModel.Messages.Message;
 
 import java.util.Queue;
@@ -24,14 +23,13 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
     /**
      * Method to add a message to the queue = encrypting the message
      *
-     * @param msg the message to add = the message to encrypt
+     * @param m the message to add = the message to encrypt
      */
     @Override
-    public void offer(Message msg) {
-        //ActorContext.lookupProxy(this).send());
-        msg.setText(cifrar(msg.getText()));
-        act.offer(msg);
+    public void offer(Message m) {
 
+        m.setText(encrypt(m.getText()));
+        act.offer(m);
 
     }
 
@@ -43,26 +41,10 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
     @Override
     public Message process() throws InterruptedException {
         Message toProcess = act.process();
-        String dec = descifrar(toProcess.getText());
+        String dec = decrypt(toProcess.getText());
         System.out.println("Decrypted: " + dec);
 
         return new Message(toProcess.getFrom(), dec);
-    }
-
-    /**
-     * Method Overritten to check the actor's instance queue
-     */
-    @Override
-    public void run() {
-        do {
-            if (!act.getQueue().isEmpty()) {
-                try {
-                    process();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        } while (true);
     }
 
     /**
@@ -72,72 +54,50 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
      * @return the encrypted message
      */
     @Override
-    public String cifrar(String mensaje) {
+    public String encrypt(String mensaje) {
         int clave = 7;
-        //lo ponemos en minusculas
         mensaje = mensaje.toLowerCase();
-        //creamos un stringbuilder para ir añadiendo los caracteres
         StringBuilder mensajeCifrado = new StringBuilder();
 
-        //recorremos el mensaje
         for (int i = 0; i < mensaje.length(); i++) {
-            //obtenemos el caracter
             if (mensaje.charAt(i) == ' ') {
-                //si es un espacio lo añadimos
                 mensajeCifrado.append(' ');
-                //si no es un espacio
                 continue;
             }
-            //obtenemos la posicion del caracter en el alfabeto
             int posicion = alfabeto.indexOf(mensaje.charAt(i));
-            //obtenemos la posicion del caracter cifrado
             int posicionCifrada = (posicion + clave) % 36;
-            //obtenemos el caracter cifrado
             char reemplazarValor = alfabeto.charAt(posicionCifrada);
-            //añadimos el caracter cifrado al mensaje cifrado
             mensajeCifrado.append(reemplazarValor);
         }
-        //devolvemos el mensaje cifrado
         return mensajeCifrado.toString();
     }
 
     /**
      * Method used to decrypt the message
      *
-     * @param textoCifrado the message to decrypt
+     * @param encrypyedText the message to decrypt
      * @return the decrypted message
      */
     @Override
-    public String descifrar(String textoCifrado) {
-        int clave = 7;
+    public String decrypt(String encrypyedText) {
+        int key = 7;
 
-        //lo ponemos en minusculas
-        textoCifrado = textoCifrado.toLowerCase();
-        //creamos un stringbuilder para ir añadiendo los caracteres
-        StringBuilder mensajeOriginal = new StringBuilder();
-        //recorremos el mensaje
-        for (int i = 0; i < textoCifrado.length(); i++) {
-            //obtenemos el caracter
-            if (textoCifrado.charAt(i) == ' ') {
-                //si es un espacio lo añadimos
-                mensajeOriginal.append(' ');
-                //si no es un espacio
+        encrypyedText = encrypyedText.toLowerCase();
+        StringBuilder originalMessage = new StringBuilder();
+        for (int i = 0; i < encrypyedText.length(); i++) {
+            if (encrypyedText.charAt(i) == ' ') {
+                originalMessage.append(' ');
                 continue;
             }
-            //obtenemos la posicion del caracter en el alfabeto
-            int posicionCaracter = alfabeto.indexOf(textoCifrado.charAt(i));
-            //obtenemos la posicion del caracter cifrado
-            int valorClave = (posicionCaracter - clave) % 26;
-            //obtenemos el caracter cifrado
-            if (valorClave < 0) {
-                valorClave = alfabeto.length() + valorClave;
+            int charPosition = alfabeto.indexOf(encrypyedText.charAt(i));
+            int keyValue = (charPosition - key) % 26;
+            if (keyValue < 0) {
+                keyValue = alfabeto.length() + keyValue;
             }
-            char sustituyeValor = alfabeto.charAt(valorClave);
-            //añadimos el caracter cifrado al mensaje cifrado
-            mensajeOriginal.append(sustituyeValor);
+            char replaceValue = alfabeto.charAt(keyValue);
+            originalMessage.append(replaceValue);
         }
-        //devolvemos el mensaje original
-        return mensajeOriginal.toString();
+        return originalMessage.toString();
     }
 
     @Override

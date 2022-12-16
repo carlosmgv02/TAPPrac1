@@ -1,13 +1,23 @@
-package Tests;
-
+import ActorModel.Actor;
 import ActorModel.ActorContext;
 import ActorModel.ActorProxy;
+import ActorModel.Factory.AbstractContext;
+import ActorModel.Factory.AbstractContextFactory;
+import ActorModel.Factory.PlatformContextFactory;
 import ActorModel.InsultActor;
 import ActorModel.Messages.Insult.AddInsultMessage;
+import ActorModel.Messages.Insult.GetAllInsultsMessage;
 import ActorModel.Messages.Insult.GetInsultMessage;
 import ActorModel.Messages.Message;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,7 +25,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Class used to test the InsultActor class.
  */
+
 public class InsultActorTest {
+    AbstractContextFactory factory = new PlatformContextFactory();
+
+    AbstractContext context = factory.create();
+
+
     /**
      * Method used to test the getInsultMessage functioning.
      * <p>
@@ -23,12 +39,13 @@ public class InsultActorTest {
      * The purpose of the test is to print the message previously sent to the actor's queue.
      * </p>
      */
+
     @Test
     public void messagesToProcess() {
-        ActorProxy act = ActorContext.spawnActor("prueba", new InsultActor());
-        act.send(new GetInsultMessage());
-        Message msg = act.getActor().process();
-        System.out.println(msg.getText());
+        Message m=new GetInsultMessage();
+        ActorProxy proxy = context.spawnActor("prueba", new InsultActor());
+        proxy.send(m);
+        assertTrue(proxy.getActor().getQueue().poll() instanceof GetInsultMessage);
     }
 
     /**
@@ -36,14 +53,13 @@ public class InsultActorTest {
      *
      * @throws InterruptedException Exception thrown when the thread is interrupted.
      */
-    @Test
+    @RepeatedTest(20)
     public void addInsult() throws InterruptedException {
-        ActorProxy act = ActorContext.spawnActor("prueba", new InsultActor());
+        InsultActor insult=new InsultActor();
+        ActorProxy act = context.spawnActor("prueba", insult);
         List<String> ins = ((InsultActor) act.getActor()).getInsultList();
-
         act.send(new AddInsultMessage("payaso"));
-        //act.getActor().sleep(10);
-        Thread.sleep(10); //le damos tiempo a que procese el mensaje
-        assertTrue(((InsultActor) act.getActor()).getInsultList().contains("payaso"));
+        Thread.sleep(250);
+        assertTrue(insult.getInsultList().contains("payaso"));
     }
 }

@@ -22,15 +22,21 @@ public class RingActor extends Actor {
     public Message process() {
         String printing_ring_actor = "Printing Ring Actor";
         Message msg = cua.poll();
-
-        //System.out.println("You're on: " + ActorContext.getActorName(this) + "\n\t" + msg);
         return new Message(msg != null ? msg.getFrom() : null, printing_ring_actor);
     }
 
+    /**
+     * Method used to get the following actor in the Ring
+     * @return the next actor
+     */
     public ActorProxy getNext() {
         return next;
     }
 
+    /**
+     * Method used to set the next actor in the Ring
+     * @param next the next actor
+     */
     public void setNext(ActorProxy next) {
         this.next = next;
     }

@@ -3,6 +3,7 @@ package ActorModel.Decorator;
 import ActorModel.Actor;
 import ActorModel.ActorContext;
 import ActorModel.Messages.Message;
+import ActorModel.Messages.QuitMessage;
 
 import java.util.Queue;
 
@@ -30,15 +31,18 @@ public class FirewallDecorator extends Actor {
         Message toProcess;
 
         toProcess = act.getQueue().element();
-        if (toProcess.getFrom() != null) {
-            if (ActorContext.contains(toProcess.getFrom().getActor())) {
-                return act.process();
+        if (toProcess instanceof QuitMessage) {
+            throw new InterruptedException();
+        } else {
+            if (toProcess.getFrom() != null) {
+                if (ActorContext.contains(toProcess.getFrom().getActor())) {
+                    return act.process();
+                }
             }
-
-        }
-        if (!thrown) {
-            System.out.println("Actor cannot process the message");
-            thrown = true;
+            if (!thrown) {
+                System.out.println("Actor cannot process the message");
+                thrown = true;
+            }
         }
         return null;
     }
@@ -51,6 +55,7 @@ public class FirewallDecorator extends Actor {
     @Override
     public void offer(Message m) {
         act.offer(m);
+
     }
 
     /**
@@ -61,22 +66,5 @@ public class FirewallDecorator extends Actor {
     @Override
     public Queue<Message> getQueue() {
         return act.getQueue();
-    }
-
-
-    /**
-     * Method overriten to process the actor's instance queue
-     */
-    @Override
-    public void run() {
-        do {
-            if (!act.getQueue().isEmpty()) {
-                try {
-                    process();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        } while (true);
     }
 }

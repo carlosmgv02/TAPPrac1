@@ -19,16 +19,17 @@ import java.util.concurrent.LinkedBlockingQueue;
  * </p>
  */
 
-public class Actor implements Runnable {
-    //Thread implementation has been moved from Thread extension to Runnable implementation
-    //This is because we want to be able to use the same thread for multiple actors, E.G. the same thread for the Encryption and the actor
-
-    private final Status status = Status.CREATED; //TODO PREGUNTAR COM CANVIAR ELS ESTATS DE CADA ACTOR (ACTOR, ACTORCONTEXT...)
+public class Actor {
+    /**
+     * Thread implementation has been moved from Thread extension to Runnable implementation
+     * This is because we want to be able to use the same thread for multiple actors, E.G. the same thread for the Encryption and the actor
+     */
+    private final Status status = Status.CREATED;
     /**
      * Queue in which the messages sent from other actors will be stored.
      */
     protected Queue<Message> cua = new LinkedBlockingQueue<>();
-    protected Collection<Observer> observers = new ArrayList<>(); //TODO PREGUNTAR SI FA FALTA TENIR AQUESTA VARIABLE
+    protected Collection<Observer> observers = new ArrayList<>();
 
     /**
      * Returns the length of the queue
@@ -48,43 +49,6 @@ public class Actor implements Runnable {
         return cua;
     }
 
-    /**
-     * Method that defines the behaviour of the actor
-     * <p>
-     * Message processing will automatically stop if a message hasn't been received in 2 seconds.<br>
-     * Message processing won't stop if there are still messages in the queue.
-     * </p>
-     */
-    @Override
-    public void run() {
-        //MonitorService.setStatus(this,Status.CREATED);
-        long start = System.currentTimeMillis();
-        long end = start + 2 * 1000; // 2 seconds * 1000 ms/sec
-        boolean as = false;
-        long aux = start;
-        do {
-            if (!cua.isEmpty()) {
-
-                try {
-                    Thread.sleep(0);
-                    process();
-                    MonitorService.setTraffic(this);
-                } catch (InterruptedException e) {
-                    System.out.println("Actor has been interrupted");
-                    MonitorService.setStatus(this, Status.STOPPED);
-                    break;
-                }
-                as = false;
-            } else {
-                if (!as) {
-                    start = System.currentTimeMillis();
-                    end = start + 2 * 1000;
-                    as = true;
-                }
-            }
-        } while (System.currentTimeMillis() < end || !as);
-        //} while (true);
-    }
 
 
     /**
@@ -96,11 +60,7 @@ public class Actor implements Runnable {
         Message msg = cua.poll();
         switch (msg) {
             case QuitMessage m1 -> {
-
-
                 throw new InterruptedException();
-
-
             }
             default -> {
                 return msg;

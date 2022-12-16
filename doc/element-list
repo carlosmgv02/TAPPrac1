@@ -1,6 +1,10 @@
 unnamed package
-ActorModel.Data
-ActorModel.Exceptions
+ActorModel
+ActorModel.Decorator
+ActorModel.DynamicProxy
+ActorModel.Factory
 ActorModel.Messages
 ActorModel.Messages.Insult
+ActorModel.Observer
+App
 Tests

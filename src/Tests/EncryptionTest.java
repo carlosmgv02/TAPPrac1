@@ -1,6 +1,9 @@
 import ActorModel.ActorContext;
 import ActorModel.ActorProxy;
 import ActorModel.Decorator.EncryptionDecorator;
+import ActorModel.Factory.AbstractContext;
+import ActorModel.Factory.AbstractContextFactory;
+import ActorModel.Factory.PlatformContextFactory;
 import ActorModel.InsultActor;
 import ActorModel.Messages.Message;
 import org.junit.Before;
@@ -17,6 +20,11 @@ import static org.junit.Assert.assertTrue;
  * @see EncryptionDecorator EncryptionDecorator
  */
 public class EncryptionTest {
+
+    AbstractContextFactory factory = new PlatformContextFactory();
+    AbstractContext context = factory.create();
+
+
     ActorProxy actor;
     Message msg = null;
     ActorContext act;
@@ -24,11 +32,10 @@ public class EncryptionTest {
     /**
      * Initialization of the actor and the message
      *
-     * @Before is used to execute the method before each test
      */
     @Before
     public void initialize() {
-        actor = ActorContext.spawnActor("encryption", new EncryptionDecorator(new InsultActor()));
+        actor = context.spawnActor("encryption", new EncryptionDecorator(new InsultActor()));
         msg = new Message(null, "hola");
         act = ActorContext.getInstance();
 

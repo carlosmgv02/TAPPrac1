@@ -15,10 +15,6 @@ public class AddInsultMessage extends Message {
         super(null, message);
     }
 
-    /*
-    @Override
-    public void setFrom (ActorProxy source){
-        super.from=source;
-    }*/
+
 }
 
