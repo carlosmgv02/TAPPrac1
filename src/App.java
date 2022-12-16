@@ -1,10 +1,9 @@
-import ActorModel.Actor;
-import ActorModel.ActorContext;
-import ActorModel.ActorProxy;
+import ActorModel.*;
+import ActorModel.Decorator.EncryptionDecorator;
+import ActorModel.Decorator.FirewallDecorator;
 import ActorModel.Factory.AbstractContext;
 import ActorModel.Factory.AbstractContextFactory;
 import ActorModel.Factory.VirtualContextFactory;
-import ActorModel.InsultActor;
 import ActorModel.Messages.Message;
 import ActorModel.Messages.QuitMessage;
 import ActorModel.Observer.ActorListener;
@@ -26,16 +25,17 @@ public class App {
 
         AbstractContext context = factory.create();
 
-        ActorProxy proxy = context.spawnActor("proxy", new InsultActor());
+        ActorProxy proxy = context.spawnActor("proxy", new FirewallDecorator(new EncryptionDecorator(new InsultActor())));
         MonitorService.attach(proxy.getActor(), new ActorListener());
 
-        proxy.send(new Message(null, "holaa"));
-        proxy.send(new Message(null, "holaa"));
-        proxy.send(new Message(null, "holaa"));
-        proxy.send(new Message(null, "holaa"));
-        proxy.send(new Message(null, "holaa"));
-        proxy.send(new Message(null, "holaa"));
-        proxy.send(new Message(null, "holaa"));
+        ActorProxy sender = context.spawnActor("proxy", new HelloWorldActor());
+        proxy.send(new Message(sender, "holaa1"));
+        proxy.send(new Message(sender, "holaa2"));
+        proxy.send(new Message(sender, "holaa3"));
+        proxy.send(new Message(sender, "holaa4"));
+        proxy.send(new Message(sender, "holaa5"));
+        proxy.send(new Message(sender, "holaa6"));
+        proxy.send(new Message(sender, "holaa7"));
         try {
             ActorContext.threadMap.get(proxy.getActor()).join();
         } catch (InterruptedException e) {

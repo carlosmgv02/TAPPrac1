@@ -45,7 +45,7 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
         Message toProcess = act.process();
         String dec = descifrar(toProcess.getText());
         System.out.println("Decrypted: " + dec);
-        act.getQueue().poll();
+
         return new Message(toProcess.getFrom(), dec);
     }
 
@@ -91,7 +91,7 @@ public class EncryptionDecorator extends Actor implements ImplCifradoCesar {
             //obtenemos la posicion del caracter en el alfabeto
             int posicion = alfabeto.indexOf(mensaje.charAt(i));
             //obtenemos la posicion del caracter cifrado
-            int posicionCifrada = (posicion + clave) % 26;
+            int posicionCifrada = (posicion + clave) % 36;
             //obtenemos el caracter cifrado
             char reemplazarValor = alfabeto.charAt(posicionCifrada);
             //añadimos el caracter cifrado al mensaje cifrado

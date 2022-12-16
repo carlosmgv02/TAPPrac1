@@ -15,9 +15,7 @@ public class VirtualContext extends ActorContext implements AbstractContext {
          */
 
         Thread t = Thread.startVirtualThread(type);
-
-
-//        Thread t = Thread.startVirtualThread(type); //We now create the thread manually and pass the Runnable object
+        
         threadMap.put(type, t); //We temporarily store the thread to keep track of its behaviour
         return newActor;
     }

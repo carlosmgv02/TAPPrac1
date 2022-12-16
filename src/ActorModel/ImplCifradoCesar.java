@@ -7,7 +7,7 @@ public interface ImplCifradoCesar {
     /**
      * Predefined alphabet to be used in the encryption
      */
-    String alfabeto = "abcdefghijklmnopqrstuvwxyz";
+    String alfabeto = "0123456789abcdefghijklmnopqrstuvwxyz";
 
     /**
      * Method to encrypt the message
