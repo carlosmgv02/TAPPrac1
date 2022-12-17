@@ -8,6 +8,8 @@ import ActorModel.InsultActor;
 import ActorModel.Messages.Message;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -15,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Class used to test the ActorProxy class.
  */
 class ActorProxyTest {
-    AbstractContextFactory factory = new PlatformContextFactory();
-    AbstractContext context = factory.create();
+    final AbstractContextFactory factory = new PlatformContextFactory();
+    final AbstractContext context = factory.create();
 
     /**
      * Method used to test the send method.
@@ -29,7 +31,7 @@ class ActorProxyTest {
         Message msg = new Message(null, "Hello World");
         ActorProxy proxy = context.spawnActor("prueba", new InsultActor());
         proxy.send(msg);
-        assertEquals(1, ActorContext.lookup("prueba").getQueLength());
+        assertEquals(1, Objects.requireNonNull(Objects.requireNonNull(ActorContext.lookup("prueba"))).getQueLength());
     }
 
     /**
@@ -43,6 +45,6 @@ class ActorProxyTest {
         Message msg = new Message(null, "Hello World");
         ActorProxy proxy = context.spawnActor("prueba", new InsultActor());
         proxy.send(msg);
-        assertTrue(ActorContext.lookup("prueba").getQueue().contains(msg));
+        assertTrue(Objects.requireNonNull(ActorContext.lookup("prueba")).getQueue().contains(msg));
     }
 }

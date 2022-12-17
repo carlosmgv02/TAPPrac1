@@ -13,8 +13,8 @@ import static org.junit.Assert.assertEquals;
 
 public class RingActorTest {
 
-    AbstractContextFactory factory = new VirtualContextFactory();
-    AbstractContext context = factory.create();
+    final AbstractContextFactory factory = new VirtualContextFactory();
+    final AbstractContext context = factory.create();
 
 
     ActorProxy ringActor;

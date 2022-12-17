@@ -29,11 +29,6 @@ public class Message {
         this.text = message;
     }
 
-    /*
-    public Message(ActorProxy from,String message){
-        this.source=from;
-        this.text=message;
-    }*/
     public Message() {
         text = "";
     }

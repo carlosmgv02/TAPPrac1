@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class InsultActor extends Actor {
 
-    protected List<String> insultList = new ArrayList<>(Arrays.asList("tonto", "feo", "inútil", "gilipollas"));
+    protected final List<String> insultList = new ArrayList<>(Arrays.asList("tonto", "feo", "inútil", "gilipollas"));
 
     /**
      * Method that processes the message.
@@ -48,37 +48,32 @@ public class InsultActor extends Actor {
             case GetInsultMessage m1 -> {
                 Collections.shuffle(insultList);
                 if (msgIsValid(m1)) {
-                    AuxProxy auxProxy = new AuxProxy(msg.getFrom());
-                    Message m = new Message(msg.getFrom(), insultList.get(0));
+                    AuxProxy auxProxy = new AuxProxy(m1.getFrom());
+                    Message m = new Message(m1.getFrom(), insultList.get(0));
                     auxProxy.send(m);
-                    return new Message(msg.getFrom(), insultList.get(0));
+                    return new Message(m1.getFrom(), insultList.get(0));
                 }
             }
             case GetAllInsultsMessage m3 -> {
                 insultList.forEach(e -> {
-                    AuxProxy auxProxy = new AuxProxy(msg.getFrom());
-                    Message temp = new Message(msg.getFrom(), e);
+                    AuxProxy auxProxy = new AuxProxy(m3.getFrom());
+                    Message temp = new Message(m3.getFrom(), e);
                     auxProxy.send(temp);
                 });
                 return new Message(msg.getFrom(), Collections.singletonList(insultList).toString());
             }
             case AddInsultMessage m4 -> {
-                String insult = msg.getText();
-                if (!insultList.contains(msg.getText()))
+                String insult = m4.getText();
+                if (!insultList.contains(m4.getText()))
                     insultList.add(insult);
-                return new Message(msg.getFrom(), insult);
+                return new Message(m4.getFrom(), insult);
             }
             case null -> {
                 return null;
             }
-            case QuitMessage m4 -> {
-
-                throw new InterruptedException();
-
-            }
+            case QuitMessage ignored -> throw new InterruptedException();
             default -> {
                 return msg;
-
             }
         }
         return null;

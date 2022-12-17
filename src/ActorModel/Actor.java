@@ -20,15 +20,11 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 
 public class Actor {
-    /**
-     * Thread implementation has been moved from Thread extension to Runnable implementation
-     * This is because we want to be able to use the same thread for multiple actors, E.G. the same thread for the Encryption and the actor
-     */
-    private final Status status = Status.CREATED;
+
     /**
      * Queue in which the messages sent from other actors will be stored.
      */
-    protected Queue<Message> cua = new LinkedBlockingQueue<>();
+    protected final Queue<Message> cua = new LinkedBlockingQueue<>();
     protected Collection<Observer> observers = new ArrayList<>();
 
     /**
@@ -59,9 +55,9 @@ public class Actor {
     public Message process() throws InterruptedException {
         Message msg = cua.poll();
         switch (msg) {
-            case QuitMessage m1 -> {
+            case QuitMessage m1 ->
                 throw new InterruptedException();
-            }
+
             default -> {
                 return msg;
             }

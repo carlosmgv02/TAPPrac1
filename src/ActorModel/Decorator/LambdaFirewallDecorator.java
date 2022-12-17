@@ -33,7 +33,6 @@ public class LambdaFirewallDecorator extends FirewallDecorator {
      * @param pred the predicate to filter the messages
      */
     public void addClosureMessage(Predicate<Message> pred) {
-        //System.out.println(messages.stream().filter(pred));
         this.filter = pred;
     }
 
@@ -50,7 +49,6 @@ public class LambdaFirewallDecorator extends FirewallDecorator {
     public Message process() throws InterruptedException, NullPointerException {
         Message toProcess = super.act.getQueue().element();
         if (filter.test(toProcess)) {
-            //System.out.println(toProcess);
             return super.act.process();
         }
         return null;

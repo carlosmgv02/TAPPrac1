@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Class used to test the ActorContext class.
  */
 public class ActorContextTest {
-    AbstractContextFactory factory=new VirtualContextFactory();
-    AbstractContext context=factory.create();
+    final AbstractContextFactory factory=new VirtualContextFactory();
+    final AbstractContext context=factory.create();
     /**
      * Method used to test the creation of an actor.
      *
@@ -65,6 +65,7 @@ public class ActorContextTest {
         System.out.println("-> TESTING GET ACTOR NAME...");
         Actor act = new InsultActor();
         context.spawnActor("hola", act);
-        assertEquals("hola", ActorContext.getInstance().getActorName(act));
+        ActorContext.getInstance();
+        assertEquals("hola", ActorContext.getActorName(act));
     }
 }

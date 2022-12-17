@@ -2,6 +2,7 @@ package ActorModel.Decorator;
 
 import ActorModel.Actor;
 import ActorModel.ActorContext;
+import ActorModel.ActorProxy;
 import ActorModel.Messages.Message;
 import ActorModel.Messages.QuitMessage;
 
@@ -14,7 +15,7 @@ import java.util.Queue;
  * </p>
  */
 public class FirewallDecorator extends Actor {
-    Actor act;
+    final Actor act;
     boolean thrown = false;
 
     public FirewallDecorator(Actor act) {
@@ -29,21 +30,21 @@ public class FirewallDecorator extends Actor {
     @Override
     public Message process() throws InterruptedException {
         Message toProcess;
-
         toProcess = act.getQueue().element();
+        ActorProxy from=toProcess.getFrom();
         if (toProcess instanceof QuitMessage) {
             throw new InterruptedException();
         } else {
-            if (toProcess.getFrom() != null) {
-                if (ActorContext.contains(toProcess.getFrom().getActor())) {
+            if (from != null && ActorContext.contains(from.getActor())) {
                     return act.process();
-                }
             }
-            if (!thrown) {
+            else{
+                act.getQueue().poll();
                 System.out.println("Actor cannot process the message");
-                thrown = true;
             }
-        }
+
+            }
+
         return null;
     }
 

@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Class used to test the Actor class
  */
 public class ActorTest {
-    AbstractContextFactory factory = new PlatformContextFactory();
+    final AbstractContextFactory factory = new PlatformContextFactory();
 
-    AbstractContext context = factory.create();
+    final AbstractContext context = factory.create();
     /**
      * Method used to test the send method.
      */

@@ -21,7 +21,7 @@ import java.util.List;
 public class ActorProxy {
     private final Actor actor;
     private final List<Message> receiveQueue;
-    protected String id;
+    protected final String id;
 
 
     public ActorProxy(Actor act, String id) {
@@ -31,9 +31,6 @@ public class ActorProxy {
     }
 
 
-    public List<Message> getProxyQueue() {
-        return receiveQueue;
-    }
 
     public void offer(Message m) {
         receiveQueue.add(m);
@@ -61,12 +58,12 @@ public class ActorProxy {
 
     public Message receive() {
         Message m;
-        String txt = "\n\t";
+        StringBuilder txt = new StringBuilder("\n\t");
         while (!receiveQueue.isEmpty()) {
             m = receiveQueue.get(0);
-            txt += m.toString() + "\n\t";
+            txt.append(m.toString()).append("\n\t");
             receiveQueue.remove(0);
         }
-        return new Message(null, txt);
+        return new Message(null, txt.toString());
     }
 }

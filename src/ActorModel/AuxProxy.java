@@ -11,7 +11,7 @@ public class AuxProxy {
     /**
      * Class constructor
      *
-     * @param actorProxy
+     * @param actorProxy the actor proxy
      */
     public AuxProxy(ActorProxy actorProxy) {
         this.actorProxy = actorProxy;

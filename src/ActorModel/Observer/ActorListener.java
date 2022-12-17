@@ -12,4 +12,8 @@ public class ActorListener extends Actor implements Observer {
             status = state;
         }
     }
+
+    public Status getStatus() {
+        return status;
+    }
 }

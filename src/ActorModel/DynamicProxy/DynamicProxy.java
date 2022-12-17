@@ -13,24 +13,21 @@ public class DynamicProxy implements InvocationHandler {
 
     private static ActorProxy actor;
 
-    private Object target = null;
-
-    private DynamicProxy(Object target) {
-        this.target = target;
+    private DynamicProxy() {
     }
 
     /**
      * Method to intercept the Actor
-     * @param target
-     * @param ap
+     * @param target var from which we take the class
+     * @param ap actorProxy's target
      * @return Object
      */
     public static Object intercept(Object target, ActorProxy ap) {
-        Class<? extends Object> targetClass = target.getClass();
-        Class[] interfaces = targetClass.getInterfaces();
+        Class<?> targetClass = target.getClass();
+        Class<?>[] interfaces = targetClass.getInterfaces();
         actor = ap;
         return Proxy.newProxyInstance(targetClass.getClassLoader(),
-                interfaces, new DynamicProxy(target));
+                interfaces, new DynamicProxy());
     }
 
     /**
@@ -48,51 +45,54 @@ public class DynamicProxy implements InvocationHandler {
      *               Arguments of primitive types are wrapped in instances of the
      *               appropriate primitive wrapper class, such as
      *               {@code java.lang.Integer} or {@code java.lang.Boolean}.
-     * @return
-     * @throws Throwable
+     * @return msg
      */
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        Object invocationResult = null;
+    public Object invoke(Object proxy, Method method, Object[] args) {
         Message msg=null;
         String str = "";
-        Class cla = null;
+        Class<?> cla;
         Object obj = null;
         try {
             if (args != null)
                 str = args[0].toString();
 
             switch (method.getName()) {
-                case "addInsult":
+                case "addInsult" -> {
                     cla = Class.forName("ActorModel.Messages.Insult.AddInsultMessage");
-                    Constructor cons = cla.getDeclaredConstructor(String.class);
+                    Constructor<?> cons = cla.getDeclaredConstructor(String.class);
                     obj = cons.newInstance(str);
-                    break;
-                case "getInsult":
+                }
+                case "getInsult" -> {
                     cla = Class.forName("ActorModel.Messages.Insult.GetInsultMessage");
-                    obj = cla.newInstance();
-                    break;
-                case "getAllInsults":
+                    obj = cla.getDeclaredConstructor();
+                }
+                case "getAllInsults" -> {
                     cla = Class.forName("ActorModel.Messages.Insult.GetAllInsultsMessage");
-                    obj = cla.newInstance();
-                    break;
-                default:
-                    break;
+                    obj = cla.getDeclaredConstructor().newInstance();
+                }
+                default -> {
+                }
             }
-            actor.send((Message) obj);
+
+            if (obj instanceof Message) {
+                actor.send((Message) obj);
+            }
             Thread.sleep(10);
 
             if (!(obj instanceof AddInsultMessage)) {
                 msg = actor.receive();
-                //System.out.println("Proxy response: \n" + msg);
             }
         } catch (InvocationTargetException ite) {
-            throw ite.getTargetException();
+            try {
+                throw ite.getTargetException();
+            } catch (Throwable e) {
+                throw new RuntimeException(e);
+            }
         } catch (Exception e) {
             System.err.println("Invocation of " + method.getName() + " failed");
-        } finally {
-            return msg;
         }
+        return msg;
     }
 }
 

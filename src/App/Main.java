@@ -1,15 +1,15 @@
 package App;
 
 import ActorModel.*;
-import ActorModel.Decorator.EncryptionDecorator;
-import ActorModel.Decorator.FirewallDecorator;
+
+import ActorModel.Decorator.LambdaFirewallDecorator;
+import ActorModel.DynamicProxy.DynamicProxy;
+import ActorModel.DynamicProxy.InsultService;
+import ActorModel.DynamicProxy.InsultServiceImpl;
 import ActorModel.Factory.AbstractContext;
 import ActorModel.Factory.AbstractContextFactory;
-import ActorModel.Factory.VirtualContextFactory;
-import ActorModel.Messages.Message;
-import ActorModel.Messages.QuitMessage;
-import ActorModel.Observer.ActorListener;
-import ActorModel.Observer.MonitorService;
+import ActorModel.Factory.PlatformContextFactory;
+
 
 /**
  * Class that represents the main program.
@@ -20,30 +20,18 @@ import ActorModel.Observer.MonitorService;
 public class Main {
     public static void main(String[] args) {
         //TODO: VALIDATION (TESTING & JAVADOC)
-        AbstractContextFactory factory = new VirtualContextFactory();
+        AbstractContextFactory factory = new PlatformContextFactory();
 
         AbstractContext context = factory.create();
         Actor insult=new InsultActor();
-        ActorProxy proxy = context.spawnActor("proxy", new FirewallDecorator(new EncryptionDecorator(insult)));
-        MonitorService.attach(proxy.getActor(), new ActorListener());
+        LambdaFirewallDecorator lambda=new LambdaFirewallDecorator(insult);
+        ActorProxy actor = context.spawnActor("insult", new InsultActor());
+        InsultService dyn= (InsultService) DynamicProxy.intercept(new InsultServiceImpl(),actor);
+        dyn.getInsult();
 
-        ActorProxy sender = context.spawnActor("proxy", new HelloWorldActor());
-        proxy.send(new Message(sender, "holaa1"));
-        proxy.send(new Message(sender, "holaa2"));
-        proxy.send(new Message(sender, "holaa3"));
-        proxy.send(new Message(sender, "holaa4"));
-        proxy.send((new QuitMessage()));
-        proxy.send(new Message(sender, "holaa5"));
-        proxy.send(new Message(sender, "holaa6"));
-        proxy.send(new Message(sender, "holaa7"));
-        try {
-            ActorContext.threadMap.get(proxy.getActor()).join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        ActorContext.join();
 
-        ActorProxy act=context.spawnActor("act",new InsultActor());
-        proxy.send(new Message(act,"hola"));
+
 
 
 

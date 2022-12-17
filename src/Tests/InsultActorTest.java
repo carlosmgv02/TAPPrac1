@@ -27,9 +27,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 
 public class InsultActorTest {
-    AbstractContextFactory factory = new PlatformContextFactory();
+    final AbstractContextFactory factory = new PlatformContextFactory();
 
-    AbstractContext context = factory.create();
+    final AbstractContext context = factory.create();
 
 
     /**

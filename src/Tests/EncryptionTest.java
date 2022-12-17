@@ -21,8 +21,8 @@ import static org.junit.Assert.assertTrue;
  */
 public class EncryptionTest {
 
-    AbstractContextFactory factory = new PlatformContextFactory();
-    AbstractContext context = factory.create();
+    final AbstractContextFactory factory = new PlatformContextFactory();
+    final AbstractContext context = factory.create();
 
 
     ActorProxy actor;

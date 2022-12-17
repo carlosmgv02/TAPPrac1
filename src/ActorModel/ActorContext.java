@@ -1,7 +1,5 @@
 package ActorModel;
 
-import ActorModel.Observer.MonitorService;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +16,6 @@ public class ActorContext {
     public final static Map<Actor, Thread> threadMap = new HashMap<>();
 
     private static ActorContext actorInstance;
-    private MonitorService monitorService;
 
     protected ActorContext() {
 
@@ -53,14 +50,16 @@ public class ActorContext {
         }
         return null;
     }
-
-    public static void enableProcessing() {
-        threadMap.forEach(
-                (key, value) -> {
-                    value.start();
-                }
-        );
+    public static void join(){
+        threadMap.forEach((k,v)->{
+            try {
+                v.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
     }
+
 
     /**
      * Method to check if the actor is in the context

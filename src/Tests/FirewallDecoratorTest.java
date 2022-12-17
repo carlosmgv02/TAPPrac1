@@ -12,9 +12,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class FirewallDecoratorTest {
-    AbstractContextFactory factory = new PlatformContextFactory();
+    final AbstractContextFactory factory = new PlatformContextFactory();
 
-    AbstractContext context = factory.create();
+    final AbstractContext context = factory.create();
     /**
      * Class used to test Firewall Decorator
      * <p>
@@ -43,7 +43,7 @@ public class FirewallDecoratorTest {
      */
     public void shouldNotBeProxy() {
         actor.send(msg);
-        assertFalse(msg.getFrom() instanceof ActorProxy);
+        assertFalse(msg.getFrom() != null);
     }
 
     @Test

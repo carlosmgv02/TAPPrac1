@@ -2,12 +2,10 @@ package ActorModel.Observer;
 
 import ActorModel.Actor;
 import ActorModel.ActorContext;
-import ActorModel.ActorProxy;
 import ActorModel.Messages.Message;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,7 +22,6 @@ import java.util.Map;
  */
 public class MonitorService extends ActorContext {
 
-    private static final Map<Actor, Integer> numberOfMessages = new HashMap<>();
     private static final Map<Actor, ArrayList<Message>> sentMessages = new HashMap<>();
     private static final Map<Actor, ArrayList<Message>> receivedMessages = new HashMap<>();
     private static final Map<Actor, ArrayList<Observer>> observerList = new HashMap<>();
@@ -56,11 +53,14 @@ public class MonitorService extends ActorContext {
      * Method used to detach an observer from an actor
      *
      * @param act the actor from which the observer will be detached
-     * @param obs
+     * @param obs observer to detach
      */
     public static void detach(Actor act, Observer obs) {
-        if (observerList.containsKey(act))
+        if (observerList.containsKey(act)){
             observerList.get(act).remove(obs);
+            obs.update(Status.ERROR);
+        }
+
     }
 
     /**

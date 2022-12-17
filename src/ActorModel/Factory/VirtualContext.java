@@ -37,7 +37,7 @@ public class VirtualContext extends ActorContext implements AbstractContext {
                 if (!type.getQueue().isEmpty()) {
 
                     try {
-                        Thread.sleep(0);
+
                         type.process();
                         MonitorService.setTraffic(type);
                     } catch (InterruptedException e) {
