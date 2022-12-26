@@ -1,38 +1,12 @@
 # PRACTICA TAP
-Practica 1 Técnicas Avanzadas de Programación. Consiste en implementar un sistema de actores en `Java`.<br>
-## NOTES
+1st assignment ot the subject TAP (Advanced Programming Techniques) of the degree in Computer Science of the Rovira i Virgili
+University. Consists in the implementation of an actor system with message passing in `Java`.
 
-### Consells Pedro
-#### MonitorService
-* Per a retornar els missatges enviats per un actor:<br>
-Creem un HashMap<Actor, ArrayList<Message>> per a guardar els missatges enviats per cada actor.<br>
-* Ho podem ficar a l'actor context.
-* MonitorService pot tenir un HashMap amb els actors i una llista dels seus observadors.
-* MonitorService que sigui opcional per a no implicar un cost en l'execució si no volem utilitzar-lo. (Decorator)
-##### Observer
-* Podem fer 3 classes diferents d'observer, o una classe amb diferents mètodes.
-##### ActorListener
-* Ha de ser una interfície.
-* Fer un mètode per a cada tipus de missatge
-#### DynamicProxy
-* substituir al codi del new instance al dyn procsi pel intercept
-* Al invoke fer un send
-##### InsultService
-* InsultService extends Actor.
-* Mètodes *getUnsult, addInsult, getAllInsults*.
-##### ReflectiveActor
-* Reflective actor quan cridem el mètode addInsult per exemple, enviem missatge a la cua amb el tipus d'objecte que correspon: <br>
-.send(new AddInsultMessage("insulto"))
-* Crear una altra classe de Message, que contingui un camp from, per saber quin mètode l'ha cridat.
-#### Remote development
-* En lloc de fer RMI, podem utilitzar [XML-RPC](https://www.youtube.com/watch?v=FTU4lUAfEeI).
-* Alternativament podem fer servir [RMI](https://www.youtube.com/watch?v=bMPd-k-ncoQ).
-#### Threads
-* Per a la implementació de Platform threads / virtual threads, ho podem implementar seguint el patró *Factory Design Pattern*.
-## Contenido
-* [TODO](#todo)
-* [Introducción](#introducción)
-* [Enunciado](#enunciado)
+## Content
+* [Introduction](#introduction)
+    * [Backend](#backend)
+    * [Frontend](#frontend)
+* [Task](#task)
     * [Description](#description)
     * [ActorProxy](#actorproxy)
     * [ActorDecorator](#actordecorator)
@@ -40,39 +14,32 @@ Creem un HashMap<Actor, ArrayList<Message>> per a guardar els missatges enviats 
     * [MonitorService and Observer pattern](#monitorservice-and-observer-pattern)
     * [Validation](#validation)
     * [Optional](#optional-parts)
-* [Autores](#autores)
-* [Apuntes](#apuntes)
-## TODO
-Tareas pendientes que faltan por hacer:
-* [ ] Implementar el sistema de actores
-  * [x] Patrón de singleton (Actor Context)
-    * [x] Insult Actor
-      * [x] GetInsultMessage
-      * [x] GetAllInsultMessage
-      * [x] AddInsultMessage
-    * [x] HelloWorld Actor
-  * [ ] Patrón de decorador
-    * [ ] ActorDecorator
-    * [x] Firewall decorator
-    * [x] Encryption decorator
-  * [ ] Patrón de proxy
-    * [x] Actor Proxy
-    * [ ] Dynamic Proxy
-  * [ ] Patrón de observador
-* [ ] Validar funcionamiento
-  * [ ] Test unitarios
-  * [ ] Crear JavaDoc
-* [ ] Parte opcional threads & ring example
-## Introducción
-Implementar dicho sistema de actores utilizando patrones de diseño y threads que manejen colas de mensajes.<br>
-Algunos de los patrones de diseños utilizados son:
+* [Authors](#authors)
+
+## Introduction
+### Backend
+Implement such actor system using design patterns and message queues managed by threads.<br>
+Further information can be checked in the [**documentation**](https://carlosmgv02.github.io/TAPPrac1/).<br>
+Some design patterns used are:<br>
+
 * Singleton
 * Decorator
 * Proxy
-* Reflection
+* Dynamic Proxy
 * Observer
 * Monitor
-## Enunciado
+* Factory
+### Frontend
+Frontend has been developed using [**Spring boot**](https://spring.io/projects/spring-boot) + [**Vaadin Framework**](https://vaadin.com/).<br>
+#### Views
+* **MainLayout**: Main view of the application. It contains a menu with the different options of the application.
+* **ListView**: View that shows a list of actors in our program.
+* **DashboardView**: View that shows a dashboard with the different actors in our program.
+* **RingActorLayout**: View that shows a ring of actors, to demonstrate the use of our backend.
+#### Services & entities
+* **ActorService**: Service that manages the actors in our program.
+* **ActorEntry**: Entity that represents an actor in our program.
+## Task
 ### Description
 <div style="text-align: justify">
 The goal of this task is to implement a Java Actor System. An Actor is basically a software entity
@@ -83,7 +50,6 @@ To create an actor we will use an ActorContext entity based on Singleton pattern
 Actor Context is: context.spawnActor(“name”,new ActorInstance()),
 ActorContext.lookup(name), and ActorContext.getNames().<br>
 Example:
-
 
 ```java
 ActorProxy hello = context.spawnActor(“name”,new RingActor());
@@ -111,7 +77,7 @@ Demonstrate that you can communicate with Actors using Proxies.<br>
 Example:
 
 ```java
-Actor insult = context.spawnActor(“name”,new InsultActor());
+ActorProxy insult = context.spawnActor(“name”,new InsultActor());
 insult.send(new GetInsultMessage());
 Message result = insult.receive();
 System.out.println(result.getText());
@@ -138,7 +104,7 @@ InsultService class with methods addInsult, getAllInsults, getInsult.<br>
 Example:
     
 ```java
-Actor insult = context.spawnActor(“name”,new InsultActor());
+ActorProxy insult = context.spawnActor(“name”,new InsultActor());
 InsultService insulter = DynamicProxy.intercept(insult);
 insulter.addInsult(“stupid”);
 System.out.println(insulter.getInsult());
@@ -150,7 +116,7 @@ class.<br>
 Example:
     
 ```java
-Actor insult = context.spawnActor(“name”,new ReflectiveActor(new InsultService()));
+ActorProxy insult = context.spawnActor(“name”,new ReflectiveActor(new InsultService()));
 ```
 ### MonitorService and Observer Pattern
 The idea is to create a MonitorService that can obtain runtime information about the ActorSystem.
@@ -175,8 +141,6 @@ aforementioned events.
 
 
 
-
-
 ### Validation
 To demonstrate that the Actor system is running correctly we propose two simple examples: Ring
 and PingPong. Ring consists of creating a number of actors connected in a ring: every actor is
@@ -189,15 +153,11 @@ entire rounds in a ring of 100 nodes.
 Use `JavaDocs` and `Unit tests` to validate the system.
 
 ### Optional parts
-#### RemoteActor context and RemoteActorProxy
-Use java.util.RMI to enable the remote communication with Actors. A RemoteActorContext will
-create a RMI Server waiting for messages. A RemoteActorProxy will create a RMI client that
-connects to the remote entity (RemoteActorContext) to send or receive messages.
 #### Virtual Actors and performance
 Using a Factory Design pattern, enable to use normal Java Threads or Virtual Threads (Java 19) in
 the Actor system. Compare the performance of both systems using the Ring example.
 
-## Autores
+## Authors
 * Carlos Martínez - [carlosmgv02](https://github.com/carlosmgv02)
 * Nil Monfort - [nilm9](https://github.com/nilm9)
 * Genís Martínez - [genismartinez](https://github.com/genismartinez)
