@@ -26,7 +26,7 @@ public class ActorContext {
      *
      * @return the instance of the ActorContext
      */
-    public synchronized static ActorContext getInstance() {
+    public  static synchronized ActorContext getInstance() {
         if (actorInstance == null) {
             actorInstance = new ActorContext();
         }
