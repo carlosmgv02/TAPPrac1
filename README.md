@@ -1,6 +1,6 @@
 # PRACTICA TAP
 1st assignment ot the subject TAP (Advanced Programming Techniques) of the degree in Computer Science of the Rovira i Virgili
-University. Consists in the implementation of an actor system with message passing in `Java`.
+University. Consists of the implementation of system of actors with message passing in `Java`.
 
 ## Content
 * [Introduction](#introduction)
